@@ -3,3 +3,8 @@ dist/
 .env
 *.log
 .DS_Store
+.pem
+
+# Firebase credentials
+serviceAccount.json
+firebase-adminsdk-*.json

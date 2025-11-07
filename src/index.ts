@@ -2,7 +2,9 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import itemRoutes from './routes/item.routes';
+import authRoutes from './routes/auth.routes';
 import { errorHandler, notFoundHandler } from './middleware/error.middleware';
+import './config/firebase.config'; // Initialize Firebase
 
 // Load environment variables
 dotenv.config();
@@ -26,6 +28,7 @@ app.get('/', (req: Request, res: Response) => {
 
 // Routes
 app.use('/api/items', itemRoutes);
+app.use('/api/auth', authRoutes);
 
 // Error handling middleware
 app.use(notFoundHandler);
