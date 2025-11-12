@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://amoxcalli-tec-ccea.k.aivencloud.com:17179/defaultdb</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="KetzalliDB_API" uuid="4a8bfafb-5253-4713-8e01-e09a6d58f572">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://amoxcalli-tec-ccea.k.aivencloud.com:17179/defaultdb</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
