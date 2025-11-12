@@ -89,6 +89,19 @@ CREATE TABLE "user_medals" (
   "achieved_at" timestamp
 );
 
+CREATE TABLE user_stats (
+    user_id uuid NOT NULL,
+    stat_name varchar(50) NOT NULL,
+    current_value int NOT NULL DEFAULT 0,
+    max_value int NOT NULL DEFAULT 100,
+    last_update TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (user_id, stat_name),
+    CONSTRAINT fk_user_stats_user
+        FOREIGN KEY (user_id)
+        REFERENCES users (id)
+        ON DELETE CASCADE
+);
+
 ALTER TABLE "users" ADD FOREIGN KEY ("role_id") REFERENCES "roles" ("id");
 
 ALTER TABLE "signs" ADD FOREIGN KEY ("category_id") REFERENCES "categories" ("id");
@@ -113,16 +126,5 @@ ALTER TABLE "user_medals" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 ALTER TABLE "user_medals" ADD FOREIGN KEY ("medal_id") REFERENCES "medals" ("id");
 
-CREATE TABLE user_stats (
-    user_id uuid NOT NULL,
-    stat_name varchar(50) NOT NULL,
-    current_value int NOT NULL DEFAULT 0,
-    max_value int NOT NULL DEFAULT 100,
-    last_update TIMESTAMP DEFAULT NOW(),
-    PRIMARY KEY (user_id, stat_name),
-    CONSTRAINT fk_user_stats_user
-        FOREIGN KEY (user_id)
-        REFERENCES users (id)
-        ON DELETE CASCADE
-);
+
 
