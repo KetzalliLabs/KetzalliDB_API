@@ -13,6 +13,11 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD || 'password',
   port: parseInt(process.env.DB_PORT || '5432'),
   
+  // SSL configuration (required for Aiven)
+  ssl: {
+    rejectUnauthorized: false, // Accept self-signed certificates from Aiven
+  },
+  
   // Connection pool settings
   max: 20, // Maximum number of clients in the pool
   idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
