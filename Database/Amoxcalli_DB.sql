@@ -126,5 +126,10 @@ ALTER TABLE "user_medals" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 ALTER TABLE "user_medals" ADD FOREIGN KEY ("medal_id") REFERENCES "medals" ("id");
 
+ALTER TABLE "categories" DROP COLUMN "description";
 
+INSERT INTO "categories" ("id", "name", "icon_url") VALUES (gen_random_uuid(),'Abecedario', 'https://img.icons8.com/?size=100&id=MXyR2CZikptq&format=png&color=000000')
 
+DELETE FROM categories WHERE id = 'f1908e19-5ab1-4d30-921d-a8db3efbd773'
+
+DELETE FROM signs WHERE category_id = 'fb59bac7-7119-4c93-837e-f12469bf699b'
