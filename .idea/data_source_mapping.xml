@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourcePerFileMappings">
-    <file url="file://$PROJECT_DIR$/Database/Amoxcalli_DB.sql" value="f05c19e9-4e41-4fe1-8e9e-d7c36599854a" />
+    <file url="file://$PROJECT_DIR$/Database/Amoxcalli_DB.sql" value="4a8bfafb-5253-4713-8e01-e09a6d58f572" />
+    <file url="file://$PROJECT_DIR$/Database/Pruebas.sql" value="4a8bfafb-5253-4713-8e01-e09a6d58f572" />
+    <file url="file://$PROJECT_DIR$/Database/abecedario_query.sql" value="4a8bfafb-5253-4713-8e01-e09a6d58f572" />
+    <file url="file://$PROJECT_DIR$/Database/categories_query.sql" value="4a8bfafb-5253-4713-8e01-e09a6d58f572" />
+
   </component>
 </project>
