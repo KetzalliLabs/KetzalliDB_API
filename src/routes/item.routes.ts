@@ -13,6 +13,26 @@ const router = Router();
 // Example: /api/items?type=signs&category_id=uuid
 router.get('/', optionalAuth, ItemController.getAllItems);
 
+// ============================================
+// EXERCISES ROUTES - MUST BE BEFORE /:id ROUTE
+// ============================================
+
+// GET /api/items/exercises - Get exercises with complete details
+// Query params: category_id (optional), exercise_id (optional)
+// Example: /api/items/exercises?category_id=uuid
+router.get('/exercises', optionalAuth, ItemController.getExercises);
+
+// POST /api/items/exercises - Create new exercise with options
+// Body (JSON): { category_id, type, prompt, order_num, options: [...] }
+router.post('/exercises', verifyFirebaseToken, ItemController.createExercise);
+
+// DELETE /api/items/exercises/:id - Delete exercise
+router.delete('/exercises/:id', verifyFirebaseToken, ItemController.deleteExercise);
+
+// ============================================
+// GENERIC ID ROUTE - MUST BE AFTER SPECIFIC ROUTES
+// ============================================
+
 // GET /api/items/:id - Get item by ID (supports query param: type)
 // Example: /api/items/uuid?type=signs
 router.get('/:id', optionalAuth, ItemController.getItemById);
@@ -46,17 +66,6 @@ router.put('/categories/:id', verifyFirebaseToken, upload.single('file'), ItemCo
 
 // DELETE /api/items/categories/:id - Delete category and its icon
 router.delete('/categories/:id', verifyFirebaseToken, ItemController.deleteCategory);
-
-// ============================================
-// EXERCISES ROUTES (Protected - requires auth)
-// ============================================
-
-// POST /api/items/exercises - Create new exercise with options
-// Body (JSON): { category_id, type, prompt, order_num, options: [...] }
-router.post('/exercises', verifyFirebaseToken, ItemController.createExercise);
-
-// DELETE /api/items/exercises/:id - Delete exercise
-router.delete('/exercises/:id', verifyFirebaseToken, ItemController.deleteExercise);
 
 // ============================================
 // USER AVATAR ROUTES (Protected - requires auth)

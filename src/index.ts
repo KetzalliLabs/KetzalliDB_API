@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 import itemRoutes from './routes/item.routes';
 import authRoutes from './routes/auth.routes';
 import { errorHandler, notFoundHandler } from './middleware/error.middleware';
@@ -18,6 +19,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static files from Public directory
+app.use(express.static(path.join(__dirname, '../Public')));
+
 // Request logging middleware (development only)
 if (process.env.NODE_ENV === 'development') {
   app.use((req: Request, res: Response, next) => {
@@ -26,14 +30,9 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
-// Health check endpoint
+// Root endpoint - Serve landing page
 app.get('/', (req: Request, res: Response) => {
-  res.json({
-    success: true,
-    message: 'KetzalliDB API is running',
-    version: '1.0.0',
-    timestamp: new Date().toISOString()
-  });
+  res.sendFile(path.join(__dirname, '../Public/index.html'));
 });
 
 // API Health check with storage status
@@ -81,6 +80,7 @@ app.get('/api', (req: Request, res: Response) => {
         createCategory: 'POST /api/items/categories (multipart/form-data)',
         updateCategory: 'PUT /api/items/categories/:id (multipart/form-data)',
         deleteCategory: 'DELETE /api/items/categories/:id',
+        getExercises: 'GET /api/items/exercises?category_id=uuid',
         createExercise: 'POST /api/items/exercises (application/json)',
         deleteExercise: 'DELETE /api/items/exercises/:id',
         updateAvatar: 'PUT /api/items/users/:userId/avatar (multipart/form-data)'

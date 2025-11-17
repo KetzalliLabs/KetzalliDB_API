@@ -34,7 +34,7 @@ export class ItemController {
             query += ' WHERE category_id = $1';
             params.push(category_id);
           }
-          query += ' ORDER BY order_num ASC';
+          query += ' ORDER BY id ASC';
           break;
 
         case 'medals':
@@ -558,6 +558,85 @@ export class ItemController {
       res.status(500).json({
         success: false,
         message: 'Failed to delete category',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+    }
+  }
+
+  /**
+   * Get exercises with complete details for Android app
+   * Returns exercises with all options in JSON format
+   */
+  static async getExercises(req: Request, res: Response): Promise<void> {
+    try {
+      const { category_id, exercise_id } = req.query;
+
+      let query = `
+        SELECT 
+          e.id,
+          e.category_id,
+          e.type,
+          e.prompt as question,
+          e.correct_sign_id,
+          c.name as category_name,
+          json_build_object(
+            'id', correct_sign.id,
+            'name', correct_sign.name,
+            'description', correct_sign.description,
+            'image_url', correct_sign.image_url,
+            'video_url', correct_sign.video_url
+          ) as correct_sign,
+          (
+            SELECT json_agg(
+              json_build_object(
+                'id', s.id,
+                'name', s.name,
+                'description', s.description,
+                'image_url', s.image_url,
+                'video_url', s.video_url,
+                'is_correct', s.id = e.correct_sign_id
+              )
+            )
+            FROM signs s
+            WHERE s.category_id = e.category_id
+          ) as options
+        FROM exercises e
+        LEFT JOIN categories c ON e.category_id = c.id
+        LEFT JOIN signs correct_sign ON e.correct_sign_id = correct_sign.id
+      `;
+
+      const params: any[] = [];
+
+      if (exercise_id) {
+        query += ` WHERE e.id = $1`;
+        params.push(exercise_id);
+      } else if (category_id) {
+        query += ` WHERE e.category_id = $1`;
+        params.push(category_id);
+      }
+
+      query += ` ORDER BY e.id`;
+
+      const result = await pool.query(query, params);
+
+      if (exercise_id && result.rows.length === 0) {
+        res.status(404).json({
+          success: false,
+          message: 'Exercise not found',
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        count: result.rows.length,
+        data: exercise_id ? result.rows[0] : result.rows,
+      });
+    } catch (error) {
+      console.error('Error fetching exercises:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to fetch exercises',
         error: error instanceof Error ? error.message : 'Unknown error',
       });
     }
