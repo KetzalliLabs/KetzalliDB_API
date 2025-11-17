@@ -28,4 +28,4 @@ INSERT INTO "signs" ("id", "name", "category_id", "image_url", "video_url") VALU
     (gen_random_uuid(), 'Sopa', (SELECT id FROM categories WHERE name='Comida'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Sopa_Web.m4v'),
     (gen_random_uuid(), 'Taco', (SELECT id FROM categories WHERE name='Comida'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Taco_Web.m4v'),
     (gen_random_uuid(), 'Tortilla', (SELECT id FROM categories WHERE name='Comida'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Tortilla_Web.m4v'),
-    (gen_random_uuid(), 'Verdura', (SELECT id FROM categories WHERE name='Comida'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Verdura_Web.m4v'),
+    (gen_random_uuid(), 'Verdura', (SELECT id FROM categories WHERE name='Comida'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Verdura_Web.m4v');
