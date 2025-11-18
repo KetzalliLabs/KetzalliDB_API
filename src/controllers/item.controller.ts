@@ -587,18 +587,48 @@ export class ItemController {
             'video_url', correct_sign.video_url
           ) as correct_sign,
           (
-            SELECT json_agg(
-              json_build_object(
-                'id', s.id,
-                'name', s.name,
-                'description', s.description,
-                'image_url', s.image_url,
-                'video_url', s.video_url,
-                'is_correct', s.id = e.correct_sign_id
-              )
-            )
-            FROM signs s
-            WHERE s.category_id = e.category_id
+            SELECT json_agg(json_build_object(
+              'id', id,
+              'name', name,
+              'description', description,
+              'image_url', image_url,
+              'video_url', video_url,
+              'is_correct', is_correct
+            ))
+            FROM (
+              SELECT 
+                s.id,
+                s.name,
+                s.description,
+                s.image_url,
+                s.video_url,
+                true as is_correct
+              FROM signs s
+              WHERE s.id = e.correct_sign_id
+              
+              UNION ALL
+              
+              SELECT 
+                id,
+                name,
+                description,
+                image_url,
+                video_url,
+                false as is_correct
+              FROM (
+                SELECT 
+                  s.id,
+                  s.name,
+                  s.description,
+                  s.image_url,
+                  s.video_url
+                FROM signs s
+                WHERE s.id <> e.correct_sign_id 
+                  AND s.category_id = e.category_id
+                ORDER BY RANDOM()
+                LIMIT 3
+              ) AS random_incorrect
+            ) AS all_options
           ) as options
         FROM exercises e
         LEFT JOIN categories c ON e.category_id = c.id
