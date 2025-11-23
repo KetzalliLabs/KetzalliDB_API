@@ -110,6 +110,35 @@ CREATE TABLE user_stats (
         ON DELETE CASCADE
 );
 
+CREATE TABLE user_sign_views (
+    user_id UUID REFERENCES users(id),
+    sign_id UUID REFERENCES signs(id),
+    viewed_at TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (user_id, sign_id)
+);
+
+CREATE TABLE user_exercise_history (
+    user_id UUID REFERENCES users(id),
+    exercise_id UUID REFERENCES exercises(id),
+    completed_at TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (user_id, exercise_id)
+);
+
+CREATE TABLE user_exercise_history (
+    user_id UUID,
+    exercise_id UUID,
+    completed_at TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (user_id, exercise_id)
+);
+
+CREATE TABLE daily_quiz_history (
+    user_id UUID,
+    date DATE,
+    score INT,
+    completed BOOLEAN DEFAULT true,
+    PRIMARY KEY (user_id, date)
+);
+
 ALTER TABLE "users" ADD FOREIGN KEY ("role_id") REFERENCES "roles" ("id");
 
 ALTER TABLE "signs" ADD FOREIGN KEY ("category_id") REFERENCES "categories" ("id");
@@ -155,3 +184,7 @@ ALTER TABLE exercises DROP COLUMN order_num;
 ALTER TABLE exercises ADD COLUMN correct_sign_id UUID REFERENCES signs(id);
 
 ALTER TABLE exercises ALTER COLUMN correct_sign_id SET NOT NULL;
+
+ALTER TABLE exercises ADD COLUMN structure_type VARCHAR(20) DEFAULT 'text-image';
+
+ALTER TABLE exercises DROP COLUMN structure_type;
