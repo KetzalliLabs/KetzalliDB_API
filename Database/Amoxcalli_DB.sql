@@ -97,17 +97,23 @@ CREATE TABLE "user_medals" (
   "achieved_at" timestamp
 );
 
+CREATE TABLE stats (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) UNIQUE NOT NULL,
+    description TEXT,
+    category VARCHAR(50), -- progreso, gamificacion, quiz, etc
+    has_limit BOOLEAN DEFAULT FALSE,
+    default_max INT,
+    icon_url TEXT
+);
+
 CREATE TABLE user_stats (
-    user_id uuid NOT NULL,
-    stat_name varchar(50) NOT NULL,
-    current_value int NOT NULL DEFAULT 0,
-    max_value int NOT NULL DEFAULT 100,
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    stat_id INT NOT NULL REFERENCES stats(id),
+    current_value INT DEFAULT 0,
+    max_value INT,
     last_update TIMESTAMP DEFAULT NOW(),
-    PRIMARY KEY (user_id, stat_name),
-    CONSTRAINT fk_user_stats_user
-        FOREIGN KEY (user_id)
-        REFERENCES users (id)
-        ON DELETE CASCADE
+    PRIMARY KEY (user_id, stat_id)
 );
 
 CREATE TABLE user_sign_views (
@@ -120,13 +126,6 @@ CREATE TABLE user_sign_views (
 CREATE TABLE user_exercise_history (
     user_id UUID REFERENCES users(id),
     exercise_id UUID REFERENCES exercises(id),
-    completed_at TIMESTAMP DEFAULT NOW(),
-    PRIMARY KEY (user_id, exercise_id)
-);
-
-CREATE TABLE user_exercise_history (
-    user_id UUID,
-    exercise_id UUID,
     completed_at TIMESTAMP DEFAULT NOW(),
     PRIMARY KEY (user_id, exercise_id)
 );
@@ -167,7 +166,7 @@ ALTER TABLE "user_medals" ADD FOREIGN KEY ("medal_id") REFERENCES "medals" ("id"
 -- Correcciones a la base de datos y debug
 ALTER TABLE "categories" DROP COLUMN "description";
 
-INSERT INTO "categories" ("id", "name", "icon_url") VALUES (gen_random_uuid(),'Abecedario', 'https://img.icons8.com/?size=100&id=MXyR2CZikptq&format=png&color=000000')
+INSERT INTO "categories" ("id", "name", "icon_url") VALUES (gen_random_uuid(),'Abecedario', 'https://img.icons8.com/?size=100&id=MXyR2CZikptq&format=png&color=000000');
 
 DELETE FROM categories WHERE id = 'f1908e19-5ab1-4d30-921d-a8db3efbd773';
 
@@ -179,6 +178,8 @@ ALTER TABLE attempts ADD COLUMN selected_sign_id uuid REFERENCES signs(id);
 
 DROP TABLE IF EXISTS exercise_options CASCADE;
 
+DROP TABLE IF EXISTS user_stats CASCADE;
+
 ALTER TABLE exercises DROP COLUMN order_num;
 
 ALTER TABLE exercises ADD COLUMN correct_sign_id UUID REFERENCES signs(id);
@@ -188,3 +189,5 @@ ALTER TABLE exercises ALTER COLUMN correct_sign_id SET NOT NULL;
 ALTER TABLE exercises ADD COLUMN structure_type VARCHAR(20) DEFAULT 'text-image';
 
 ALTER TABLE exercises DROP COLUMN structure_type;
+
+ALTER TABLE users DROP COLUMN coin;
