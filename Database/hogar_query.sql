@@ -1,0 +1,11 @@
+INSERT INTO "signs" ("id", "name", "category_id", "image_url", "video_url") VALUES
+    (gen_random_uuid(), 'Baño', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Bano_Web.m4v'),
+    (gen_random_uuid(), 'Caja', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Caja_Web.m4v'),
+    (gen_random_uuid(), 'Cama', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Cama_Web.m4v'),
+    (gen_random_uuid(), 'Celular', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Celular_Web.m4v'),
+    (gen_random_uuid(), 'Cocina', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Cocina_Web.m4v'),
+    (gen_random_uuid(), 'Computadora', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Computadora_Web.m4v'),
+    (gen_random_uuid(), 'Cuarto', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Cuarto_Web.m4v'),
+    (gen_random_uuid(), 'Cuchara', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Cuchara_Web.m4v'),
+    (gen_random_uuid(), 'Foco', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Foco_Web.m4v'),
+    (gen_random_uuid(), 'Gas', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Gas_Web.m4v'),

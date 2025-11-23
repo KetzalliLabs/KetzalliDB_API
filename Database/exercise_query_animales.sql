@@ -1,0 +1,3 @@
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Animales'), 'multiple_choice', '¿Cuál es el signo para la palabra Abeja?', (SELECT id FROM signs WHERE name='Abeja'), 'text-image'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Animales'), 'multiple_choice', '¿A que animal corresponde este signo?', (SELECT id FROM signs WHERE name='Águila'), 'image-text');

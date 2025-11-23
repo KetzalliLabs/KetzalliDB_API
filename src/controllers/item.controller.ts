@@ -34,7 +34,7 @@ export class ItemController {
             query += ' WHERE category_id = $1';
             params.push(category_id);
           }
-          query += ' ORDER BY order_num ASC';
+          query += ' ORDER BY id ASC';
           break;
 
         case 'medals':
@@ -60,6 +60,178 @@ export class ItemController {
         message: 'Failed to fetch items',
         error: error instanceof Error ? error.message : 'Unknown error',
       });
+    }
+  }
+
+  /**
+   * Get exercise quiz data: exercise, correct sign and 3 random incorrect signs
+   */
+  static async getExerciseQuiz(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+
+      // 1) Get exercise
+      const exerciseResult = await pool.query('SELECT * FROM exercises WHERE id = $1', [id]);
+
+      if (exerciseResult.rows.length === 0) {
+        res.status(404).json({ success: false, message: `Exercise with id ${id} not found` });
+        return;
+      }
+
+      const exercise = exerciseResult.rows[0];
+      const correctSignId = exercise.correct_sign_id;
+      const categoryId = exercise.category_id;
+
+      // Get category name
+      const categoryRes = await pool.query('SELECT name FROM categories WHERE id = $1', [categoryId]);
+      const categoryName = categoryRes.rows.length > 0 ? categoryRes.rows[0].name : null;
+
+      // 2) Get correct sign
+      const correctResult = await pool.query('SELECT * FROM signs WHERE id = $1', [correctSignId]);
+      const correctSign = correctResult.rows.length > 0 ? correctResult.rows[0] : null;
+
+      // 3) Get up to 3 random incorrect signs from same category
+      const incorrectResult = await pool.query(
+        'SELECT * FROM signs WHERE id <> $1 AND category_id = $2 ORDER BY RANDOM() LIMIT 3',
+        [correctSignId, categoryId]
+      );
+
+      const incorrectSigns = incorrectResult.rows;
+
+      // Build options array (correct + incorrect) and shuffle
+      const options = [] as any[];
+      if (correctSign) options.push(correctSign);
+      options.push(...incorrectSigns);
+
+      // simple in-place shuffle
+      for (let i = options.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [options[i], options[j]] = [options[j], options[i]];
+      }
+
+      res.status(200).json({
+        success: true,
+        data: {
+          exercise: {
+            id: exercise.id,
+            category_id: exercise.category_id,
+            category_name: categoryName,
+            type: exercise.type,
+            prompt: exercise.prompt,
+            correct_sign_id: exercise.correct_sign_id,
+            structure_type: exercise.structure_type ?? null,
+          },
+          correct: correctSign,
+          incorrect: incorrectSigns,
+          options,
+        },
+      });
+    } catch (error) {
+      console.error('Error fetching exercise quiz:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to fetch exercise quiz',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+    }
+  }
+
+  /**
+   * Generate a quiz of exercises.
+   * Body: { mode: 'category'|'mixed'|'custom', count: number, category_id?: string, exercise_ids?: string[] }
+   */
+  static async generateQuiz(req: Request, res: Response): Promise<void> {
+    try {
+      const { mode = 'category', count = 5, category_id, exercise_ids } = req.body as any;
+
+      const limit = Math.max(1, Math.min(Number(count) || 5, 50));
+
+      let exercisesQuery = '';
+      let params: any[] = [];
+
+      if (mode === 'custom' && Array.isArray(exercise_ids) && exercise_ids.length > 0) {
+        // Use provided exercise ids (limit to requested count)
+        const ids = (exercise_ids as string[]).slice(0, limit);
+        exercisesQuery = `SELECT * FROM exercises WHERE id = ANY($1::uuid[])`;
+        params = [ids];
+      } else if (mode === 'category' && category_id) {
+        exercisesQuery = `SELECT * FROM exercises WHERE category_id = $1 ORDER BY RANDOM() LIMIT $2`;
+        params = [category_id, limit];
+      } else {
+        // mixed or fallback
+        exercisesQuery = `SELECT * FROM exercises ORDER BY RANDOM() LIMIT $1`;
+        params = [limit];
+      }
+
+      const exercisesResult = await pool.query(exercisesQuery, params);
+      const exercises = exercisesResult.rows;
+
+      if (!exercises || exercises.length === 0) {
+        res.status(404).json({ success: false, message: 'No exercises found for the requested parameters' });
+        return;
+      }
+
+      // Prepare list of exercise ids
+      const exerciseIds = exercises.map((e: any) => e.id);
+
+      // Fetch for all selected exercises: correct sign and up to 3 random incorrect signs (same category)
+      const detailsQuery = `
+        SELECT
+          e.id as exercise_id,
+          e.*, 
+          c.name AS category_name,
+          json_build_object('id', s.id, 'name', s.name, 'description', s.description, 'image_url', s.image_url, 'video_url', s.video_url) AS correct,
+          COALESCE(json_agg(json_build_object('id', s2.id, 'name', s2.name, 'description', s2.description, 'image_url', s2.image_url, 'video_url', s2.video_url)) FILTER (WHERE s2.id IS NOT NULL), '[]') AS incorrects
+        FROM exercises e
+        JOIN signs s ON s.id = e.correct_sign_id
+        JOIN categories c ON c.id = e.category_id
+        LEFT JOIN LATERAL (
+          SELECT * FROM signs s3
+          WHERE s3.id <> e.correct_sign_id AND s3.category_id = e.category_id
+          ORDER BY RANDOM() LIMIT 3
+        ) s2 ON true
+        WHERE e.id = ANY($1::uuid[])
+        GROUP BY e.id, s.id, c.name
+      `;
+
+      const detailsResult = await pool.query(detailsQuery, [exerciseIds]);
+
+      const questions = detailsResult.rows.map((row: any) => {
+        const exercise = {
+          id: row.id,
+          category_id: row.category_id,
+          category_name: row.category_name || null,
+          type: row.type,
+          prompt: row.prompt,
+          correct_sign_id: row.correct_sign_id,
+          structure_type: row.structure_type || null,
+        };
+
+        const correct = row.correct || null;
+        const incorrect = row.incorrects || [];
+
+        const options = [] as any[];
+        if (correct) options.push(correct);
+        options.push(...incorrect);
+
+        // shuffle options
+        for (let i = options.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [options[i], options[j]] = [options[j], options[i]];
+        }
+
+        return {
+          exercise,
+          correct,
+          incorrect,
+          options,
+        };
+      });
+
+      res.status(200).json({ success: true, data: { questions } });
+    } catch (error) {
+      console.error('Error generating quiz:', error);
+      res.status(500).json({ success: false, message: 'Failed to generate quiz', error: error instanceof Error ? error.message : 'Unknown error' });
     }
   }
 
@@ -257,7 +429,7 @@ export class ItemController {
 
         // Insert exercise
         const exerciseQuery = `
-          INSERT INTO exercises (id, category_id, type, prompt, order_num)
+          INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id)
           VALUES (gen_random_uuid(), $1, $2, $3, $4)
           RETURNING *
         `;
@@ -671,3 +843,5 @@ export const getItemById = ItemController.getItemById;
 export const createItem = ItemController.createSign; // Maps to createSign
 export const updateItem = ItemController.updateSign; // Maps to updateSign
 export const deleteItem = ItemController.deleteSign; // Maps to deleteSign
+export const getExerciseQuiz = ItemController.getExerciseQuiz;
+export const generateQuiz = ItemController.generateQuiz;

@@ -55,6 +55,14 @@ router.delete('/categories/:id', verifyFirebaseToken, ItemController.deleteCateg
 // Body (JSON): { category_id, type, prompt, order_num, options: [...] }
 router.post('/exercises', verifyFirebaseToken, ItemController.createExercise);
 
+// POST /api/items/exercises/generate-quiz - Generate a quiz of exercises (public)
+// Body: { mode: 'category'|'mixed'|'custom', count: number, category_id?: string, exercise_ids?: string[] }
+router.post('/exercises/generate-quiz', optionalAuth, ItemController.generateQuiz);
+
+// GET /api/items/exercises/:id/quiz - Get exercise + correct sign + 3 random incorrect signs
+// Example: /api/items/exercises/:id/quiz
+router.get('/exercises/:id/quiz', optionalAuth, ItemController.getExerciseQuiz);
+
 // DELETE /api/items/exercises/:id - Delete exercise
 router.delete('/exercises/:id', verifyFirebaseToken, ItemController.deleteExercise);
 
