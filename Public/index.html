@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KetzalliDB API - Mexican Sign Language Learning Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container">
+            <div class="logo-container fade-in">
+                <img src="./Media/Images/PLACEHOLDERLOGO.PNG.png" alt="Ketzalli Logo" class="logo">
+            </div>
+            <h1 class="hero-title slide-up">KetzalliDB API</h1>
+            <p class="hero-subtitle slide-up delay-1">Mexican Sign Language Learning Platform</p>
+            <div class="hero-badges slide-up delay-2">
+                <span class="badge">v1.0.0</span>
+                <span class="badge success">REST API</span>
+                <span class="badge info">TypeScript</span>
+            </div>
+            <div class="quick-links slide-up delay-3">
+                <a href="#endpoints" class="btn btn-primary">View Endpoints</a>
+                <a href="#authentication" class="btn btn-secondary">Authentication</a>
+            </div>
+        </div>
+        <div class="hero-decoration"></div>
+    </header>
+
+    <!-- Status Section -->
+    <section class="status-section">
+        <div class="container">
+            <div class="status-grid">
+                <div class="status-card fade-in delay-1">
+                    <div class="status-icon">🚀</div>
+                    <h3>API Status</h3>
+                    <p class="status-value">Operational</p>
+                </div>
+                <div class="status-card fade-in delay-2">
+                    <div class="status-icon">🗄️</div>
+                    <h3>Database</h3>
+                    <p class="status-value">PostgreSQL</p>
+                </div>
+                <div class="status-card fade-in delay-3">
+                    <div class="status-icon">☁️</div>
+                    <h3>Storage</h3>
+                    <p class="status-value">Cloudflare R2</p>
+                </div>
+                <div class="status-card fade-in delay-4">
+                    <div class="status-icon">🔥</div>
+                    <h3>Auth</h3>
+                    <p class="status-value">Firebase</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Base URL Section -->
+    <section class="base-url-section">
+        <div class="container">
+            <h2>Base URL</h2>
+            <div class="code-block">
+                <code>http://localhost:3000</code>
+                <button class="copy-btn" onclick="copyToClipboard('http://localhost:3000')">📋 Copy</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Authentication Section -->
+    <section id="authentication" class="section">
+        <div class="container">
+            <h2 class="section-title">🔐 Authentication</h2>
+            <p class="section-description">Most endpoints require Firebase authentication. Include the Firebase ID token in the Authorization header.</p>
+            
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/auth/register</span>
+                </div>
+                <p class="endpoint-description">Register a new user</p>
+                <div class="code-section">
+                    <h4>Request Body:</h4>
+                    <pre><code>{
+  "firebase_uid": "string",
+  "email": "string",
+  "display_name": "string"
+}</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "User registered successfully",
+  "data": {
+    "id": "uuid",
+    "firebase_uid": "string",
+    "email": "string",
+    "display_name": "string",
+    "role_id": "uuid",
+    "coin": 0,
+    "avatar_url": null,
+    "join_date": "2025-11-16T00:00:00.000Z"
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/auth/login</span>
+                </div>
+                <p class="endpoint-description">Login existing user</p>
+                <div class="code-section">
+                    <h4>Request Body:</h4>
+                    <pre><code>{
+  "firebase_uid": "string"
+}</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "id": "uuid",
+    "firebase_uid": "string",
+    "email": "string",
+    "display_name": "string",
+    "role_id": "uuid",
+    "coin": 100,
+    "avatar_url": "https://...",
+    "join_date": "2025-11-16T00:00:00.000Z"
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/auth/profile</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Get authenticated user profile</p>
+                <div class="code-section">
+                    <h4>Headers:</h4>
+                    <pre><code>Authorization: Bearer &lt;firebase_token&gt;</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "data": {
+    "id": "uuid",
+    "firebase_uid": "string",
+    "email": "string",
+    "display_name": "string",
+    "role_id": "uuid",
+    "coin": 100,
+    "avatar_url": "https://...",
+    "join_date": "2025-11-16T00:00:00.000Z"
+  }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signs Endpoints -->
+    <section id="endpoints" class="section">
+        <div class="container">
+            <h2 class="section-title">✋ Signs Endpoints</h2>
+            
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/items?type=signs&category_id=uuid</span>
+                </div>
+                <p class="endpoint-description">Get all signs (optionally filtered by category)</p>
+                <div class="code-section">
+                    <h4>Query Parameters:</h4>
+                    <pre><code>type: "signs" (optional)
+category_id: "uuid" (optional)</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "count": 2,
+  "data": [
+    {
+      "id": "uuid",
+      "category_id": "uuid",
+      "name": "Hola",
+      "description": "Seña de saludo",
+      "image_url": "https://...",
+      "video_url": "https://..."
+    }
+  ]
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/items/:id?type=signs</span>
+                </div>
+                <p class="endpoint-description">Get a specific sign by ID</p>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "data": {
+    "id": "uuid",
+    "category_id": "uuid",
+    "name": "Hola",
+    "description": "Seña de saludo",
+    "image_url": "https://...",
+    "video_url": "https://..."
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/items/signs</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Create a new sign with image and video</p>
+                <div class="code-section">
+                    <h4>Content-Type:</h4>
+                    <pre><code>multipart/form-data</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Form Data:</h4>
+                    <pre><code>name: "string" (required)
+category_id: "uuid" (required)
+description: "string" (optional)
+image: File (optional)
+video: File (optional)</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "Sign created successfully",
+  "data": {
+    "id": "uuid",
+    "category_id": "uuid",
+    "name": "Hola",
+    "description": "Seña de saludo",
+    "image_url": "https://...",
+    "video_url": "https://..."
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method put">PUT</span>
+                    <span class="path">/api/items/signs/:id</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Update an existing sign</p>
+                <div class="code-section">
+                    <h4>Form Data (all optional):</h4>
+                    <pre><code>name: "string"
+category_id: "uuid"
+description: "string"
+image: File
+video: File</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method delete">DELETE</span>
+                    <span class="path">/api/items/signs/:id</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Delete a sign and its media files</p>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "Sign deleted successfully"
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Endpoints -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">📁 Categories Endpoints</h2>
+            
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/items?type=categories</span>
+                </div>
+                <p class="endpoint-description">Get all categories</p>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "count": 5,
+  "data": [
+    {
+      "id": "uuid",
+      "name": "Abecedario",
+      "icon_url": "https://..."
+    }
+  ]
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/items/categories</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Create a new category</p>
+                <div class="code-section">
+                    <h4>Form Data:</h4>
+                    <pre><code>name: "string" (required)
+description: "string" (optional)
+file: File (icon image, optional)</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method put">PUT</span>
+                    <span class="path">/api/items/categories/:id</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Update a category</p>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method delete">DELETE</span>
+                    <span class="path">/api/items/categories/:id</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Delete a category</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exercises Endpoints -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">📝 Exercises Endpoints</h2>
+            
+            <div class="endpoint-card highlight">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/items/exercises</span>
+                    <span class="badge new">NEW</span>
+                </div>
+                <p class="endpoint-description">Get exercises with complete details (optimized for Android)</p>
+                <div class="code-section">
+                    <h4>Query Parameters:</h4>
+                    <pre><code>category_id: "uuid" (optional)
+exercise_id: "uuid" (optional)</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "count": 1,
+  "data": [
+    {
+      "id": "uuid",
+      "category_id": "uuid",
+      "category_name": "Abecedario",
+      "type": "multiple_choice",
+      "question": "¿Cuál es la seña para la letra A?",
+      "correct_sign_id": "uuid",
+      "correct_sign": {
+        "id": "uuid",
+        "name": "Letra A",
+        "description": "Seña para la letra A",
+        "image_url": "https://...",
+        "video_url": "https://..."
+      },
+      "options": [
+        {
+          "id": "uuid",
+          "name": "Letra A",
+          "description": "...",
+          "image_url": "https://...",
+          "video_url": "https://...",
+          "is_correct": true
+        },
+        {
+          "id": "uuid",
+          "name": "Letra B",
+          "description": "...",
+          "image_url": "https://...",
+          "video_url": "https://...",
+          "is_correct": false
+        }
+      ]
+    }
+  ]
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/items/exercises</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Create a new exercise with options</p>
+                <div class="code-section">
+                    <h4>Request Body:</h4>
+                    <pre><code>{
+  "category_id": "uuid",
+  "type": "multiple_choice",
+  "prompt": "¿Cuál es la seña correcta?",
+  "order_num": 1,
+  "options": [
+    {
+      "text": "Opción A",
+      "image_url": "https://...",
+      "video_url": "https://...",
+      "is_correct": true
+    }
+  ]
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method delete">DELETE</span>
+                    <span class="path">/api/items/exercises/:id</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Delete an exercise</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Endpoints -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">👤 User Endpoints</h2>
+            
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method put">PUT</span>
+                    <span class="path">/api/items/users/:userId/avatar</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Update user avatar</p>
+                <div class="code-section">
+                    <h4>Form Data:</h4>
+                    <pre><code>file: File (image, required)</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "Avatar updated successfully",
+  "data": {
+    "id": "uuid",
+    "display_name": "John Doe",
+    "email": "john@example.com",
+    "avatar_url": "https://..."
+  }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Error Responses -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">⚠️ Error Responses</h2>
+            
+            <div class="error-examples">
+                <div class="error-card">
+                    <h3>400 Bad Request</h3>
+                    <pre><code>{
+  "success": false,
+  "message": "Category ID and name are required"
+}</code></pre>
+                </div>
+
+                <div class="error-card">
+                    <h3>401 Unauthorized</h3>
+                    <pre><code>{
+  "success": false,
+  "message": "No token provided"
+}</code></pre>
+                </div>
+
+                <div class="error-card">
+                    <h3>404 Not Found</h3>
+                    <pre><code>{
+  "success": false,
+  "message": "Item with id uuid not found"
+}</code></pre>
+                </div>
+
+                <div class="error-card">
+                    <h3>500 Internal Server Error</h3>
+                    <pre><code>{
+  "success": false,
+  "message": "Failed to fetch items",
+  "error": "Database connection error"
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>KetzalliDB API</h3>
+                    <p>Mexican Sign Language Learning Platform</p>
+                    <p class="version">Version 1.0.0</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#authentication">Authentication</a></li>
+                        <li><a href="#endpoints">Endpoints</a></li>
+                        <li><a href="/api/health">Health Check</a></li>
+                        <li><a href="/api">API Info</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/KetzalliLabs">GitHub</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 KetzalliLabs. Built with ❤️ for accessibility.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
