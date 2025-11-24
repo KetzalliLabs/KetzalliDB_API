@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import {
+  register,
+  login,
   getCurrentUser,
   verifyToken,
   createUser,
@@ -14,7 +16,11 @@ import { verifyFirebaseToken, requireAdmin } from '../middleware/auth.middleware
 
 const router = Router();
 
-// Public routes (authentication required)
+// Public authentication routes
+router.post('/register', register);
+router.post('/login', login);
+
+// Protected routes (authentication required)
 router.get('/me', verifyFirebaseToken, getCurrentUser);
 router.get('/me/stats', verifyFirebaseToken, getUserStats);
 router.post('/verify', verifyFirebaseToken, verifyToken);

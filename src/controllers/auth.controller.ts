@@ -1,6 +1,153 @@
 import { Request, Response } from 'express';
 import { auth } from '../config/firebase.config';
 import pool from '../config/database';
+<<<<<<< HEAD
+=======
+
+/**
+ * Register a new user - Save to database after Firebase authentication
+ */
+export const register = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { firebase_uid, email, display_name } = req.body;
+
+    if (!firebase_uid || !email) {
+      res.status(400).json({
+        success: false,
+        message: 'Firebase UID and email are required'
+      });
+      return;
+    }
+
+    // Verify the Firebase user exists
+    try {
+      await auth.getUser(firebase_uid);
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: 'Invalid Firebase UID'
+      });
+      return;
+    }
+
+    // Check if user already exists in our database
+    const existingUser = await pool.query(
+      'SELECT * FROM users WHERE firebase_uid = $1',
+      [firebase_uid]
+    );
+
+    if (existingUser.rows.length > 0) {
+      res.status(409).json({
+        success: false,
+        message: 'User already registered'
+      });
+      return;
+    }
+
+    // Get default user role
+    const roleResult = await pool.query(
+      "SELECT id FROM roles WHERE name = 'user' LIMIT 1"
+    );
+
+    let roleId;
+    if (roleResult.rows.length === 0) {
+      // Create default user role if it doesn't exist
+      const newRole = await pool.query(
+        "INSERT INTO roles (id, name, description) VALUES (gen_random_uuid(), 'user', 'Regular user') RETURNING id"
+      );
+      roleId = newRole.rows[0].id;
+    } else {
+      roleId = roleResult.rows[0].id;
+    }
+
+    // Insert user into database
+    const query = `
+      INSERT INTO users (id, firebase_uid, role_id, display_name, email, coin, join_date)
+      VALUES (gen_random_uuid(), $1, $2, $3, $4, 0, NOW())
+      RETURNING id, firebase_uid, role_id, display_name, email, coin, avatar_url, join_date
+    `;
+
+    const result = await pool.query(query, [
+      firebase_uid,
+      roleId,
+      display_name || null,
+      email
+    ]);
+
+    res.status(201).json({
+      success: true,
+      message: 'User registered successfully',
+      data: result.rows[0]
+    });
+  } catch (error: any) {
+    console.error('Error registering user:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error registering user',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+};
+
+/**
+ * Login user - Verify Firebase token and return user data from database
+ */
+export const login = async (req: Request, res: Response): Promise<void> => {
+  try {
+    console.log('Login request body:', req.body);
+    
+    const { firebase_uid } = req.body;
+
+    if (!firebase_uid) {
+      console.log('Missing firebase_uid in request');
+      res.status(400).json({
+        success: false,
+        message: 'Firebase UID is required',
+        received: req.body
+      });
+      return;
+    }
+
+    // Verify Firebase user exists
+    try {
+      await auth.getUser(firebase_uid);
+    } catch (error) {
+      res.status(401).json({
+        success: false,
+        message: 'Invalid Firebase UID'
+      });
+      return;
+    }
+
+    // Get user from database
+    const result = await pool.query(
+      'SELECT id, firebase_uid, role_id, display_name, email, coin, avatar_url, join_date FROM users WHERE firebase_uid = $1',
+      [firebase_uid]
+    );
+
+    if (result.rows.length === 0) {
+      res.status(404).json({
+        success: false,
+        message: 'User not found. Please register first.'
+      });
+      return;
+    }
+
+    res.json({
+      success: true,
+      message: 'Login successful',
+      data: result.rows[0]
+    });
+  } catch (error: any) {
+    console.error('Error logging in user:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error logging in',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+};
+>>>>>>> 230ffae446a0558f401aae87ebb2f88a694866ee
 
 /**
  * Get current authenticated user info
