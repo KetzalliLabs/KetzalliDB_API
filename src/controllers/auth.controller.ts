@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 import { auth } from '../config/firebase.config';
 import pool from '../config/database';
-<<<<<<< HEAD
-=======
 
 /**
  * Register a new user - Save to database after Firebase authentication
@@ -147,7 +145,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     });
   }
 };
->>>>>>> 230ffae446a0558f401aae87ebb2f88a694866ee
 
 /**
  * Get current authenticated user info
