@@ -191,3 +191,5 @@ ALTER TABLE exercises ADD COLUMN structure_type VARCHAR(20) DEFAULT 'text-image'
 ALTER TABLE exercises DROP COLUMN structure_type;
 
 ALTER TABLE users DROP COLUMN coin;
+
+ALTER TABLE stats DROP COLUMN icon_url;
