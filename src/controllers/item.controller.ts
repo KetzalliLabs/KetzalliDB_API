@@ -142,7 +142,7 @@ export class ItemController {
    */
   static async generateQuiz(req: Request, res: Response): Promise<void> {
     try {
-      const { mode = 'category', count = 5, category_id, exercise_ids } = req.body as any;
+      const { mode = 'mixed', count = 5, category_id, exercise_ids } = req.body as any;
 
       const limit = Math.max(1, Math.min(Number(count) || 5, 50));
 

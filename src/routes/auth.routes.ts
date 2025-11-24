@@ -6,7 +6,11 @@ import {
   verifyToken,
   createUser,
   setUserClaims,
-  deleteUser
+  deleteUser,
+  getUserStats,
+  recordSignView,
+  recordExerciseCompletion,
+  recordDailyQuiz,
 } from '../controllers/auth.controller';
 import { verifyFirebaseToken, requireAdmin } from '../middleware/auth.middleware';
 
@@ -18,7 +22,13 @@ router.post('/login', login);
 
 // Protected routes (authentication required)
 router.get('/me', verifyFirebaseToken, getCurrentUser);
+router.get('/me/stats', verifyFirebaseToken, getUserStats);
 router.post('/verify', verifyFirebaseToken, verifyToken);
+
+// Event endpoints for user activity
+router.post('/me/signs/:signId/view', verifyFirebaseToken, recordSignView);
+router.post('/me/exercises/:exerciseId/complete', verifyFirebaseToken, recordExerciseCompletion);
+router.post('/me/daily-quiz', verifyFirebaseToken, recordDailyQuiz);
 
 // Admin routes
 router.post('/users', verifyFirebaseToken, requireAdmin, createUser);
