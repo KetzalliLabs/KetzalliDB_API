@@ -60,9 +60,9 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
     // Insert user into database
     const query = `
-      INSERT INTO users (id, firebase_uid, role_id, display_name, email, coin, join_date)
-      VALUES (gen_random_uuid(), $1, $2, $3, $4, 0, NOW())
-      RETURNING id, firebase_uid, role_id, display_name, email, coin, avatar_url, join_date
+      INSERT INTO users (id, firebase_uid, role_id, display_name, email, join_date)
+      VALUES (gen_random_uuid(), $1, $2, $3, $4, NOW())
+      RETURNING id, firebase_uid, role_id, display_name, email, avatar_url, join_date
     `;
 
     const result = await pool.query(query, [
@@ -119,7 +119,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     // Get user from database
     const result = await pool.query(
-      'SELECT id, firebase_uid, role_id, display_name, email, coin, avatar_url, join_date FROM users WHERE firebase_uid = $1',
+      'SELECT id, firebase_uid, role_id, display_name, email, avatar_url, join_date FROM users WHERE firebase_uid = $1',
       [firebase_uid]
     );
 
