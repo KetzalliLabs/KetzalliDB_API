@@ -81,16 +81,33 @@ async function syncUserToDatabase(decodedToken: any): Promise<void> {
     const checkResult = await client.query(checkQuery, [uid]);
 
     if (checkResult.rows.length === 0) {
-      // Create new user
+      // Get or create default user role
+      let roleId;
+      const roleResult = await client.query(
+        "SELECT id FROM roles WHERE name = 'user' LIMIT 1"
+      );
+
+      if (roleResult.rows.length === 0) {
+        // Create default user role if it doesn't exist
+        const newRole = await client.query(
+          "INSERT INTO roles (id, name, description) VALUES (gen_random_uuid(), 'user', 'Regular user') RETURNING id"
+        );
+        roleId = newRole.rows[0].id;
+      } else {
+        roleId = roleResult.rows[0].id;
+      }
+
+      // Create new user with role_id
       const insertQuery = `
-        INSERT INTO users (firebase_uid, email, display_name, avatar_url, coin, join_date)
-        VALUES ($1, $2, $3, $4, $5, NOW())
+        INSERT INTO users (id, firebase_uid, role_id, email, display_name, avatar_url, coin, join_date)
+        VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6, NOW())
       `;
       
       const displayName = name || email?.split('@')[0] || 'User';
       
       await client.query(insertQuery, [
         uid,
+        roleId,
         email || null,
         displayName,
         picture || null,
