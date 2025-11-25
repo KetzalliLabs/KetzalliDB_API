@@ -81,13 +81,13 @@
                     <span class="method post">POST</span>
                     <span class="path">/api/auth/register</span>
                 </div>
-                <p class="endpoint-description">Register a new user</p>
+                <p class="endpoint-description">Register a new user in the database (after Firebase signup)</p>
                 <div class="code-section">
                     <h4>Request Body:</h4>
                     <pre><code>{
   "firebase_uid": "string",
   "email": "string",
-  "display_name": "string"
+  "display_name": "string" (optional)
 }</code></pre>
                 </div>
                 <div class="code-section">
@@ -101,9 +101,8 @@
     "email": "string",
     "display_name": "string",
     "role_id": "uuid",
-    "coin": 0,
     "avatar_url": null,
-    "join_date": "2025-11-16T00:00:00.000Z"
+    "join_date": "2025-11-25T00:00:00.000Z"
   }
 }</code></pre>
                 </div>
@@ -114,7 +113,7 @@
                     <span class="method post">POST</span>
                     <span class="path">/api/auth/login</span>
                 </div>
-                <p class="endpoint-description">Login existing user</p>
+                <p class="endpoint-description">Login user - Auto-creates user in DB if doesn't exist</p>
                 <div class="code-section">
                     <h4>Request Body:</h4>
                     <pre><code>{
@@ -132,9 +131,8 @@
     "email": "string",
     "display_name": "string",
     "role_id": "uuid",
-    "coin": 100,
     "avatar_url": "https://...",
-    "join_date": "2025-11-16T00:00:00.000Z"
+    "join_date": "2025-11-25T00:00:00.000Z"
   }
 }</code></pre>
                 </div>
@@ -143,10 +141,10 @@
             <div class="endpoint-card">
                 <div class="endpoint-header">
                     <span class="method get">GET</span>
-                    <span class="path">/api/auth/profile</span>
+                    <span class="path">/api/auth/me</span>
                     <span class="auth-required">🔒 Auth Required</span>
                 </div>
-                <p class="endpoint-description">Get authenticated user profile</p>
+                <p class="endpoint-description">Get current authenticated user profile from Firebase and DB</p>
                 <div class="code-section">
                     <h4>Headers:</h4>
                     <pre><code>Authorization: Bearer &lt;firebase_token&gt;</code></pre>
@@ -156,14 +154,275 @@
                     <pre><code>{
   "success": true,
   "data": {
-    "id": "uuid",
-    "firebase_uid": "string",
-    "email": "string",
-    "display_name": "string",
-    "role_id": "uuid",
-    "coin": 100,
-    "avatar_url": "https://...",
-    "join_date": "2025-11-16T00:00:00.000Z"
+    "uid": "firebase_uid",
+    "email": "user@example.com",
+    "displayName": "User Name",
+    "photoURL": "https://...",
+    "emailVerified": true,
+    "disabled": false,
+    "metadata": {
+      "creationTime": "2025-11-25T00:00:00.000Z",
+      "lastSignInTime": "2025-11-25T12:00:00.000Z"
+    },
+    "customClaims": {},
+    "internal": {
+      "id": "uuid",
+      "email": "user@example.com",
+      "display_name": "User Name",
+      "avatar_url": "https://..."
+    },
+    "stats": {
+      "progress": [],
+      "streak": null,
+      "medals": [],
+      "stats": [],
+      "attempts": {
+        "total": 0,
+        "correct": 0,
+        "accuracy_percentage": 0
+      },
+      "daily_quiz_history": [],
+      "exercise_history": [],
+      "sign_views": []
+    }
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/auth/me/stats</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Get user statistics and progress</p>
+                <div class="code-section">
+                    <h4>Headers:</h4>
+                    <pre><code>Authorization: Bearer &lt;firebase_token&gt;</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "data": {
+    "user": {
+      "id": "uuid",
+      "firebase_uid": "string",
+      "display_name": "User Name",
+      "email": "user@example.com",
+      "avatar_url": "https://..."
+    },
+    "progress": [
+      {
+        "category_id": "uuid",
+        "score": 85,
+        "status": "in_progress",
+        "updated_at": "2025-11-25T00:00:00.000Z"
+      }
+    ],
+    "streak": {
+      "current_days": 5,
+      "best_days": 10,
+      "last_check": "2025-11-25"
+    },
+    "medals": [],
+    "stats": [
+      {
+        "stat_id": "uuid",
+        "name": "signs_viewed",
+        "description": "Total signs viewed",
+        "current_value": 42,
+        "max_value": null,
+        "last_update": "2025-11-25T00:00:00.000Z"
+      }
+    ],
+    "attempts": {
+      "total": 50,
+      "correct": 40,
+      "accuracy_percentage": 80
+    },
+    "daily_quiz_history": [],
+    "exercise_history": [],
+    "sign_views": []
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/auth/me/signs/:signId/view</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Record a sign view for the authenticated user</p>
+                <div class="code-section">
+                    <h4>Headers:</h4>
+                    <pre><code>Authorization: Bearer &lt;firebase_token&gt;</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "Sign view recorded"
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/auth/me/exercises/:exerciseId/complete</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Record an exercise completion/attempt</p>
+                <div class="code-section">
+                    <h4>Headers:</h4>
+                    <pre><code>Authorization: Bearer &lt;firebase_token&gt;</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Request Body:</h4>
+                    <pre><code>{
+  "isCorrect": true,
+  "selectedSignId": "uuid" (optional),
+  "timeTaken": 15000 (optional, in milliseconds),
+  "score": 100 (optional)
+}</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "Exercise completion recorded"
+}</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Rewards:</h4>
+                    <pre><code>If correct:
+  +10 EXP
+  +5 Coins (via stats table)</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/auth/me/daily-quiz</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Record or update daily quiz result</p>
+                <div class="code-section">
+                    <h4>Headers:</h4>
+                    <pre><code>Authorization: Bearer &lt;firebase_token&gt;</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Request Body:</h4>
+                    <pre><code>{
+  "date": "2025-11-25" (optional, defaults to today),
+  "numQuestions": 10 (optional),
+  "correctCount": 8 (optional),
+  "score": 80 (optional),
+  "completed": true
+}</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "Daily quiz recorded"
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/auth/verify</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                </div>
+                <p class="endpoint-description">Verify Firebase token validity</p>
+                <div class="code-section">
+                    <h4>Headers:</h4>
+                    <pre><code>Authorization: Bearer &lt;firebase_token&gt;</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "Token is valid",
+  "data": {
+    "uid": "firebase_uid",
+    "email": "user@example.com",
+    "email_verified": true
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/auth/users</span>
+                    <span class="auth-required">🔒 Admin Only</span>
+                </div>
+                <p class="endpoint-description">Create a new Firebase user (Admin only)</p>
+                <div class="code-section">
+                    <h4>Request Body:</h4>
+                    <pre><code>{
+  "email": "string",
+  "password": "string",
+  "displayName": "string" (optional),
+  "photoURL": "string" (optional)
+}</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "User created successfully",
+  "data": {
+    "uid": "firebase_uid",
+    "email": "user@example.com",
+    "displayName": "User Name"
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/auth/users/claims</span>
+                    <span class="auth-required">🔒 Admin Only</span>
+                </div>
+                <p class="endpoint-description">Set custom claims for a user (Admin only)</p>
+                <div class="code-section">
+                    <h4>Request Body:</h4>
+                    <pre><code>{
+  "uid": "firebase_uid",
+  "claims": {
+    "admin": true,
+    "role": "moderator"
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <span class="method delete">DELETE</span>
+                    <span class="path">/api/auth/users/:uid</span>
+                    <span class="auth-required">🔒 Admin Only</span>
+                </div>
+                <p class="endpoint-description">Delete a user from Firebase (Admin only)</p>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "User deleted successfully",
+  "data": {
+    "uid": "firebase_uid"
   }
 }</code></pre>
                 </div>
