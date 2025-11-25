@@ -412,9 +412,9 @@ export async function recordExerciseCompletion(req: Request, res: Response): Pro
       [userId, exerciseId]
     );
 
-    // insert attempt (generate uuid on DB side). attempts schema uses `selected_option`.
+    // insert attempt (generate uuid on DB side). attempts schema uses `selected_sign_id`.
     await client.query(
-      `INSERT INTO attempts (id, user_id, exercise_id, selected_option, is_correct, created_at)
+      `INSERT INTO attempts (id, user_id, exercise_id, selected_sign_id, is_correct, created_at)
        VALUES (gen_random_uuid(), $1, $2, $3, $4, NOW())`,
       [userId, exerciseId, selectedSignId, isCorrect]
     );
