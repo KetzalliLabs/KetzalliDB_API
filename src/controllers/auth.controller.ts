@@ -128,8 +128,18 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 
     console.log('🔌 Connecting to database...');
-    client = await pool.connect();
-    console.log('✅ Database connected');
+    try {
+      client = await pool.connect();
+      console.log('✅ Database connected');
+    } catch (connError: any) {
+      console.error('❌ Database connection failed:', connError.message);
+      res.status(503).json({
+        success: false,
+        message: 'Database connection failed. Please try again.',
+        error: process.env.NODE_ENV === 'development' ? connError.message : undefined
+      });
+      return;
+    }
 
     // Get user from database
     console.log(`🔍 Checking if user exists in database...`);
@@ -189,7 +199,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
           roleId,
           firebaseUser.email || null,
           displayName,
-          firebaseUser.photoURL || null,
+          firebaseUser.photoURL || null
         ]);
 
         await client.query('COMMIT');

@@ -99,8 +99,8 @@ async function syncUserToDatabase(decodedToken: any): Promise<void> {
 
       // Create new user with role_id
       const insertQuery = `
-        INSERT INTO users (id, firebase_uid, role_id, email, display_name, avatar_url, coin, join_date)
-        VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6, NOW())
+        INSERT INTO users (id, firebase_uid, role_id, email, display_name, avatar_url, join_date)
+        VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, NOW())
       `;
       
       const displayName = name || email?.split('@')[0] || 'User';
@@ -110,8 +110,7 @@ async function syncUserToDatabase(decodedToken: any): Promise<void> {
         roleId,
         email || null,
         displayName,
-        picture || null,
-        0 // Default coin value
+        picture || null
       ]);
       
       console.log(`✅ New user created: ${email || uid}`);

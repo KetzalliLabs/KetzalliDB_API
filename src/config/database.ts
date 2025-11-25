@@ -21,7 +21,9 @@ const pool = new Pool({
   // Connection pool settings
   max: 20, // Maximum number of clients in the pool
   idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
-  connectionTimeoutMillis: 2000, // Return an error after 2 seconds if connection cannot be established
+  connectionTimeoutMillis: 10000, // Increased to 10 seconds for Railway/Aiven
+  query_timeout: 30000, // Query timeout in milliseconds
+  statement_timeout: 30000, // Statement timeout
 });
 
 // Log when a client is checked out from the pool
