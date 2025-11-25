@@ -89,15 +89,19 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
 /**
  * Login user - Verify Firebase token and return user data from database
+ * Auto-creates user in database if they don't exist yet
  */
 export const login = async (req: Request, res: Response): Promise<void> => {
+  let client;
+  
   try {
-    console.log('Login request body:', req.body);
+    console.log('=== LOGIN REQUEST START ===');
+    console.log('Request body:', JSON.stringify(req.body, null, 2));
     
     const { firebase_uid } = req.body;
 
     if (!firebase_uid) {
-      console.log('Missing firebase_uid in request');
+      console.log('❌ Missing firebase_uid in request');
       res.status(400).json({
         success: false,
         message: 'Firebase UID is required',
@@ -106,43 +110,132 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Verify Firebase user exists
+    console.log(`🔍 Verifying Firebase user: ${firebase_uid}`);
+    
+    // Verify Firebase user exists and get their info
+    let firebaseUser;
     try {
-      await auth.getUser(firebase_uid);
-    } catch (error) {
+      firebaseUser = await auth.getUser(firebase_uid);
+      console.log(`✅ Firebase user verified: ${firebaseUser.email}`);
+    } catch (error: any) {
+      console.log(`❌ Firebase verification failed:`, error.message);
       res.status(401).json({
         success: false,
-        message: 'Invalid Firebase UID'
+        message: 'Invalid Firebase UID',
+        error: error.message
       });
       return;
     }
 
+    console.log('🔌 Connecting to database...');
+    client = await pool.connect();
+    console.log('✅ Database connected');
+
     // Get user from database
-    const result = await pool.query(
+    console.log(`🔍 Checking if user exists in database...`);
+    let result = await client.query(
       'SELECT id, firebase_uid, role_id, display_name, email, avatar_url, join_date FROM users WHERE firebase_uid = $1',
       [firebase_uid]
     );
 
+    // If user doesn't exist in database, create them automatically
     if (result.rows.length === 0) {
-      res.status(404).json({
-        success: false,
-        message: 'User not found. Please register first.'
-      });
-      return;
+      console.log(`⚠️ User ${firebase_uid} not found in DB, creating automatically...`);
+      
+      try {
+        console.log('🔄 Starting transaction...');
+        await client.query('BEGIN');
+
+        // Get or create default user role
+        console.log('🔍 Looking for default user role...');
+        let roleId;
+        const roleResult = await client.query(
+          "SELECT id FROM roles WHERE name = 'user' LIMIT 1"
+        );
+
+        if (roleResult.rows.length === 0) {
+          console.log('⚠️ User role not found, creating...');
+          // Create default user role if it doesn't exist
+          const newRole = await client.query(
+            "INSERT INTO roles (id, name, description) VALUES (gen_random_uuid(), 'user', 'Regular user') RETURNING id"
+          );
+          roleId = newRole.rows[0].id;
+          console.log(`✅ Created default user role: ${roleId}`);
+        } else {
+          roleId = roleResult.rows[0].id;
+          console.log(`✅ Found existing user role: ${roleId}`);
+        }
+
+        // Create new user
+        const displayName = firebaseUser.displayName || firebaseUser.email?.split('@')[0] || 'User';
+        
+        console.log('📝 Inserting new user into database...');
+        console.log('User data:', {
+          firebase_uid,
+          roleId,
+          email: firebaseUser.email,
+          displayName,
+          photoURL: firebaseUser.photoURL
+        });
+        
+        const insertQuery = `
+          INSERT INTO users (id, firebase_uid, role_id, email, display_name, avatar_url, join_date)
+          VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, NOW())
+          RETURNING id, firebase_uid, role_id, display_name, email, avatar_url, join_date
+        `;
+        
+        result = await client.query(insertQuery, [
+          firebase_uid,
+          roleId,
+          firebaseUser.email || null,
+          displayName,
+          firebaseUser.photoURL || null,
+        ]);
+
+        await client.query('COMMIT');
+        console.log(`✅ Transaction committed - New user created: ${firebaseUser.email || firebase_uid}`);
+        console.log('User data:', JSON.stringify(result.rows[0], null, 2));
+      } catch (dbError: any) {
+        console.log('❌ Database error occurred, rolling back...');
+        await client.query('ROLLBACK');
+        console.error('❌ Database error details:', {
+          message: dbError.message,
+          code: dbError.code,
+          detail: dbError.detail,
+          constraint: dbError.constraint,
+          table: dbError.table
+        });
+        throw dbError;
+      }
+    } else {
+      console.log(`✅ User found in database: ${result.rows[0].email}`);
     }
 
+    console.log('=== LOGIN SUCCESSFUL ===');
     res.json({
       success: true,
       message: 'Login successful',
       data: result.rows[0]
     });
   } catch (error: any) {
-    console.error('Error logging in user:', error);
+    console.error('❌ ERROR IN LOGIN:', error);
+    console.error('Error stack:', error.stack);
     res.status(500).json({
       success: false,
       message: 'Error logging in',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined,
+      details: process.env.NODE_ENV === 'development' ? {
+        code: error.code,
+        constraint: error.constraint,
+        table: error.table
+      } : undefined
     });
+  } finally {
+    if (client) {
+      client.release();
+      console.log('🔌 Database connection released');
+    }
+    console.log('=== LOGIN REQUEST END ===\n');
   }
 };
 
