@@ -11,6 +11,7 @@ import {
   recordSignView,
   recordExerciseCompletion,
   recordDailyQuiz,
+  updateProgress,
 } from '../controllers/auth.controller';
 import { verifyFirebaseToken, requireAdmin } from '../middleware/auth.middleware';
 
@@ -29,6 +30,7 @@ router.post('/verify', verifyFirebaseToken, verifyToken);
 router.post('/me/signs/:signId/view', verifyFirebaseToken, recordSignView);
 router.post('/me/exercises/:exerciseId/complete', verifyFirebaseToken, recordExerciseCompletion);
 router.post('/me/daily-quiz', verifyFirebaseToken, recordDailyQuiz);
+router.post('/me/progress', verifyFirebaseToken, updateProgress);
 
 // Admin routes
 router.post('/users', verifyFirebaseToken, requireAdmin, createUser);
