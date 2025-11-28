@@ -1,0 +1,69 @@
+name: Deploy to Railway
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Railway
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Verify build
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "❌ Build failed - dist directory not found"
+            exit 1
+          fi
+          echo "✅ Build verified successfully"
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up --service=${{ secrets.RAILWAY_SERVICE_NAME || 'ketzallidb-api' }}
+
+      - name: Deployment Summary
+        if: success()
+        run: |
+          echo "### 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Build completed successfully" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Deployed to Railway" >> $GITHUB_STEP_SUMMARY
+          echo "- 📦 Service: KetzalliDB API" >> $GITHUB_STEP_SUMMARY
+          echo "- 🌿 Branch: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- 📝 Commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** Deployment successful! 🎉" >> $GITHUB_STEP_SUMMARY
+
+      - name: Deployment Failed
+        if: failure()
+        run: |
+          echo "### ❌ Deployment Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Please check the logs for more details." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Troubleshooting:**" >> $GITHUB_STEP_SUMMARY
+          echo "1. Verify RAILWAY_TOKEN is set in repository secrets" >> $GITHUB_STEP_SUMMARY
+          echo "2. Ensure Railway service is properly configured" >> $GITHUB_STEP_SUMMARY
+          echo "3. Check Railway dashboard for additional errors" >> $GITHUB_STEP_SUMMARY
