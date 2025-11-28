@@ -768,6 +768,293 @@ export const getUserStats = async (req: Request, res: Response): Promise<void> =
 };
 
 /**
+ * List all available medals (public)
+ */
+export const getAllMedals = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const rows = await pool.query('SELECT id, name, description, icon_url, condition_type, condition_value FROM medals ORDER BY name');
+    res.json({ success: true, data: rows.rows });
+  } catch (error: any) {
+    console.error('Error listing medals:', error);
+    res.status(500).json({ success: false, message: 'Error listing medals', error: process.env.NODE_ENV === 'development' ? error.message : undefined });
+  }
+};
+
+/**
+ * Get medals earned by the current user
+ */
+export const getUserMedals = async (req: Request, res: Response): Promise<void> => {
+  try {
+    if (!req.user) {
+      res.status(401).json({ success: false, message: 'User not authenticated' });
+      return;
+    }
+
+    // find internal user
+    const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [req.user.uid]);
+    if (u.rowCount === 0) {
+      res.status(404).json({ success: false, message: 'User record not found' });
+      return;
+    }
+    const userId = u.rows[0].id;
+
+    const rows = await pool.query(
+      `SELECT um.id as user_medal_id, m.id as medal_id, m.name, m.description, m.icon_url, um.achieved_at
+       FROM user_medals um JOIN medals m ON m.id = um.medal_id
+       WHERE um.user_id = $1 ORDER BY um.achieved_at DESC`,
+      [userId]
+    );
+
+    res.json({ success: true, data: rows.rows });
+  } catch (error: any) {
+    console.error('Error fetching user medals:', error);
+    res.status(500).json({ success: false, message: 'Error fetching user medals', error: process.env.NODE_ENV === 'development' ? error.message : undefined });
+  }
+};
+
+/**
+ * Claim a medal (user action). Checks medal condition against user_stats.
+ */
+export const claimMedal = async (req: Request, res: Response): Promise<void> => {
+  try {
+    if (!req.user) {
+      res.status(401).json({ success: false, message: 'User not authenticated' });
+      return;
+    }
+
+    const { medalId } = req.params as { medalId?: string };
+    if (!medalId) {
+      res.status(400).json({ success: false, message: 'medalId is required' });
+      return;
+    }
+
+    // find medal
+    const medalRes = await pool.query('SELECT id, condition_type, condition_value FROM medals WHERE id = $1 LIMIT 1', [medalId]);
+    if (medalRes.rowCount === 0) {
+      res.status(404).json({ success: false, message: 'Medal not found' });
+      return;
+    }
+    const medal = medalRes.rows[0];
+
+    // find internal user
+    const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [req.user.uid]);
+    if (u.rowCount === 0) {
+      res.status(404).json({ success: false, message: 'User record not found' });
+      return;
+    }
+    const userId = u.rows[0].id;
+
+    // check if already has medal
+    const existing = await pool.query('SELECT 1 FROM user_medals WHERE user_id = $1 AND medal_id = $2 LIMIT 1', [userId, medalId]);
+    if ((existing.rowCount ?? 0) > 0) {
+      res.status(409).json({ success: false, message: 'Medal already awarded' });
+      return;
+    }
+
+
+    // Evaluate medal conditions from medal_conditions table (supports stats, streaks, etc.)
+    const condRes = await pool.query('SELECT id, source_type, stat_id, source_key, operator, threshold FROM medal_conditions WHERE medal_id = $1', [medalId]);
+
+    const conditions = condRes.rows;
+    const evaluate = (left: number, op: string, right: number) => {
+      switch (op) {
+        case '>=': return left >= right;
+        case '<=': return left <= right;
+        case '>': return left > right;
+        case '<': return left < right;
+        case '=': return left === right;
+        default: return left >= right;
+      }
+    };
+
+    for (const c of conditions) {
+      let value = 0;
+      if (c.source_type === 'stat' && c.stat_id) {
+        const r = await pool.query('SELECT current_value FROM user_stats WHERE user_id = $1 AND stat_id = $2 LIMIT 1', [userId, c.stat_id]);
+        value = r.rowCount ? r.rows[0].current_value : 0;
+      } else if (c.source_type === 'streak') {
+        const r = await pool.query('SELECT current_days FROM streaks WHERE user_id = $1 LIMIT 1', [userId]);
+        value = r.rowCount ? r.rows[0].current_days : 0;
+      } else {
+        // unsupported condition type — treat as not met
+        res.status(500).json({ success: false, message: `Unsupported medal condition type: ${c.source_type}` });
+        return;
+      }
+
+      if (!evaluate(Number(value), c.operator || '>=', Number(c.threshold))) {
+        res.status(403).json({ success: false, message: 'Medal conditions not met', required: c.threshold, current: value, condition: c });
+        return;
+      }
+    }
+
+    // award medal
+    await pool.query('INSERT INTO user_medals (id, user_id, medal_id, achieved_at) VALUES (gen_random_uuid(), $1, $2, NOW())', [userId, medalId]);
+
+    res.status(201).json({ success: true, message: 'Medal awarded' });
+  } catch (error: any) {
+    console.error('Error claiming medal:', error);
+    res.status(500).json({ success: false, message: 'Error claiming medal', error: process.env.NODE_ENV === 'development' ? error.message : undefined });
+  }
+};
+
+/**
+ * Award a medal to a user (admin action). `uid` param is firebase uid of the target user.
+ */
+export const awardMedal = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { uid, medalId } = req.params as { uid?: string; medalId?: string };
+    if (!uid || !medalId) {
+      res.status(400).json({ success: false, message: 'uid and medalId are required' });
+      return;
+    }
+
+    // find internal user by firebase uid
+    const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [uid]);
+    if (u.rowCount === 0) {
+      res.status(404).json({ success: false, message: 'Target user not found' });
+      return;
+    }
+    const userId = u.rows[0].id;
+
+    // check medal exists
+    const m = await pool.query('SELECT id FROM medals WHERE id = $1 LIMIT 1', [medalId]);
+    if (m.rowCount === 0) {
+      res.status(404).json({ success: false, message: 'Medal not found' });
+      return;
+    }
+
+    // avoid duplicates
+    const existing = await pool.query('SELECT 1 FROM user_medals WHERE user_id = $1 AND medal_id = $2 LIMIT 1', [userId, medalId]);
+    if ((existing.rowCount ?? 0) > 0) {
+      res.status(409).json({ success: false, message: 'User already has this medal' });
+      return;
+    }
+
+    await pool.query('INSERT INTO user_medals (id, user_id, medal_id, achieved_at) VALUES (gen_random_uuid(), $1, $2, NOW())', [userId, medalId]);
+    res.status(201).json({ success: true, message: 'Medal awarded to user' });
+  } catch (error: any) {
+    console.error('Error awarding medal:', error);
+    res.status(500).json({ success: false, message: 'Error awarding medal', error: process.env.NODE_ENV === 'development' ? error.message : undefined });
+  }
+};
+
+  /**
+   * Add a sign to the authenticated user's favorites
+   */
+  export const addFavoriteSign = async (req: Request, res: Response): Promise<void> => {
+    try {
+      if (!req.user) {
+        res.status(401).json({ success: false, message: 'User not authenticated' });
+        return;
+      }
+
+      const { signId } = req.params as { signId?: string };
+      if (!signId) {
+        res.status(400).json({ success: false, message: 'signId is required' });
+        return;
+      }
+
+      // find internal user
+      const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [req.user.uid]);
+      if (u.rowCount === 0) {
+        res.status(404).json({ success: false, message: 'User record not found' });
+        return;
+      }
+      const userId = u.rows[0].id;
+
+      // insert favorite, avoid duplicates using ON CONFLICT
+      const insertRes = await pool.query(
+        `INSERT INTO user_favorite_signs (id, user_id, sign_id, created_at)
+         VALUES (gen_random_uuid(), $1, $2, NOW())
+         ON CONFLICT (user_id, sign_id) DO NOTHING
+         RETURNING id`,
+        [userId, signId]
+      );
+
+      if (insertRes.rowCount === 0) {
+        res.status(200).json({ success: true, message: 'Sign already in favorites' });
+        return;
+      }
+
+      res.status(201).json({ success: true, message: 'Sign added to favorites', id: insertRes.rows[0].id });
+    } catch (error: any) {
+      console.error('Error adding favorite sign:', error);
+      res.status(500).json({ success: false, message: 'Error adding favorite sign', error: process.env.NODE_ENV === 'development' ? error.message : undefined });
+    }
+  };
+
+  /**
+   * Remove a sign from the authenticated user's favorites
+   */
+  export const removeFavoriteSign = async (req: Request, res: Response): Promise<void> => {
+    try {
+      if (!req.user) {
+        res.status(401).json({ success: false, message: 'User not authenticated' });
+        return;
+      }
+
+      const { signId } = req.params as { signId?: string };
+      if (!signId) {
+        res.status(400).json({ success: false, message: 'signId is required' });
+        return;
+      }
+
+      // find internal user
+      const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [req.user.uid]);
+      if (u.rowCount === 0) {
+        res.status(404).json({ success: false, message: 'User record not found' });
+        return;
+      }
+      const userId = u.rows[0].id;
+
+      const delRes = await pool.query('DELETE FROM user_favorite_signs WHERE user_id = $1 AND sign_id = $2', [userId, signId]);
+      if ((delRes.rowCount ?? 0) === 0) {
+        res.status(404).json({ success: false, message: 'Favorite not found' });
+        return;
+      }
+
+      res.json({ success: true, message: 'Sign removed from favorites' });
+    } catch (error: any) {
+      console.error('Error removing favorite sign:', error);
+      res.status(500).json({ success: false, message: 'Error removing favorite sign', error: process.env.NODE_ENV === 'development' ? error.message : undefined });
+    }
+  };
+
+/**
+ * List favorite signs for the authenticated user
+ */
+export const getFavoriteSigns = async (req: Request, res: Response): Promise<void> => {
+  try {
+    if (!req.user) {
+      res.status(401).json({ success: false, message: 'User not authenticated' });
+      return;
+    }
+
+    // find internal user
+    const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [req.user.uid]);
+    if (u.rowCount === 0) {
+      res.status(404).json({ success: false, message: 'User record not found' });
+      return;
+    }
+    const userId = u.rows[0].id;
+
+    const rows = await pool.query(
+      `SELECT s.id, s.name, s.description, s.image_url, s.video_url, ufs.created_at
+       FROM user_favorite_signs ufs
+       JOIN signs s ON s.id = ufs.sign_id
+       WHERE ufs.user_id = $1
+       ORDER BY ufs.created_at DESC`,
+      [userId]
+    );
+
+    res.json({ success: true, data: rows.rows });
+  } catch (error: any) {
+    console.error('Error fetching favorite signs:', error);
+    res.status(500).json({ success: false, message: 'Error fetching favorite signs', error: process.env.NODE_ENV === 'development' ? error.message : undefined });
+  }
+};
+
+/**
  * Helper to fetch aggregated stats and histories for an internal user id
  */
 const fetchUserStats = async (userId: string) => {
