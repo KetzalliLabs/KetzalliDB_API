@@ -24,6 +24,7 @@ import { verifyFirebaseToken, requireAdmin } from '../middleware/auth.middleware
 const router = Router();
 
 // Public authentication routes
+//test
 router.post('/register', register);
 router.post('/login', login);
 
