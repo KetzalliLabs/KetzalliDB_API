@@ -335,6 +335,186 @@
                 </div>
             </div>
 
+            <div class="endpoint-card highlight">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/auth/me/favorites/:signId</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                    <span class="badge new">NEW</span>
+                </div>
+                <p class="endpoint-description">Add a sign to user's favorites</p>
+                <div class="code-section">
+                    <h4>Headers:</h4>
+                    <pre><code>Authorization: Bearer &lt;firebase_token&gt;</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "Sign added to favorites",
+  "id": "uuid"
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card highlight">
+                <div class="endpoint-header">
+                    <span class="method delete">DELETE</span>
+                    <span class="path">/api/auth/me/favorites/:signId</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                    <span class="badge new">NEW</span>
+                </div>
+                <p class="endpoint-description">Remove a sign from user's favorites</p>
+                <div class="code-section">
+                    <h4>Headers:</h4>
+                    <pre><code>Authorization: Bearer &lt;firebase_token&gt;</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "Sign removed from favorites"
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card highlight">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/auth/me/favorites</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                    <span class="badge new">NEW</span>
+                </div>
+                <p class="endpoint-description">Get user's favorite signs</p>
+                <div class="code-section">
+                    <h4>Headers:</h4>
+                    <pre><code>Authorization: Bearer &lt;firebase_token&gt;</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "data": [
+    {
+      "id": "uuid",
+      "name": "Hola",
+      "description": "Greeting sign",
+      "image_url": "https://...",
+      "video_url": "https://...",
+      "created_at": "2025-11-25T00:00:00.000Z"
+    }
+  ]
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card highlight">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/auth/medals</span>
+                    <span class="badge new">NEW</span>
+                </div>
+                <p class="endpoint-description">Get all available medals (public)</p>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "data": [
+    {
+      "id": "uuid",
+      "name": "First Steps",
+      "description": "Complete your first exercise",
+      "icon_url": "https://...",
+      "condition_type": "stat",
+      "condition_value": 1
+    }
+  ]
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card highlight">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/auth/me/medals</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                    <span class="badge new">NEW</span>
+                </div>
+                <p class="endpoint-description">Get medals earned by the authenticated user</p>
+                <div class="code-section">
+                    <h4>Headers:</h4>
+                    <pre><code>Authorization: Bearer &lt;firebase_token&gt;</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "data": [
+    {
+      "user_medal_id": "uuid",
+      "medal_id": "uuid",
+      "name": "First Steps",
+      "description": "Complete your first exercise",
+      "icon_url": "https://...",
+      "achieved_at": "2025-11-25T00:00:00.000Z"
+    }
+  ]
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card highlight">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/auth/me/medals/:medalId/claim</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                    <span class="badge new">NEW</span>
+                </div>
+                <p class="endpoint-description">Claim a medal (user must meet conditions)</p>
+                <div class="code-section">
+                    <h4>Headers:</h4>
+                    <pre><code>Authorization: Bearer &lt;firebase_token&gt;</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response (Success):</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "Medal awarded"
+}</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response (Conditions not met):</h4>
+                    <pre><code>{
+  "success": false,
+  "message": "Medal conditions not met",
+  "required": 10,
+  "current": 5,
+  "condition": {...}
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card highlight">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/auth/users/:uid/medals/:medalId</span>
+                    <span class="auth-required">🔒 Admin Only</span>
+                    <span class="badge new">NEW</span>
+                </div>
+                <p class="endpoint-description">Award a medal to a user (Admin only)</p>
+                <div class="code-section">
+                    <h4>Headers:</h4>
+                    <pre><code>Authorization: Bearer &lt;firebase_token&gt;</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "message": "Medal awarded to user"
+}</code></pre>
+                </div>
+            </div>
+
             <div class="endpoint-card">
                 <div class="endpoint-header">
                     <span class="method post">POST</span>
@@ -704,6 +884,125 @@ exercise_id: "uuid" (optional)</code></pre>
     }
   ]
 }</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card highlight">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/items/exercises/:id/quiz</span>
+                    <span class="badge new">NEW</span>
+                </div>
+                <p class="endpoint-description">Get a single exercise with correct sign and 3 random incorrect options</p>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "data": {
+    "exercise": {
+      "id": "uuid",
+      "category_id": "uuid",
+      "category_name": "Abecedario",
+      "type": "multiple_choice",
+      "prompt": "¿Cuál es la seña para la letra A?",
+      "correct_sign_id": "uuid",
+      "structure_type": null
+    },
+    "correct": {
+      "id": "uuid",
+      "name": "Letra A",
+      "description": "...",
+      "image_url": "https://...",
+      "video_url": "https://..."
+    },
+    "incorrect": [
+      {
+        "id": "uuid",
+        "name": "Letra B",
+        "description": "...",
+        "image_url": "https://...",
+        "video_url": "https://..."
+      }
+    ],
+    "options": [
+      // Shuffled array of correct + incorrect signs
+    ]
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card highlight">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/items/exercises/generate-quiz</span>
+                    <span class="badge new">NEW</span>
+                </div>
+                <p class="endpoint-description">Generate a quiz with multiple exercises (supports 3 modes)</p>
+                <div class="code-section">
+                    <h4>Request Body (Category Mode):</h4>
+                    <pre><code>{
+  "mode": "category",
+  "count": 10,
+  "category_id": "uuid"
+}</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Request Body (Mixed Mode):</h4>
+                    <pre><code>{
+  "mode": "mixed",
+  "count": 10
+}</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Request Body (Custom Mode):</h4>
+                    <pre><code>{
+  "mode": "custom",
+  "count": 5,
+  "exercise_ids": ["uuid1", "uuid2", "uuid3"]
+}</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "data": {
+    "questions": [
+      {
+        "exercise": {
+          "id": "uuid",
+          "category_id": "uuid",
+          "category_name": "Abecedario",
+          "type": "multiple_choice",
+          "prompt": "Question text",
+          "correct_sign_id": "uuid",
+          "structure_type": null
+        },
+        "correct": {
+          "id": "uuid",
+          "name": "Correct answer",
+          "description": "...",
+          "image_url": "https://...",
+          "video_url": "https://..."
+        },
+        "incorrect": [
+          // Array of incorrect options
+        ],
+        "options": [
+          // Shuffled array of all options
+        ]
+      }
+    ]
+  }
+}</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Mode Options:</h4>
+                    <pre><code>"category" - Questions from specific category (requires category_id)
+"mixed" - Random questions from all categories
+"custom" - Specific exercises (requires exercise_ids array)
+
+Count: Maximum 50 questions per quiz</code></pre>
                 </div>
             </div>
 

@@ -280,6 +280,173 @@ Authorization: Bearer <firebase_token>
 
 ---
 
+### POST `/api/auth/me/favorites/:signId` 🔒
+
+Add a sign to user's favorites
+
+**Headers:**
+```
+Authorization: Bearer <firebase_token>
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Sign added to favorites",
+  "id": "uuid"
+}
+```
+
+---
+
+### DELETE `/api/auth/me/favorites/:signId` 🔒
+
+Remove a sign from user's favorites
+
+**Headers:**
+```
+Authorization: Bearer <firebase_token>
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Sign removed from favorites"
+}
+```
+
+---
+
+### GET `/api/auth/me/favorites` 🔒
+
+Get user's favorite signs
+
+**Headers:**
+```
+Authorization: Bearer <firebase_token>
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "uuid",
+      "name": "Hola",
+      "description": "Greeting sign",
+      "image_url": "https://...",
+      "video_url": "https://...",
+      "created_at": "2025-11-25T00:00:00.000Z"
+    }
+  ]
+}
+```
+
+---
+
+### GET `/api/auth/medals`
+
+Get all available medals (public)
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "uuid",
+      "name": "First Steps",
+      "description": "Complete your first exercise",
+      "icon_url": "https://...",
+      "condition_type": "stat",
+      "condition_value": 1
+    }
+  ]
+}
+```
+
+---
+
+### GET `/api/auth/me/medals` 🔒
+
+Get medals earned by the authenticated user
+
+**Headers:**
+```
+Authorization: Bearer <firebase_token>
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "user_medal_id": "uuid",
+      "medal_id": "uuid",
+      "name": "First Steps",
+      "description": "Complete your first exercise",
+      "icon_url": "https://...",
+      "achieved_at": "2025-11-25T00:00:00.000Z"
+    }
+  ]
+}
+```
+
+---
+
+### POST `/api/auth/me/medals/:medalId/claim` 🔒
+
+Claim a medal (user must meet conditions)
+
+**Headers:**
+```
+Authorization: Bearer <firebase_token>
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Medal awarded"
+}
+```
+
+**Error (conditions not met):**
+```json
+{
+  "success": false,
+  "message": "Medal conditions not met",
+  "required": 10,
+  "current": 5,
+  "condition": {...}
+}
+```
+
+---
+
+### POST `/api/auth/users/:uid/medals/:medalId` 🔒 Admin Only
+
+Award a medal to a user (Admin only)
+
+**Headers:**
+```
+Authorization: Bearer <firebase_token>
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Medal awarded to user"
+}
+```
+
+---
+
 ### POST `/api/auth/verify` 🔒
 
 Verify Firebase token validity
@@ -686,6 +853,113 @@ Get exercises with complete details (optimized for Android)
       ]
     }
   ]
+}
+```
+
+---
+
+### GET `/api/items/exercises/:id/quiz`
+
+Get a single exercise with correct sign and 3 random incorrect options
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "exercise": {
+      "id": "uuid",
+      "category_id": "uuid",
+      "category_name": "Abecedario",
+      "type": "multiple_choice",
+      "prompt": "¿Cuál es la seña para la letra A?",
+      "correct_sign_id": "uuid",
+      "structure_type": null
+    },
+    "correct": {
+      "id": "uuid",
+      "name": "Letra A",
+      "description": "...",
+      "image_url": "https://...",
+      "video_url": "https://..."
+    },
+    "incorrect": [
+      {
+        "id": "uuid",
+        "name": "Letra B",
+        "description": "...",
+        "image_url": "https://...",
+        "video_url": "https://..."
+      }
+    ],
+    "options": [
+      // Shuffled array of correct + incorrect signs
+    ]
+  }
+}
+```
+
+---
+
+### POST `/api/items/exercises/generate-quiz`
+
+Generate a quiz with multiple exercises
+
+**Request Body:**
+```json
+{
+  "mode": "category",
+  "count": 10,
+  "category_id": "uuid"
+}
+```
+
+**Mode Options:**
+- `"category"` - Questions from specific category (requires `category_id`)
+- `"mixed"` - Random questions from all categories
+- `"custom"` - Specific exercises (requires `exercise_ids` array)
+
+**Request Body (Custom mode):**
+```json
+{
+  "mode": "custom",
+  "count": 5,
+  "exercise_ids": ["uuid1", "uuid2", "uuid3"]
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "questions": [
+      {
+        "exercise": {
+          "id": "uuid",
+          "category_id": "uuid",
+          "category_name": "Abecedario",
+          "type": "multiple_choice",
+          "prompt": "Question text",
+          "correct_sign_id": "uuid",
+          "structure_type": null
+        },
+        "correct": {
+          "id": "uuid",
+          "name": "Correct answer",
+          "description": "...",
+          "image_url": "https://...",
+          "video_url": "https://..."
+        },
+        "incorrect": [
+          // Array of incorrect options
+        ],
+        "options": [
+          // Shuffled array of all options
+        ]
+      }
+    ]
+  }
 }
 ```
 
