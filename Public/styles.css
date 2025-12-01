@@ -732,6 +732,214 @@ body {
     color: white;
 }
 
+/* ==================== Database Section Styles ==================== */
+.db-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.db-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: var(--transition);
+}
+
+.db-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow);
+}
+
+.db-card h3 {
+    color: var(--primary-light);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.db-description {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background: rgba(99, 102, 241, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--primary-color);
+}
+
+.info-item .label {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.info-item .value {
+    color: var(--primary-light);
+    font-weight: 600;
+}
+
+.schema-category {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: rgba(99, 102, 241, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.schema-category h4 {
+    color: var(--primary-light);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.table-list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.table-item {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 3px solid var(--success-color);
+    transition: var(--transition);
+}
+
+.table-item:hover {
+    transform: translateX(5px);
+    border-color: var(--primary-color);
+}
+
+.table-item strong {
+    color: var(--success-color);
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.table-item span {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.table-item pre {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.relationships {
+    display: grid;
+    gap: 1rem;
+}
+
+.relationship-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem;
+    background: rgba(59, 130, 246, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--info-color);
+}
+
+.relationship-item strong {
+    color: var(--info-color);
+    font-size: 1rem;
+}
+
+.relationship-item span {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.setup-steps {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.step {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.step-number {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-content h4 {
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.step-content pre {
+    margin-top: 0.5rem;
+}
+
+.feature-list {
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+}
+
+.feature-list li {
+    padding: 1rem;
+    background: rgba(16, 185, 129, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--success-color);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.feature-list li strong {
+    color: var(--success-color);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.feature-list code {
+    background: rgba(99, 102, 241, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+/* ==================== End Database Styles ==================== */
+
+
 /* ==================== Smooth Scroll ==================== */
 html {
     scroll-behavior: smooth;

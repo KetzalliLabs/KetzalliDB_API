@@ -33,7 +33,15 @@ KetzalliDB API is a TypeScript-based Express.js backend service designed for the
 - 🖼️ **Image Processing** - Automatic image optimization with Sharp
 - 📁 **Multi-part File Uploads** - Support for images and videos
 - 🎯 **Role-based Access Control** - Admin and user roles
-- 🏆 **Gamification** - Streaks, medals, progress tracking, and user stats
+- 🏆 **Gamification System**:
+  - Daily streaks tracking
+  - Achievement medals with conditions
+  - User progress tracking by category
+  - Exercise completion history
+  - Sign view analytics
+  - User statistics (EXP, coins, accuracy)
+- ⭐ **Favorites System** - Users can save favorite signs
+- 📊 **Quiz Generation** - Dynamic quiz creation with 3 modes (category, mixed, custom)
 - 🔍 **Type Safety** - Full TypeScript support
 - 🛡️ **Error Handling** - Centralized error handling middleware
 - 📊 **Health Monitoring** - Built-in health check endpoints
@@ -156,11 +164,39 @@ npm run build
 
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
-| GET | `/api/auth/me` | Get current user profile | Yes |
+| POST | `/api/auth/register` | Register new user in DB | No |
+| POST | `/api/auth/login` | Login user (auto-creates if doesn't exist) | No |
+| GET | `/api/auth/me` | Get current user profile with stats | Yes |
+| GET | `/api/auth/me/stats` | Get user statistics and progress | Yes |
 | POST | `/api/auth/verify` | Verify Firebase token | Yes |
 | POST | `/api/auth/users` | Create new user (admin) | Yes (Admin) |
 | POST | `/api/auth/users/claims` | Set user custom claims (admin) | Yes (Admin) |
 | DELETE | `/api/auth/users/:uid` | Delete user (admin) | Yes (Admin) |
+
+### User Activity Tracking
+
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| POST | `/api/auth/me/signs/:signId/view` | Record sign view | Yes |
+| POST | `/api/auth/me/exercises/:exerciseId/complete` | Record exercise completion | Yes |
+| POST | `/api/auth/me/daily-quiz` | Record daily quiz result | Yes |
+
+### Favorites
+
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| POST | `/api/auth/me/favorites/:signId` | Add sign to favorites | Yes |
+| DELETE | `/api/auth/me/favorites/:signId` | Remove sign from favorites | Yes |
+| GET | `/api/auth/me/favorites` | Get user's favorite signs | Yes |
+
+### Medals & Achievements
+
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| GET | `/api/auth/medals` | Get all available medals | No |
+| GET | `/api/auth/me/medals` | Get user's earned medals | Yes |
+| POST | `/api/auth/me/medals/:medalId/claim` | Claim a medal | Yes |
+| POST | `/api/auth/users/:uid/medals/:medalId` | Award medal to user (admin) | Yes (Admin) |
 
 ### Items (Signs & Categories)
 
@@ -209,8 +245,15 @@ npm run build
 
 | Method | Endpoint | Description | Content-Type |
 |--------|----------|-------------|--------------|
+| GET | `/api/items/exercises` | Get exercises with options | - |
+| GET | `/api/items/exercises/:id/quiz` | Get exercise as quiz (1 correct + 3 incorrect) | - |
+| POST | `/api/items/exercises/generate-quiz` | Generate quiz with multiple exercises | `application/json` |
 | POST | `/api/items/exercises` | Create new exercise | `application/json` |
 | DELETE | `/api/items/exercises/:id` | Delete exercise | - |
+
+**Get Exercises Query Parameters:**
+- `category_id` (uuid): Filter by category
+- `exercise_id` (uuid): Get specific exercise
 
 **Exercise JSON Body:**
 ```json
@@ -229,6 +272,20 @@ npm run build
   ]
 }
 ```
+
+**Generate Quiz JSON Body:**
+```json
+{
+  "mode": "category",
+  "count": 10,
+  "category_id": "uuid"
+}
+```
+
+**Quiz Modes:**
+- `category` - Questions from specific category (requires `category_id`)
+- `mixed` - Random questions from all categories
+- `custom` - Specific exercises (requires `exercise_ids` array)
 
 ##### User Avatar
 
@@ -417,11 +474,17 @@ The database includes the following tables:
 - **exercises** - Learning exercises
 - **exercise_options** - Exercise answer options
 - **attempts** - User exercise attempts
-- **progress** - User learning progress
+- **progress** - User learning progress by category
 - **streaks** - Daily streak tracking
-- **medals** - Achievement medals
+- **medals** - Achievement medal definitions
+- **medal_conditions** - Medal unlock conditions
 - **user_medals** - User medal achievements
-- **user_stats** - User statistics
+- **stats** - Global stat definitions (EXP, coins, etc.)
+- **user_stats** - User statistics values
+- **daily_quiz_history** - Daily quiz completion records
+- **user_exercise_history** - Exercise completion timestamps
+- **user_sign_views** - Sign view tracking
+- **user_favorite_signs** - User favorite signs
 
 ## 📄 License
 
