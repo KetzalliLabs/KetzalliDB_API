@@ -33,6 +33,11 @@ router.delete('/exercises/:id', verifyFirebaseToken, ItemController.deleteExerci
 // GENERIC ID ROUTE - MUST BE AFTER SPECIFIC ROUTES
 // ============================================
 
+// MEDALS - Public single-medal endpoints by slug
+// Example: /api/items/medals/tlaolli
+// (Placed before generic /:id to avoid routing conflicts)
+router.get('/medals/:slug', optionalAuth, ItemController.getMedalBySlug);
+
 // GET /api/items/:id - Get item by ID (supports query param: type)
 // Example: /api/items/uuid?type=signs
 router.get('/:id', optionalAuth, ItemController.getItemById);

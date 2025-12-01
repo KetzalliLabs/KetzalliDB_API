@@ -39,6 +39,7 @@ router.post('/me/signs/:signId/view', verifyFirebaseToken, recordSignView);
 router.get('/me/signs/views', verifyFirebaseToken, getViewedSignsProgress);
 router.post('/me/exercises/:exerciseId/complete', verifyFirebaseToken, recordExerciseCompletion);
 router.post('/me/daily-quiz', verifyFirebaseToken, recordDailyQuiz);
+//router.post('/me/progress', verifyFirebaseToken, updateProgress);
 
 // Favorite signs
 router.post('/me/favorites/:signId', verifyFirebaseToken, addFavoriteSign);

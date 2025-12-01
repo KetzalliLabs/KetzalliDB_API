@@ -288,6 +288,59 @@ export class ItemController {
   }
 
   /**
+   * Get medal info by slug (public)
+   * Example slugs: tlaolli, jade, obsidiana, turquesa, quetzal, codigo-dorado
+   */
+  static async getMedalBySlug(req: Request, res: Response): Promise<void> {
+    try {
+      const { slug } = req.params as { slug: string };
+
+      if (!slug) {
+        res.status(400).json({ success: false, message: 'Missing medal slug' });
+        return;
+      }
+
+      // Map common slug forms to the stored medal name
+      const slugMap: Record<string, string> = {
+        'tlaolli': 'Tlaolli',
+        'jade': 'Jade',
+        'obsidiana': 'Obsidiana',
+        'turquesa': 'Turquesa',
+        'quetzal': 'Quetzal',
+        'codice-dorado': 'Códice dorado',
+        'codice_dorado': 'Códice dorado',
+        'codice': 'Códice dorado',
+        'oro': 'Códice dorado',
+      };
+
+      const name = slugMap[slug.toLowerCase()] ?? null;
+
+      let query = '';
+      let params: any[] = [];
+
+      if (name) {
+        query = 'SELECT * FROM medals WHERE name = $1 LIMIT 1';
+        params = [name];
+      } else {
+        // fallback: try match by slug directly against lower(name)
+        query = 'SELECT * FROM medals WHERE LOWER(name) = $1 LIMIT 1';
+        params = [slug.toLowerCase()];
+      }
+
+      const result = await pool.query(query, params);
+      if (result.rows.length === 0) {
+        res.status(404).json({ success: false, message: 'Medal not found' });
+        return;
+      }
+
+      res.status(200).json({ success: true, data: result.rows[0] });
+    } catch (error) {
+      console.error('Error fetching medal by slug:', error);
+      res.status(500).json({ success: false, message: 'Failed to fetch medal', error: error instanceof Error ? error.message : String(error) });
+    }
+  }
+
+  /**
    * Create a new sign with image and video upload
    */
   static async createSign(req: Request, res: Response): Promise<void> {
