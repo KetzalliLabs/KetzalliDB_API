@@ -26,6 +26,7 @@
             <div class="quick-links slide-up delay-3">
                 <a href="#endpoints" class="btn btn-primary">View Endpoints</a>
                 <a href="#authentication" class="btn btn-secondary">Authentication</a>
+                <a href="#database" class="btn btn-secondary">Database</a>
             </div>
         </div>
         <div class="hero-decoration"></div>
@@ -1092,6 +1093,333 @@ Count: Maximum 50 questions per quiz</code></pre>
         </div>
     </section>
 
+    <!-- Database Section -->
+    <section id="database" class="section">
+        <div class="container">
+            <h2 class="section-title">🗄️ Database Documentation</h2>
+            
+            <div class="db-info">
+                <div class="db-card">
+                    <h3>📊 Database Information</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="label">Database Type:</span>
+                            <span class="value">PostgreSQL</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Version:</span>
+                            <span class="value">12+</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Connection Pool:</span>
+                            <span class="value">pg (node-postgres)</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Total Tables:</span>
+                            <span class="value">17</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="db-card">
+                    <h3>🔌 Connection Configuration</h3>
+                    <pre><code>// Database Configuration (src/config/database.ts)
+import { Pool } from 'pg';
+
+const pool = new Pool({
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT || '5432'),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
+});
+
+export default pool;</code></pre>
+                </div>
+
+                <div class="db-card">
+                    <h3>📋 Database Schema</h3>
+                    <p class="db-description">The database consists of 17 tables organized into 5 main categories:</p>
+                    
+                    <div class="schema-category">
+                        <h4>👤 User & Authentication (3 tables)</h4>
+                        <div class="table-list">
+                            <div class="table-item">
+                                <strong>roles</strong>
+                                <span>User role definitions (admin, user)</span>
+                                <pre><code>id uuid PRIMARY KEY
+name varchar(50)
+description text</code></pre>
+                            </div>
+                            <div class="table-item">
+                                <strong>users</strong>
+                                <span>User profiles and authentication data</span>
+                                <pre><code>id uuid PRIMARY KEY
+firebase_uid varchar(128)
+role_id uuid → roles(id)
+display_name varchar(100)
+email varchar(255)
+avatar_url varchar(255)
+join_date timestamp</code></pre>
+                            </div>
+                            <div class="table-item">
+                                <strong>user_favorite_signs</strong>
+                                <span>User's favorite signs</span>
+                                <pre><code>id uuid PRIMARY KEY
+user_id uuid → users(id)
+sign_id uuid → signs(id)
+created_at timestamp
+UNIQUE (user_id, sign_id)</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="schema-category">
+                        <h4>✋ Content Management (3 tables)</h4>
+                        <div class="table-list">
+                            <div class="table-item">
+                                <strong>categories</strong>
+                                <span>Sign language categories (Alphabet, Numbers, etc.)</span>
+                                <pre><code>id uuid PRIMARY KEY
+name varchar(1000)
+icon_url varchar(255)</code></pre>
+                            </div>
+                            <div class="table-item">
+                                <strong>signs</strong>
+                                <span>Mexican Sign Language signs with media</span>
+                                <pre><code>id uuid PRIMARY KEY
+category_id uuid → categories(id)
+name varchar(100)
+description text
+image_url varchar(255)
+video_url varchar(255)</code></pre>
+                            </div>
+                            <div class="table-item">
+                                <strong>exercises</strong>
+                                <span>Learning exercises and quizzes</span>
+                                <pre><code>id uuid PRIMARY KEY
+category_id uuid → categories(id)
+type varchar(50)
+prompt text
+correct_sign_id uuid → signs(id)
+structure_type varchar(20)</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="schema-category">
+                        <h4>📊 Statistics & Analytics (2 tables)</h4>
+                        <div class="table-list">
+                            <div class="table-item">
+                                <strong>stats</strong>
+                                <span>Global stat definitions (EXP, coins, signs_viewed, etc.)</span>
+                                <pre><code>id uuid PRIMARY KEY
+name varchar(50)
+description text
+category varchar(50)
+max_limit integer
+default_max integer</code></pre>
+                            </div>
+                            <div class="table-item">
+                                <strong>user_stats</strong>
+                                <span>User statistic values</span>
+                                <pre><code>id uuid PRIMARY KEY
+user_id uuid → users(id)
+stat_id uuid → stats(id)
+current_value integer
+max_value integer
+last_update timestamp</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="schema-category">
+                        <h4>🎯 Activity Tracking (4 tables)</h4>
+                        <div class="table-list">
+                            <div class="table-item">
+                                <strong>user_sign_views</strong>
+                                <span>Track which signs users have viewed</span>
+                                <pre><code>id uuid PRIMARY KEY
+user_id uuid → users(id)
+sign_id uuid → signs(id)
+viewed_at timestamp</code></pre>
+                            </div>
+                            <div class="table-item">
+                                <strong>attempts</strong>
+                                <span>Quiz and exercise attempt history</span>
+                                <pre><code>id uuid PRIMARY KEY
+user_id uuid → users(id)
+exercise_id uuid → exercises(id)
+selected_sign_id uuid → signs(id)
+is_correct boolean
+created_at timestamp</code></pre>
+                            </div>
+                            <div class="table-item">
+                                <strong>user_exercise_history</strong>
+                                <span>Exercise completion timestamps</span>
+                                <pre><code>id uuid PRIMARY KEY
+user_id uuid → users(id)
+exercise_id uuid → exercises(id)
+completed_at timestamp</code></pre>
+                            </div>
+                            <div class="table-item">
+                                <strong>daily_quiz_history</strong>
+                                <span>Daily quiz completion records</span>
+                                <pre><code>id uuid PRIMARY KEY
+user_id uuid → users(id)
+score integer
+completed boolean
+date date</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="schema-category">
+                        <h4>🏆 Gamification (5 tables)</h4>
+                        <div class="table-list">
+                            <div class="table-item">
+                                <strong>streaks</strong>
+                                <span>Daily login streak tracking</span>
+                                <pre><code>id uuid PRIMARY KEY
+user_id uuid → users(id)
+current_days integer
+best_days integer
+last_check date</code></pre>
+                            </div>
+                            <div class="table-item">
+                                <strong>progress</strong>
+                                <span>User progress per category</span>
+                                <pre><code>id uuid PRIMARY KEY
+user_id uuid → users(id)
+category_id uuid → categories(id)
+score integer
+updated_at timestamp
+UNIQUE (user_id, category_id)</code></pre>
+                            </div>
+                            <div class="table-item">
+                                <strong>medals</strong>
+                                <span>Achievement medal definitions</span>
+                                <pre><code>id uuid PRIMARY KEY
+name varchar(100)
+description text
+icon_url varchar(255)
+condition_type varchar(50)
+condition_value integer</code></pre>
+                            </div>
+                            <div class="table-item">
+                                <strong>medal_conditions</strong>
+                                <span>Medal unlock conditions (stats/streaks)</span>
+                                <pre><code>id uuid PRIMARY KEY
+medal_id uuid → medals(id) ON DELETE CASCADE
+source_type varchar(50)
+stat_id uuid
+source_key varchar(100)
+operator varchar(10) DEFAULT '>='
+threshold integer</code></pre>
+                            </div>
+                            <div class="table-item">
+                                <strong>user_medals</strong>
+                                <span>Medals earned by users</span>
+                                <pre><code>id uuid PRIMARY KEY
+user_id uuid → users(id)
+medal_id uuid → medals(id)
+achieved_at timestamp
+UNIQUE (user_id, medal_id)</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="db-card">
+                    <h3>🔗 Entity Relationships</h3>
+                    <div class="relationships">
+                        <div class="relationship-item">
+                            <strong>users → roles</strong>
+                            <span>Many-to-One: Each user has one role</span>
+                        </div>
+                        <div class="relationship-item">
+                            <strong>signs → categories</strong>
+                            <span>Many-to-One: Each sign belongs to one category</span>
+                        </div>
+                        <div class="relationship-item">
+                            <strong>exercises → categories</strong>
+                            <span>Many-to-One: Each exercise belongs to one category</span>
+                        </div>
+                        <div class="relationship-item">
+                            <strong>exercises → signs</strong>
+                            <span>Many-to-One: Each exercise has one correct sign</span>
+                        </div>
+                        <div class="relationship-item">
+                            <strong>user_medals → users, medals</strong>
+                            <span>Many-to-Many: Users can earn multiple medals</span>
+                        </div>
+                        <div class="relationship-item">
+                            <strong>progress → users, categories</strong>
+                            <span>Many-to-Many: Track progress per user per category</span>
+                        </div>
+                        <div class="relationship-item">
+                            <strong>attempts → users, exercises</strong>
+                            <span>Many-to-Many: Track all quiz attempts</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="db-card">
+                    <h3>⚡ Database Setup</h3>
+                    <div class="setup-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Create Database</h4>
+                                <pre><code>createdb amoxcalli_db</code></pre>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Run Schema</h4>
+                                <pre><code>psql -d amoxcalli_db -f Database/AmoxcalliDB.sql</code></pre>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Configure Environment</h4>
+                                <pre><code>DB_HOST=localhost
+DB_PORT=5432
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_NAME=amoxcalli_db</code></pre>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Create First Admin</h4>
+                                <pre><code>npm run admin:create</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="db-card">
+                    <h3>🔍 Key Features</h3>
+                    <ul class="feature-list">
+                        <li><strong>UUID Primary Keys:</strong> All tables use UUIDs for primary keys via <code>gen_random_uuid()</code></li>
+                        <li><strong>Foreign Key Constraints:</strong> Enforced referential integrity across all relationships</li>
+                        <li><strong>Unique Constraints:</strong> Prevent duplicate favorites, medals, and progress entries</li>
+                        <li><strong>Cascade Deletes:</strong> Medal conditions are deleted when parent medal is removed</li>
+                        <li><strong>Timestamps:</strong> Automatic tracking of creation and update times</li>
+                        <li><strong>Indexes:</strong> Optimized queries on frequently accessed columns</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -1106,6 +1434,7 @@ Count: Maximum 50 questions per quiz</code></pre>
                     <ul>
                         <li><a href="#authentication">Authentication</a></li>
                         <li><a href="#endpoints">Endpoints</a></li>
+                        <li><a href="#database">Database</a></li>
                         <li><a href="/api/health">Health Check</a></li>
                         <li><a href="/api">API Info</a></li>
                     </ul>
