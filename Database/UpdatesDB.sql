@@ -28,3 +28,7 @@ ALTER TABLE exercises DROP COLUMN structure_type;
 ALTER TABLE users DROP COLUMN coin;
 
 ALTER TABLE stats DROP COLUMN icon_url;
+
+ALTER TABLE medals DROP COLUMN condition_type;
+
+ALTER TABLE medals DROP COLUMN condition_value;

@@ -31,6 +31,12 @@ GET /api/items
 - Query params: `type` (e.g. `signs`), `category_id`
 - Descripción: Recupera listas de recursos (señas, categorías, ejercicios). Útil para listar contenido en vistas y catálogos.
 
+GET /api/items/medals/:slug
+- Name: Get Medal By Slug
+- Auth: optional
+- Params: `slug` — one of `tlaolli`, `jade`, `obsidiana`, `turquesa`, `quetzal`, `codice-dorado`
+- Descripción: Devuelve la información de una medalla pública por su "slug" (no requiere autenticación). Ejemplo: `/api/items/medals/tlaolli` retorna la fila de la tabla `medals` con `name = 'Tlaolli'`.
+
 GET /api/items/exercises
 - Name: List Exercises
 - Auth: optional

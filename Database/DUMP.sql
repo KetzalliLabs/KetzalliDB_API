@@ -269,3 +269,15 @@ INSERT INTO stats (name, description, category, has_limit, default_max) VALUES
     ('exp', 'Puntos de experiencia para medir progreso y calcular nivel', 'progreso', FALSE, NULL),
     ('exercises_completed', 'Conteo total de ejercicios completados por el usuario', 'progreso', FALSE, NULL),
     ('signs_viewed', 'Cantidad de signos vistos (uso para progreso y filtrado de ejercicios)', 'progreso', FALSE, NULL);
+
+-------------------------------------------------------
+-- Medals Query
+-------------------------------------------------------
+
+INSERT INTO medals (id, name, description, icon_url) VALUES
+    (gen_random_uuid(), 'Tlaolli', '3 días de racha.', 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/M_Tlaolli.png'),
+    (gen_random_uuid(), 'Jade', '7 días de racha.', 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/M_Jade.png'),
+    (gen_random_uuid(), 'Obsidiana', 'Practica 5 señas', 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/M_Obsidiana.png'),
+    (gen_random_uuid(), 'Turquesa', 'Obtén 100 de XP.', 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/M_Turquesa.png'),
+    (gen_random_uuid(), 'Quetzal', 'Completa 3 ejercicios', 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/M_Quetzal.png'),
+    (gen_random_uuid(), 'Códice dorado', 'Completa 5 ejercicios.', 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/M_Oro.png');
