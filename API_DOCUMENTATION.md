@@ -218,6 +218,50 @@ Authorization: Bearer <firebase_token>
 
 ---
 
+### GET `/api/auth/me/signs/views` 🔒
+
+Get signs viewed by the authenticated user grouped by category with progress information
+
+**Headers:**
+```
+Authorization: Bearer <firebase_token>
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "category_id": "uuid",
+      "category_name": "Abecedario",
+      "viewed_count": 15,
+      "total_count": 27,
+      "score": 55,
+      "sign_ids": ["uuid1", "uuid2", "uuid3"]
+    },
+    {
+      "category_id": "uuid",
+      "category_name": "Números",
+      "viewed_count": 10,
+      "total_count": 10,
+      "score": 100,
+      "sign_ids": ["uuid4", "uuid5"]
+    }
+  ]
+}
+```
+
+**Response Fields:**
+- `category_id`: UUID of the category
+- `category_name`: Name of the category
+- `viewed_count`: Number of unique signs viewed in this category
+- `total_count`: Total number of signs in this category
+- `score`: Progress percentage (0-100) for this category
+- `sign_ids`: Array of viewed sign UUIDs
+
+---
+
 ### POST `/api/auth/me/exercises/:exerciseId/complete` 🔒
 
 Record an exercise completion/attempt

@@ -271,6 +271,53 @@
                 </div>
             </div>
 
+            <div class="endpoint-card highlight">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/auth/me/signs/views</span>
+                    <span class="auth-required">🔒 Auth Required</span>
+                    <span class="badge new">NEW</span>
+                </div>
+                <p class="endpoint-description">Get signs viewed by the authenticated user grouped by category with progress information</p>
+                <div class="code-section">
+                    <h4>Headers:</h4>
+                    <pre><code>Authorization: Bearer &lt;firebase_token&gt;</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "data": [
+    {
+      "category_id": "uuid",
+      "category_name": "Abecedario",
+      "viewed_count": 15,
+      "total_count": 27,
+      "score": 55,
+      "sign_ids": ["uuid1", "uuid2", "uuid3"]
+    },
+    {
+      "category_id": "uuid",
+      "category_name": "Números",
+      "viewed_count": 10,
+      "total_count": 10,
+      "score": 100,
+      "sign_ids": ["uuid4", "uuid5"]
+    }
+  ]
+}</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response Fields:</h4>
+                    <pre><code>category_id: UUID of the category
+category_name: Name of the category
+viewed_count: Number of unique signs viewed in this category
+total_count: Total number of signs in this category
+score: Progress percentage (0-100) for this category
+sign_ids: Array of viewed sign UUIDs</code></pre>
+                </div>
+            </div>
+
             <div class="endpoint-card">
                 <div class="endpoint-header">
                     <span class="method post">POST</span>

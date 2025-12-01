@@ -281,3 +281,11 @@ INSERT INTO medals (id, name, description, icon_url) VALUES
     (gen_random_uuid(), 'Turquesa', 'Obtén 100 de XP.', 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/M_Turquesa.png'),
     (gen_random_uuid(), 'Quetzal', 'Completa 3 ejercicios', 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/M_Quetzal.png'),
     (gen_random_uuid(), 'Códice dorado', 'Completa 5 ejercicios.', 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/M_Oro.png');
+
+
+-------------------------------------------------------
+-- Roles Dump
+-------------------------------------------------------
+INSERT INTO roles (id, name, description) VALUES
+    (gen_random_uuid(), 'admin', 'Administrador con acceso completo a todas las funcionalidades y configuraciones del sistema.'),
+    (gen_random_uuid(), 'superadmin', 'Superadministrador con privilegios elevados para gestionar administradores y supervisar el sistema en su totalidad.')
