@@ -11,6 +11,7 @@ import {
   recordSignView,
   recordExerciseCompletion,
   recordDailyQuiz,
+  getViewedSignsProgress,
   getAllMedals,
   getUserMedals,
   claimMedal,
@@ -35,6 +36,7 @@ router.post('/verify', verifyFirebaseToken, verifyToken);
 
 // Event endpoints for user activity
 router.post('/me/signs/:signId/view', verifyFirebaseToken, recordSignView);
+router.get('/me/signs/views', verifyFirebaseToken, getViewedSignsProgress);
 router.post('/me/exercises/:exerciseId/complete', verifyFirebaseToken, recordExerciseCompletion);
 router.post('/me/daily-quiz', verifyFirebaseToken, recordDailyQuiz);
 
@@ -44,16 +46,16 @@ router.delete('/me/favorites/:signId', verifyFirebaseToken, removeFavoriteSign);
 router.get('/me/favorites', verifyFirebaseToken, getFavoriteSigns);
 
 
-  // Medals
-  router.get('/medals', getAllMedals);
-  router.get('/me/medals', verifyFirebaseToken, getUserMedals);
-  router.post('/me/medals/:medalId/claim', verifyFirebaseToken, claimMedal);
+// Medals
+router.get('/medals', getAllMedals);
+router.get('/me/medals', verifyFirebaseToken, getUserMedals);
+router.post('/me/medals/:medalId/claim', verifyFirebaseToken, claimMedal);
 
 // Admin routes
 router.post('/users', verifyFirebaseToken, requireAdmin, createUser);
 router.post('/users/claims', verifyFirebaseToken, requireAdmin, setUserClaims);
-  router.delete('/users/:uid', verifyFirebaseToken, requireAdmin, deleteUser);
-  // Admin award medal
-  router.post('/users/:uid/medals/:medalId', verifyFirebaseToken, requireAdmin, awardMedal);
+router.delete('/users/:uid', verifyFirebaseToken, requireAdmin, deleteUser);
+// Admin award medal
+router.post('/users/:uid/medals/:medalId', verifyFirebaseToken, requireAdmin, awardMedal);
 
 export default router;

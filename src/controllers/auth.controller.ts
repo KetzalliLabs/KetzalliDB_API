@@ -361,12 +361,98 @@ export async function recordSignView(req: Request, res: Response): Promise<void>
       await client.query('UPDATE user_sign_views SET viewed_at = NOW() WHERE user_id = $1 AND sign_id = $2', [userId, signId]);
     }
 
+    // Update progress for the category of this sign (if any)
+    try {
+      const catRes = await client.query('SELECT category_id FROM signs WHERE id = $1 LIMIT 1', [signId]);
+      const categoryId = catRes.rows[0]?.category_id ?? null;
+      if (categoryId) {
+        // number of distinct signs viewed by user in this category
+        const viewedRes = await client.query(
+          `SELECT COUNT(DISTINCT usv.sign_id)::int as viewed_count
+           FROM user_sign_views usv
+           JOIN signs s ON s.id = usv.sign_id
+           WHERE usv.user_id = $1 AND s.category_id = $2`,
+          [userId, categoryId]
+        );
+        const viewedCount = viewedRes.rows[0]?.viewed_count ?? 0;
+
+        // total signs in category
+        const totalRes = await client.query('SELECT COUNT(*)::int as total FROM signs WHERE category_id = $1', [categoryId]);
+        const totalCount = totalRes.rows[0]?.total ?? 0;
+
+        const score = totalCount > 0 ? Math.floor((viewedCount / totalCount) * 100) : 0;
+
+        // Upsert into progress
+        await client.query(
+          `INSERT INTO progress (id, user_id, category_id, score, updated_at)
+           VALUES (gen_random_uuid(), $1, $2, $3, NOW())
+           ON CONFLICT (user_id, category_id) DO UPDATE
+           SET score = EXCLUDED.score, updated_at = NOW()`,
+          [userId, categoryId, score]
+        );
+      }
+    } catch (err) {
+      // non-fatal: log and continue — progress update failure shouldn't block view recording
+      console.error('Failed to update progress for sign view:', err);
+    }
+
     await client.query('COMMIT');
     res.status(200).json({ success: true, message: 'Sign view recorded' });
   } catch (error) {
     await client.query('ROLLBACK');
     console.error('Error recording sign view:', error);
     res.status(500).json({ success: false, message: 'Failed to record sign view', error: (error instanceof Error) ? error.message : String(error) });
+  } finally {
+    client.release();
+  }
+}
+
+/**
+ * Get signs viewed by the authenticated user grouped by category and progress info.
+ * Route: GET /api/auth/me/signs/views
+ * Returns: [{ category_id, category_name, viewed_count, total_count, score, sign_ids[] }, ...]
+ */
+export async function getViewedSignsProgress(req: Request, res: Response): Promise<void> {
+  const firebaseUid = (req as any).user?.uid;
+  if (!firebaseUid) {
+    res.status(401).json({ success: false, message: 'Unauthorized' });
+    return;
+  }
+
+  const client = await pool.connect();
+  try {
+    // find internal user id
+    const u = await client.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [firebaseUid]);
+    if (u.rowCount === 0) {
+      res.status(404).json({ success: false, message: 'User record not found' });
+      return;
+    }
+    const userId = u.rows[0].id;
+
+    const rows = await client.query(
+      `SELECT
+         s.category_id,
+         c.name AS category_name,
+         COUNT(DISTINCT usv.sign_id)::int AS viewed_count,
+         COALESCE(totals.total_count, 0)::int AS total_count,
+         CASE WHEN COALESCE(totals.total_count, 0) = 0 THEN 0 ELSE FLOOR((COUNT(DISTINCT usv.sign_id)::float / totals.total_count) * 100)::int END AS score,
+         ARRAY_AGG(DISTINCT usv.sign_id) FILTER (WHERE usv.sign_id IS NOT NULL) AS sign_ids
+       FROM user_sign_views usv
+       JOIN signs s ON s.id = usv.sign_id
+       LEFT JOIN categories c ON c.id = s.category_id
+       LEFT JOIN (
+         SELECT category_id, COUNT(*) AS total_count FROM signs GROUP BY category_id
+       ) totals ON totals.category_id = s.category_id
+       WHERE usv.user_id = $1
+       GROUP BY s.category_id, c.name, totals.total_count
+       ORDER BY c.name NULLS LAST`,
+      [userId]
+    );
+
+    res.json({ success: true, data: rows.rows });
+  } catch (error) {
+    console.error('Error fetching viewed signs progress:', error);
+    res.status(500).json({ success: false, message: 'Error fetching viewed signs progress', error: (error instanceof Error) ? error.message : String(error) });
   } finally {
     client.release();
   }
