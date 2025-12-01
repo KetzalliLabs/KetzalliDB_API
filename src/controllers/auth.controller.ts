@@ -621,6 +621,66 @@ export async function recordDailyQuiz(req: Request, res: Response): Promise<void
 }
 
 /**
+ * Update or create category progress for authenticated user
+ * Route: POST /api/auth/me/progress
+ * Body: { category_id: string, score: number, status: string }
+ */
+export async function updateProgress(req: Request, res: Response): Promise<void> {
+  const firebaseUid = (req as any).user?.uid;
+  const { category_id, score, status } = req.body || {};
+
+  if (!firebaseUid) {
+    res.status(401).json({ success: false, message: 'Unauthorized' });
+    return;
+  }
+  if (!category_id) {
+    res.status(400).json({ success: false, message: 'Missing category_id' });
+    return;
+  }
+
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    // get user id
+    const userRow = await client.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [firebaseUid]);
+    if (userRow.rowCount === 0) {
+      await client.query('ROLLBACK');
+      res.status(404).json({ success: false, message: 'User record not found' });
+      return;
+    }
+    const userId = userRow.rows[0].id;
+
+    // upsert progress
+    const progressResult = await client.query(
+      `INSERT INTO progress (id, user_id, category_id, score, status, updated_at)
+       VALUES (gen_random_uuid(), $1, $2, $3, $4, NOW())
+       ON CONFLICT (user_id, category_id) DO UPDATE
+       SET score = EXCLUDED.score, status = EXCLUDED.status, updated_at = NOW()
+       RETURNING *`,
+      [userId, category_id, score || 0, status || 'in_progress']
+    );
+
+    await client.query('COMMIT');
+    res.status(200).json({ 
+      success: true, 
+      message: 'Progress updated',
+      data: progressResult.rows[0]
+    });
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error('Error updating progress:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to update progress', 
+      error: (error instanceof Error) ? error.message : String(error) 
+    });
+  } finally {
+    client.release();
+  }
+}
+
+/**
  * Verify token endpoint (for testing)
  */
 export const verifyToken = async (req: Request, res: Response): Promise<void> => {
