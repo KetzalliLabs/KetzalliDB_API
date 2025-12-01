@@ -2,7 +2,7 @@
 -- TABLE: categories
 -- =========================
 CREATE TABLE categories (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name varchar(1000),
     icon_url varchar(255)
 );
@@ -11,7 +11,7 @@ CREATE TABLE categories (
 -- TABLE: roles
 -- =========================
 CREATE TABLE roles (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name varchar(50),
     description text
 );
@@ -20,7 +20,7 @@ CREATE TABLE roles (
 -- TABLE: signs
 -- =========================
 CREATE TABLE signs (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     category_id uuid REFERENCES categories(id),
     name varchar(100),
     description text,
@@ -32,7 +32,7 @@ CREATE TABLE signs (
 -- TABLE: stats
 -- =========================
 CREATE TABLE stats (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name varchar(50),
     description text,
     category varchar(50),
@@ -44,7 +44,7 @@ CREATE TABLE stats (
 -- TABLE: exercises
 -- =========================
 CREATE TABLE exercises (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     category_id uuid REFERENCES categories(id),
     type varchar(50),
     prompt text,
@@ -56,7 +56,7 @@ CREATE TABLE exercises (
 -- TABLE: users
 -- =========================
 CREATE TABLE users (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     firebase_uid varchar(128),
     role_id uuid REFERENCES roles(id),
     display_name varchar(100),
@@ -69,7 +69,7 @@ CREATE TABLE users (
 -- TABLE: user_sign_views
 -- =========================
 CREATE TABLE user_sign_views (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id uuid REFERENCES users(id),
     sign_id uuid REFERENCES signs(id),
     viewed_at timestamp
@@ -79,7 +79,7 @@ CREATE TABLE user_sign_views (
 -- TABLE: attempts (quiz attempts)
 -- =========================
 CREATE TABLE attempts (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id uuid REFERENCES users(id),
     exercise_id uuid REFERENCES exercises(id),
     selected_sign_id uuid REFERENCES signs(id),
@@ -91,7 +91,7 @@ CREATE TABLE attempts (
 -- TABLE: user_exercise_history
 -- =========================
 CREATE TABLE user_exercise_history (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id uuid REFERENCES users(id),
     exercise_id uuid REFERENCES exercises(id),
     completed_at timestamp
@@ -101,7 +101,7 @@ CREATE TABLE user_exercise_history (
 -- TABLE: user_stats
 -- =========================
 CREATE TABLE user_stats (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id uuid REFERENCES users(id),
     stat_id uuid REFERENCES stats(id),
     current_value integer,
@@ -113,7 +113,7 @@ CREATE TABLE user_stats (
 -- TABLE: streaks
 -- =========================
 CREATE TABLE streaks (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id uuid REFERENCES users(id),
     current_days integer,
     best_days integer,
@@ -124,7 +124,7 @@ CREATE TABLE streaks (
 -- TABLE: progress (per category)
 -- =========================
 CREATE TABLE progress (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id uuid REFERENCES users(id),
     category_id uuid REFERENCES categories(id),
     score integer,               
@@ -137,7 +137,7 @@ CREATE TABLE progress (
 -- TABLE: medals
 -- =========================
 CREATE TABLE medals (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name varchar(100),
     description text,
     icon_url varchar(255),
@@ -149,7 +149,7 @@ CREATE TABLE medals (
 -- TABLE: user_medals
 -- =========================
 CREATE TABLE user_medals (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id uuid REFERENCES users(id),
     medal_id uuid REFERENCES medals(id),
     achieved_at timestamp,
@@ -160,7 +160,7 @@ CREATE TABLE user_medals (
 -- TABLE: daily_quiz_history
 -- =========================
 CREATE TABLE daily_quiz_history (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id uuid REFERENCES users(id),
     score integer,
     completed boolean,
@@ -171,7 +171,7 @@ CREATE TABLE daily_quiz_history (
 -- TABLE: medal_conditions
 -- =========================
 CREATE TABLE medal_conditions (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     medal_id uuid NOT NULL REFERENCES medals(id) ON DELETE CASCADE,
     source_type varchar(50) NOT NULL, 
     stat_id uuid, 
@@ -184,7 +184,7 @@ CREATE TABLE medal_conditions (
 -- TABLE: user_favorite_signs
 -- =========================
 CREATE TABLE user_favorite_signs (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id uuid NOT NULL REFERENCES users(id),
     sign_id uuid NOT NULL REFERENCES signs(id),
     created_at timestamp DEFAULT NOW(),
