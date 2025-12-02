@@ -32,3 +32,5 @@ ALTER TABLE stats DROP COLUMN icon_url;
 ALTER TABLE medals DROP COLUMN condition_type;
 
 ALTER TABLE medals DROP COLUMN condition_value;
+
+DROP TABLE IF EXISTS medal_conditions;
