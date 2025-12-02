@@ -197,6 +197,7 @@ npm run build
 | GET | `/api/auth/me/medals` | Get user's earned medals | Yes |
 | POST | `/api/auth/me/medals/:medalId/claim` | Claim a medal | Yes |
 | POST | `/api/auth/users/:uid/medals/:medalId` | Award medal to user (admin) | Yes (Admin) |
+| GET | `/api/items/medals/:slug` | Get medal by slug (public) | No |
 
 ### Items (Signs & Categories)
 

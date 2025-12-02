@@ -563,6 +563,40 @@ sign_ids: Array of viewed sign UUIDs</code></pre>
                 </div>
             </div>
 
+            <div class="endpoint-card highlight">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/items/medals/:slug</span>
+                    <span class="badge new">NEW</span>
+                </div>
+                <p class="endpoint-description">Get a specific medal by slug (public)</p>
+                <div class="code-section">
+                    <h4>Path Parameters:</h4>
+                    <pre><code>slug: Medal slug (e.g., tlaolli, jade, obsidiana)</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Supported Slugs:</h4>
+                    <pre><code>tlaolli - Tlaolli medal
+jade - Jade medal
+obsidiana - Obsidiana medal
+turquesa - Turquesa medal
+quetzal - Quetzal medal
+codice-dorado, codice_dorado, codice, oro - Códice dorado medal</code></pre>
+                </div>
+                <div class="code-section">
+                    <h4>Response:</h4>
+                    <pre><code>{
+  "success": true,
+  "data": {
+    "id": "uuid",
+    "name": "Tlaolli",
+    "description": "First medal description",
+    "icon_url": "https://..."
+  }
+}</code></pre>
+                </div>
+            </div>
+
             <div class="endpoint-card">
                 <div class="endpoint-header">
                     <span class="method post">POST</span>
@@ -1462,6 +1496,60 @@ DB_NAME=amoxcalli_db</code></pre>
                         <li><strong>Timestamps:</strong> Automatic tracking of creation and update times</li>
                         <li><strong>Indexes:</strong> Optimized queries on frequently accessed columns</li>
                     </ul>
+                </div>
+
+                <div class="db-card">
+                    <h3>⚡ Database Triggers & Functions</h3>
+                    <p class="db-description">Automatic medal awarding system using PostgreSQL triggers</p>
+                    
+                    <div class="trigger-section">
+                        <h4>🏆 Auto-Award Medals on User Stats</h4>
+                        <div class="trigger-info">
+                            <div class="info-item">
+                                <span class="label">Function:</span>
+                                <span class="value"><code>award_medals_on_user_stats_change()</code></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Trigger:</span>
+                                <span class="value"><code>trg_award_medals_on_user_stats_change</code></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Fires On:</span>
+                                <span class="value">AFTER INSERT OR UPDATE on <code>user_stats</code></span>
+                            </div>
+                        </div>
+                        <p style="margin-top: 1rem; color: var(--text-secondary);">Automatically awards medals when user statistics are updated. Checks all stat-based medal conditions and awards medals if thresholds are met.</p>
+                    </div>
+
+                    <div class="trigger-section" style="margin-top: 1.5rem;">
+                        <h4>🔥 Auto-Award Medals on Streaks</h4>
+                        <div class="trigger-info">
+                            <div class="info-item">
+                                <span class="label">Function:</span>
+                                <span class="value"><code>award_medals_on_streaks_change()</code></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Trigger:</span>
+                                <span class="value"><code>trg_award_medals_on_streaks_change</code></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Fires On:</span>
+                                <span class="value">AFTER INSERT OR UPDATE on <code>streaks</code></span>
+                            </div>
+                        </div>
+                        <p style="margin-top: 1rem; color: var(--text-secondary);">Automatically awards medals when user streaks are updated. Checks streak-based medal conditions (current_days) and awards medals when thresholds are reached.</p>
+                    </div>
+
+                    <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(16, 185, 129, 0.05); border-radius: 8px; border-left: 3px solid var(--success-color);">
+                        <h4 style="color: var(--success-color); margin-bottom: 0.5rem;">Benefits</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 1.5rem; line-height: 1.8;">
+                            <li>Automatic medal awarding without API calls</li>
+                            <li>Real-time achievement tracking</li>
+                            <li>Consistent medal logic at database level</li>
+                            <li>Prevents duplicate medal awards</li>
+                            <li>No additional application code needed</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

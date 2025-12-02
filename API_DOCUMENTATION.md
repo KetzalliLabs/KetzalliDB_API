@@ -492,6 +492,44 @@ Authorization: Bearer <firebase_token>
 
 ---
 
+### GET `/api/items/medals/:slug`
+
+Get a specific medal by slug (public)
+
+**Path Parameters:**
+- `slug`: Medal slug (e.g., `tlaolli`, `jade`, `obsidiana`, `turquesa`, `quetzal`, `codice-dorado`)
+
+**Supported Slugs:**
+- `tlaolli` - Tlaolli medal
+- `jade` - Jade medal
+- `obsidiana` - Obsidiana medal
+- `turquesa` - Turquesa medal
+- `quetzal` - Quetzal medal
+- `codice-dorado`, `codice_dorado`, `codice`, `oro` - Códice dorado medal
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "uuid",
+    "name": "Tlaolli",
+    "description": "First medal description",
+    "icon_url": "https://..."
+  }
+}
+```
+
+**Error (Not Found):**
+```json
+{
+  "success": false,
+  "message": "Medal not found"
+}
+```
+
+---
+
 ### POST `/api/auth/verify` 🔒
 
 Verify Firebase token validity
@@ -1464,6 +1502,85 @@ npm run admin:create
 - **Cascade Deletes:** Medal conditions are deleted when parent medal is removed
 - **Timestamps:** Automatic tracking of creation and update times
 - **Indexes:** Optimized queries on frequently accessed columns (e.g., `idx_user_favorite_signs_user_id`)
+
+---
+
+### Database Triggers & Functions
+
+The database includes automatic triggers for medal awarding:
+
+#### Auto-Award Medals on User Stats
+
+**Function:** `award_medals_on_user_stats_change()`
+
+**Trigger:** `trg_award_medals_on_user_stats_change` on `user_stats` table
+
+**Behavior:**
+- Automatically awards medals when user statistics are inserted or updated
+- Checks all stat-based medal conditions
+- Awards medal if threshold is met and user doesn't already have it
+- Fires AFTER INSERT OR UPDATE on user_stats
+
+**Example:**
+```sql
+CREATE OR REPLACE FUNCTION award_medals_on_user_stats_change()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO user_medals (id, user_id, medal_id, achieved_at)
+  SELECT gen_random_uuid(), NEW.user_id, mc.medal_id, NOW()
+  FROM medal_conditions mc
+  WHERE mc.source_type = 'stat' 
+    AND mc.stat_id = NEW.stat_id 
+    AND NEW.current_value >= mc.threshold
+    AND NOT EXISTS (
+      SELECT 1 FROM user_medals um 
+      WHERE um.user_id = NEW.user_id 
+        AND um.medal_id = mc.medal_id
+    );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+#### Auto-Award Medals on Streaks
+
+**Function:** `award_medals_on_streaks_change()`
+
+**Trigger:** `trg_award_medals_on_streaks_change` on `streaks` table
+
+**Behavior:**
+- Automatically awards medals when user streaks are updated
+- Checks streak-based medal conditions (source_key = 'current_days')
+- Awards medal if streak threshold is met
+- Fires AFTER INSERT OR UPDATE on streaks
+
+**Example:**
+```sql
+CREATE OR REPLACE FUNCTION award_medals_on_streaks_change()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO user_medals (id, user_id, medal_id, achieved_at)
+  SELECT gen_random_uuid(), NEW.user_id, mc.medal_id, NOW()
+  FROM medal_conditions mc
+  WHERE mc.source_type = 'streak' 
+    AND mc.source_key = 'current_days' 
+    AND NEW.current_days >= mc.threshold
+    AND NOT EXISTS (
+      SELECT 1 FROM user_medals um 
+      WHERE um.user_id = NEW.user_id 
+        AND um.medal_id = mc.medal_id
+    );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+**Benefits:**
+- Automatic medal awarding without API calls
+- Real-time achievement tracking
+- Consistent medal logic at database level
+- Prevents duplicate medal awards
+- No additional application code needed
 
 ---
 
