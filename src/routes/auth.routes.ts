@@ -45,7 +45,6 @@ router.post('/me/favorites/:signId', verifyFirebaseToken, addFavoriteSign);
 router.delete('/me/favorites/:signId', verifyFirebaseToken, removeFavoriteSign);
 router.get('/me/favorites', verifyFirebaseToken, getFavoriteSigns);
 
-
 // Medals
 router.get('/medals', getAllMedals);
 router.get('/me/medals', verifyFirebaseToken, getUserMedals);
