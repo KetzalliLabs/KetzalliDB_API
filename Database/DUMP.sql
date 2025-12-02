@@ -816,3 +816,6 @@ INSERT INTO medals (id, name, description, icon_url) VALUES
 INSERT INTO roles (id, name, description) VALUES
     (gen_random_uuid(), 'admin', 'Administrador con acceso completo a todas las funcionalidades y configuraciones del sistema.'),
     (gen_random_uuid(), 'superadmin', 'Superadministrador con privilegios elevados para gestionar administradores y supervisar el sistema en su totalidad.')
+
+INSERT INTO roles (id, name, description) VALUES
+(gen_random_uuid(), 'teacher', 'Maestro o Maestra, responsable de la creación y gestión de contenido educativo.');
