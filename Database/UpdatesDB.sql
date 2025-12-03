@@ -34,3 +34,7 @@ ALTER TABLE medals DROP COLUMN condition_type;
 ALTER TABLE medals DROP COLUMN condition_value;
 
 DROP TABLE IF EXISTS medal_conditions;
+
+ALTER TABLE user_favorite_signs ADD COLUMN name VARCHAR(100);
+
+ALTER TABLE user_favorite_signs ADD COLUMN created_at timestamp DEFAULT NOW();
