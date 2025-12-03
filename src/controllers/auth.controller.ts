@@ -309,11 +309,12 @@ export const getCurrentUser = async (req: Request, res: Response): Promise<void>
  * Route: POST /api/auth/me/signs/:signId/view
  */
 export async function recordSignView(req: Request, res: Response): Promise<void> {
-  const firebaseUid = (req as any).user?.uid;
+  // Accept firebase UID from header `x-firebase-uid`, body `firebase_uid`, or query `firebase_uid`.
+  const firebaseUid = (req.headers['x-firebase-uid'] as string) || (req.body && req.body.firebase_uid) || (req.query && (req.query as any).firebase_uid);
   const { signId } = req.params;
 
   if (!firebaseUid) {
-    res.status(401).json({ success: false, message: 'Unauthorized' });
+    res.status(401).json({ success: false, message: 'Unauthorized: missing user identifier' });
     return;
   }
   if (!signId) {
@@ -382,14 +383,19 @@ export async function recordSignView(req: Request, res: Response): Promise<void>
 
         const score = totalCount > 0 ? Math.floor((viewedCount / totalCount) * 100) : 0;
 
-        // Upsert into progress
-        await client.query(
-          `INSERT INTO progress (id, user_id, category_id, score, updated_at)
-           VALUES (gen_random_uuid(), $1, $2, $3, NOW())
-           ON CONFLICT (user_id, category_id) DO UPDATE
-           SET score = EXCLUDED.score, updated_at = NOW()`,
+        // Upsert into progress. Use UPDATE then INSERT to avoid relying on
+        // an ON CONFLICT target that might not exist (unique constraint).
+        const updateRes = await client.query(
+          `UPDATE progress SET score = $3, updated_at = NOW() WHERE user_id = $1 AND category_id = $2 RETURNING id`,
           [userId, categoryId, score]
         );
+        if (updateRes.rowCount === 0) {
+          await client.query(
+            `INSERT INTO progress (id, user_id, category_id, score, updated_at)
+             VALUES (gen_random_uuid(), $1, $2, $3, NOW())`,
+            [userId, categoryId, score]
+          );
+        }
       }
     } catch (err) {
       // non-fatal: log and continue — progress update failure shouldn't block view recording
@@ -413,9 +419,10 @@ export async function recordSignView(req: Request, res: Response): Promise<void>
  * Returns: [{ category_id, category_name, viewed_count, total_count, score, sign_ids[] }, ...]
  */
 export async function getViewedSignsProgress(req: Request, res: Response): Promise<void> {
-  const firebaseUid = (req as any).user?.uid;
+  // Accept firebase UID from header `x-firebase-uid`, body `firebase_uid`, or query `firebase_uid`.
+  const firebaseUid = (req.headers['x-firebase-uid'] as string) || (req.body && req.body.firebase_uid) || (req.query && (req.query as any).firebase_uid);
   if (!firebaseUid) {
-    res.status(401).json({ success: false, message: 'Unauthorized' });
+    res.status(401).json({ success: false, message: 'Unauthorized: missing user identifier' });
     return;
   }
 
@@ -464,12 +471,13 @@ export async function getViewedSignsProgress(req: Request, res: Response): Promi
  * Body: { isCorrect?: boolean, selectedSignId?: string, timeTaken?: number, score?: number }
  */
 export async function recordExerciseCompletion(req: Request, res: Response): Promise<void> {
-  const firebaseUid = (req as any).user?.uid;
+  // Accept firebase UID from header `x-firebase-uid`, body `firebase_uid`, or query `firebase_uid`.
+  const firebaseUid = (req.headers['x-firebase-uid'] as string) || (req.body && req.body.firebase_uid) || (req.query && (req.query as any).firebase_uid);
   const { exerciseId } = req.params;
   const { isCorrect = false, selectedSignId = null, timeTaken = null, score = null } = req.body || {};
 
   if (!firebaseUid) {
-    res.status(401).json({ success: false, message: 'Unauthorized' });
+    res.status(401).json({ success: false, message: 'Unauthorized: missing user identifier' });
     return;
   }
   if (!exerciseId) {
@@ -564,11 +572,12 @@ export async function recordExerciseCompletion(req: Request, res: Response): Pro
  * Body: { date?: string (YYYY-MM-DD), numQuestions?: number, correctCount?: number, score?: number, completed?: boolean }
  */
 export async function recordDailyQuiz(req: Request, res: Response): Promise<void> {
-  const firebaseUid = (req as any).user?.uid;
+  // Accept firebase UID from header `x-firebase-uid`, body `firebase_uid`, or query `firebase_uid`.
+  const firebaseUid = (req.headers['x-firebase-uid'] as string) || (req.body && req.body.firebase_uid) || (req.query && (req.query as any).firebase_uid);
   const { date = null, numQuestions = null, correctCount = null, score = null, completed = true } = req.body || {};
 
   if (!firebaseUid) {
-    res.status(401).json({ success: false, message: 'Unauthorized' });
+    res.status(401).json({ success: false, message: 'Unauthorized: missing user identifier' });
     return;
   }
 
@@ -871,13 +880,15 @@ export const getAllMedals = async (req: Request, res: Response): Promise<void> =
  */
 export const getUserMedals = async (req: Request, res: Response): Promise<void> => {
   try {
-    if (!req.user) {
-      res.status(401).json({ success: false, message: 'User not authenticated' });
+    // Accept firebase UID from header `x-firebase-uid`, body `firebase_uid`, or query `firebase_uid`.
+    const firebaseUid = (req.headers['x-firebase-uid'] as string) || (req.body && req.body.firebase_uid) || (req.query && (req.query as any).firebase_uid);
+    if (!firebaseUid) {
+      res.status(401).json({ success: false, message: 'Unauthorized: missing user identifier' });
       return;
     }
 
     // find internal user
-    const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [req.user.uid]);
+    const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [firebaseUid]);
     if (u.rowCount === 0) {
       res.status(404).json({ success: false, message: 'User record not found' });
       return;
@@ -903,8 +914,10 @@ export const getUserMedals = async (req: Request, res: Response): Promise<void> 
  */
 export const claimMedal = async (req: Request, res: Response): Promise<void> => {
   try {
-    if (!req.user) {
-      res.status(401).json({ success: false, message: 'User not authenticated' });
+    // Accept firebase UID from header `x-firebase-uid`, body `firebase_uid`, or query `firebase_uid`.
+    const firebaseUid = (req.headers['x-firebase-uid'] as string) || (req.body && req.body.firebase_uid) || (req.query && (req.query as any).firebase_uid);
+    if (!firebaseUid) {
+      res.status(401).json({ success: false, message: 'Unauthorized: missing user identifier' });
       return;
     }
 
@@ -923,7 +936,7 @@ export const claimMedal = async (req: Request, res: Response): Promise<void> => 
     const medal = medalRes.rows[0];
 
     // find internal user
-    const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [req.user.uid]);
+    const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [firebaseUid]);
     if (u.rowCount === 0) {
       res.status(404).json({ success: false, message: 'User record not found' });
       return;
@@ -1029,19 +1042,21 @@ export const awardMedal = async (req: Request, res: Response): Promise<void> => 
    */
   export const addFavoriteSign = async (req: Request, res: Response): Promise<void> => {
     try {
-      if (!req.user) {
-        res.status(401).json({ success: false, message: 'User not authenticated' });
-        return;
-      }
+        // Accept firebase UID from header `x-firebase-uid`, body `firebase_uid`, or query `firebase_uid`.
+        const firebaseUid = (req.headers['x-firebase-uid'] as string) || (req.body && req.body.firebase_uid) || (req.query && (req.query as any).firebase_uid);
+        if (!firebaseUid) {
+          res.status(401).json({ success: false, message: 'Unauthorized: missing user identifier' });
+          return;
+        }
 
-      const { signId } = req.params as { signId?: string };
-      if (!signId) {
-        res.status(400).json({ success: false, message: 'signId is required' });
-        return;
-      }
+        const { signId } = req.params as { signId?: string };
+        if (!signId) {
+          res.status(400).json({ success: false, message: 'signId is required' });
+          return;
+        }
 
-      // find internal user
-      const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [req.user.uid]);
+        // find internal user
+        const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [firebaseUid]);
       if (u.rowCount === 0) {
         res.status(404).json({ success: false, message: 'User record not found' });
         return;
@@ -1050,8 +1065,8 @@ export const awardMedal = async (req: Request, res: Response): Promise<void> => 
 
       // insert favorite, avoid duplicates using ON CONFLICT
       const insertRes = await pool.query(
-        `INSERT INTO user_favorite_signs (id, user_id, sign_id, created_at)
-         VALUES (gen_random_uuid(), $1, $2, NOW())
+        `INSERT INTO user_favorite_signs (id, user_id, sign_id, name, created_at)
+         VALUES (gen_random_uuid(), $1, $2, (SELECT name FROM signs WHERE id = $2), NOW())
          ON CONFLICT (user_id, sign_id) DO NOTHING
          RETURNING id`,
         [userId, signId]
@@ -1074,8 +1089,10 @@ export const awardMedal = async (req: Request, res: Response): Promise<void> => 
    */
   export const removeFavoriteSign = async (req: Request, res: Response): Promise<void> => {
     try {
-      if (!req.user) {
-        res.status(401).json({ success: false, message: 'User not authenticated' });
+      // Accept firebase UID from header `x-firebase-uid`, body `firebase_uid`, or query `firebase_uid`.
+      const firebaseUid = (req.headers['x-firebase-uid'] as string) || (req.body && req.body.firebase_uid) || (req.query && (req.query as any).firebase_uid);
+      if (!firebaseUid) {
+        res.status(401).json({ success: false, message: 'Unauthorized: missing user identifier' });
         return;
       }
 
@@ -1086,7 +1103,7 @@ export const awardMedal = async (req: Request, res: Response): Promise<void> => 
       }
 
       // find internal user
-      const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [req.user.uid]);
+      const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [firebaseUid]);
       if (u.rowCount === 0) {
         res.status(404).json({ success: false, message: 'User record not found' });
         return;
@@ -1111,13 +1128,15 @@ export const awardMedal = async (req: Request, res: Response): Promise<void> => 
  */
 export const getFavoriteSigns = async (req: Request, res: Response): Promise<void> => {
   try {
-    if (!req.user) {
-      res.status(401).json({ success: false, message: 'User not authenticated' });
+    // Accept firebase UID from header `x-firebase-uid`, body `firebase_uid`, or query `firebase_uid`.
+    const firebaseUid = (req.headers['x-firebase-uid'] as string) || (req.body && req.body.firebase_uid) || (req.query && (req.query as any).firebase_uid);
+    if (!firebaseUid) {
+      res.status(401).json({ success: false, message: 'Unauthorized: missing user identifier' });
       return;
     }
 
     // find internal user
-    const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [req.user.uid]);
+    const u = await pool.query('SELECT id FROM users WHERE firebase_uid = $1 LIMIT 1', [firebaseUid]);
     if (u.rowCount === 0) {
       res.status(404).json({ success: false, message: 'User record not found' });
       return;

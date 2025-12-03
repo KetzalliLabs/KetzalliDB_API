@@ -35,21 +35,21 @@ router.get('/me/stats', verifyFirebaseToken, getUserStats);
 router.post('/verify', verifyFirebaseToken, verifyToken);
 
 // Event endpoints for user activity
-router.post('/me/signs/:signId/view', verifyFirebaseToken, recordSignView);
-router.get('/me/signs/views', verifyFirebaseToken, getViewedSignsProgress);
-router.post('/me/exercises/:exerciseId/complete', verifyFirebaseToken, recordExerciseCompletion);
-router.post('/me/daily-quiz', verifyFirebaseToken, recordDailyQuiz);
+router.post('/me/signs/:signId/view', recordSignView);
+router.get('/me/signs/views', getViewedSignsProgress);
+router.post('/me/exercises/:exerciseId/complete', recordExerciseCompletion);
+router.post('/me/daily-quiz', recordDailyQuiz);
 //router.post('/me/progress', verifyFirebaseToken, updateProgress);
 
 // Favorite signs
-router.post('/me/favorites/:signId', verifyFirebaseToken, addFavoriteSign);
-router.delete('/me/favorites/:signId', verifyFirebaseToken, removeFavoriteSign);
-router.get('/me/favorites', verifyFirebaseToken, getFavoriteSigns);
+router.post('/me/favorites/:signId', addFavoriteSign);
+router.delete('/me/favorites/:signId', removeFavoriteSign);
+router.get('/me/favorites', getFavoriteSigns);
 
 // Medals
 router.get('/medals', getAllMedals);
-router.get('/me/medals', verifyFirebaseToken, getUserMedals);
-router.post('/me/medals/:medalId/claim', verifyFirebaseToken, claimMedal);
+router.get('/me/medals', getUserMedals);
+router.post('/me/medals/:medalId/claim', claimMedal);
 
 // Admin routes
 router.post('/users', verifyFirebaseToken, requireAdmin, createUser);

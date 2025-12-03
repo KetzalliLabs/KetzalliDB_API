@@ -237,7 +237,7 @@ INSERT INTO "signs" ("id", "name", "category_id", "image_url", "video_url") VALU
     (gen_random_uuid(), 'Plato', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Plato_Web.m4v'),
     (gen_random_uuid(), 'Puerta', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Puerta_Web.m4v'),
     (gen_random_uuid(), 'Silla', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Silla_Web.m4v'),
-    (gen_random_uuid(), 'Telefono', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Telefono_Web.m4v'),
+    (gen_random_uuid(), 'Teléfono', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Telefono_Web.m4v'),
     (gen_random_uuid(), 'Tenedor', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Tenedor_Web.m4v'),
     (gen_random_uuid(), 'Vaso', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Vaso_Web.m4v'),
     (gen_random_uuid(), 'Ventana', (SELECT id FROM categories WHERE name='Hogar'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Ventana_Web.m4v');
@@ -362,7 +362,7 @@ INSERT INTO "signs" ("id", "name", "category_id", "image_url", "video_url") VALU
     (gen_random_uuid(), 'Hija', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Hija_Web.m4v'),
     (gen_random_uuid(), 'Hijo', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Hijo_Web.m4v'),
     (gen_random_uuid(), 'Hombre', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Hombre_Web.m4v'),
-    (gen_random_uuid(), 'Huerfano', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Huerfano_Web.m4v'),
+    (gen_random_uuid(), 'Huérfano', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Huerfano_Web.m4v'),
     (gen_random_uuid(), 'Madrastra', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Madrastra_Web.m4v'),
     (gen_random_uuid(), 'Madrina', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Madrina_Web.m4v'),
     (gen_random_uuid(), 'Mamá', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Mama_Web.m4v'),
@@ -395,8 +395,8 @@ INSERT INTO "signs" ("id", "name", "category_id", "image_url", "video_url") VALU
     (gen_random_uuid(), 'Sordo', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Sordo_Web.m4v'),
     (gen_random_uuid(), 'Suegra', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Suegra_Web.m4v'),
     (gen_random_uuid(), 'Suegro', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Suegro_Web.m4v'),
-    (gen_random_uuid(), 'Tia', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Tia_Web.m4v'),
-    (gen_random_uuid(), 'Tio', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Tio_Web.m4v'),
+    (gen_random_uuid(), 'Tía', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Tia_Web.m4v'),
+    (gen_random_uuid(), 'Tío', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Tio_Web.m4v'),
     (gen_random_uuid(), 'Unión libre', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Unionlibre_Web.m4v'),
     (gen_random_uuid(), 'Vecino', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Vecino_Web.m4v'),
     (gen_random_uuid(), 'Viudo', (SELECT id FROM categories WHERE name='Personas'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Viudo_Web.m4v'),
@@ -428,14 +428,14 @@ INSERT INTO "signs" ("id", "name", "category_id", "image_url", "video_url") VALU
     (gen_random_uuid(), 'Accidente', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Accidente_Web.m4v'),
     (gen_random_uuid(), 'Adentro', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Adentro_Web.m4v'),
     (gen_random_uuid(), 'Afortunado', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Afortunado_Web.m4v'),
-    (gen_random_uuid(), 'Alegre / Divertido', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Alegredivertido_Web.m4v'),
+    (gen_random_uuid(), 'Alegre', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Alegredivertido_Web.m4v'),
     (gen_random_uuid(), 'Algunos', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Algunos_Web.m4v'),
     (gen_random_uuid(), 'Alto', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Altoestatura_Web.m4v'),
     (gen_random_uuid(), 'Amable', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Amable_Web.m4v'),
     (gen_random_uuid(), 'Antes', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Antes_Web.m4v'),
     (gen_random_uuid(), 'Arriba', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Arriba_Web.m4v'),
     (gen_random_uuid(), 'Asustado', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Asustado_Web.m4v'),
-    (gen_random_uuid(), 'Atención / Atento', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Atencionatento_Web.m4v'),
+    (gen_random_uuid(), 'Atento', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Atencionatento_Web.m4v'),
     (gen_random_uuid(), 'Baboso', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Baboso_Web.m4v'),
     (gen_random_uuid(), 'Bonito', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Bonito_Web.m4v'),
     (gen_random_uuid(), 'Broma', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Broma_Web.m4v'),
@@ -502,7 +502,7 @@ INSERT INTO "signs" ("id", "name", "category_id", "image_url", "video_url") VALU
     (gen_random_uuid(), 'Pobre', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Pobre_Web.m4v'),
     (gen_random_uuid(), 'Presumido', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Presumido_Web.m4v'),
     (gen_random_uuid(), 'Problema', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Problema_Web.m4v'),
-    (gen_random_uuid(), 'Rápido / Pronto', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Rapidopronto_Web.m4v'),
+    (gen_random_uuid(), 'Rápido', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Rapidopronto_Web.m4v'),
     (gen_random_uuid(), 'Raro', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Raro_Web.m4v'),
     (gen_random_uuid(), 'Secreto', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Secreto_Web.m4v'),
     (gen_random_uuid(), 'Seña propia', (SELECT id FROM categories WHERE name='Gramática'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Senaproipa_Web.m4v'),
@@ -576,12 +576,12 @@ INSERT INTO "signs" ("id", "name", "category_id", "image_url", "video_url") VALU
     (gen_random_uuid(), 'Abrigo', (SELECT id FROM categories WHERE name='Ropa'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Abrigo_Web.m4v'),
     (gen_random_uuid(), 'Brasier', (SELECT id FROM categories WHERE name='Ropa'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Brasier_Web.m4v'),
     (gen_random_uuid(), 'Bufanda', (SELECT id FROM categories WHERE name='Ropa'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Bufanda_Web.m4v'),
-    (gen_random_uuid(), 'Calzon', (SELECT id FROM categories WHERE name='Ropa'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Calzon_Web.m4v'),
+    (gen_random_uuid(), 'Calzón', (SELECT id FROM categories WHERE name='Ropa'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Calzon_Web.m4v'),
     (gen_random_uuid(), 'Camisa', (SELECT id FROM categories WHERE name='Ropa'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Camisa_Web.m4v'),
     (gen_random_uuid(), 'Corbata', (SELECT id FROM categories WHERE name='Ropa'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Corbata_Web.m4v'),
     (gen_random_uuid(), 'Falda', (SELECT id FROM categories WHERE name='Ropa'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Falda_Web.m4v'),
     (gen_random_uuid(), 'Medias', (SELECT id FROM categories WHERE name='Ropa'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Medias_Web.m4v'),
-    (gen_random_uuid(), 'Pantalon', (SELECT id FROM categories WHERE name='Ropa'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Pantalon_Web.m4v'),
+    (gen_random_uuid(), 'Pantalón', (SELECT id FROM categories WHERE name='Ropa'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Pantalon_Web.m4v'),
     (gen_random_uuid(), 'Tenis', (SELECT id FROM categories WHERE name='Ropa'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Tenis_Web.m4v'),
     (gen_random_uuid(), 'Vestido', (SELECT id FROM categories WHERE name='Ropa'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Vestido_Web.m4v'),
     (gen_random_uuid(), 'Zapatos', (SELECT id FROM categories WHERE name='Ropa'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Zapatos_Web.m4v');
@@ -591,22 +591,22 @@ INSERT INTO "signs" ("id", "name", "category_id", "image_url", "video_url") VALU
 -------------------------------------------------------
 
 INSERT INTO "signs" ("id", "name", "category_id", "image_url", "video_url") VALUES
-    (gen_random_uuid(), 'Adios', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Adios_Web.m4v'),
+    (gen_random_uuid(), 'Adiós', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Adios_Web.m4v'),
     (gen_random_uuid(), 'Bien', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Bien_Web.m4v'),
-    (gen_random_uuid(), 'Buenasnoches', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Buenasnoches_Web.m4v'),
-    (gen_random_uuid(), 'Buenastardes', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Buenastardes_Web.m4v'),
-    (gen_random_uuid(), 'Buenosdias', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Buenosdias_Web.m4v'),
-    (gen_random_uuid(), 'Comoestas', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Comoestas_Web.m4v'),
-    (gen_random_uuid(), 'Comotellamas', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Comotellamas_Web.m4v'),
-    (gen_random_uuid(), 'Denada', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Denada_Web.m4v'),
+    (gen_random_uuid(), 'Buenas noches', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Buenasnoches_Web.m4v'),
+    (gen_random_uuid(), 'Buenas tardes', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Buenastardes_Web.m4v'),
+    (gen_random_uuid(), 'Buenos días', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Buenosdias_Web.m4v'),
+    (gen_random_uuid(), '¿Cómo estás?', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Comoestas_Web.m4v'),
+    (gen_random_uuid(), '¿Cómo te llamas?', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Comotellamas_Web.m4v'),
+    (gen_random_uuid(), 'De nada', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Denada_Web.m4v'),
     (gen_random_uuid(), 'Gracias', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Gracias_Web.m4v'),
-    (gen_random_uuid(), 'Gustodeconocerte', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Gustodeconocerte_Web.m4v'),
+    (gen_random_uuid(), 'Gusto de conocerte', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Gustodeconocerte_Web.m4v'),
     (gen_random_uuid(), 'Hola', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Hola_Web.m4v'),
     (gen_random_uuid(), 'Mal', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Mal_Web.m4v'),
-    (gen_random_uuid(), 'Masomenos', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Masomenos_Web.m4v'),
-    (gen_random_uuid(), 'Nosvemos', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Nosvemos_Web.m4v'),
-    (gen_random_uuid(), 'Perdon', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Perdon_Web.m4v'),
-    (gen_random_uuid(), 'Porfavor', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Porfavor_Web.m4v');
+    (gen_random_uuid(), 'Más o menos', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Masomenos_Web.m4v'),
+    (gen_random_uuid(), 'Nos vemos', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Nosvemos_Web.m4v'),
+    (gen_random_uuid(), 'Perdón', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Perdon_Web.m4v'),
+    (gen_random_uuid(), 'Por favor', (SELECT id FROM categories WHERE name='Saludos'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Porfavor_Web.m4v');
 
 -------------------------------------------------------
 --  Tiempo Query
@@ -659,13 +659,13 @@ INSERT INTO "signs" ("id", "name", "category_id", "image_url", "video_url") VALU
 -------------------------------------------------------
 
 INSERT INTO "signs" ("id", "name", "category_id", "image_url", "video_url") VALUES
-    (gen_random_uuid(), 'Avion', (SELECT id FROM categories WHERE name='Transporte'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Avion_Web.m4v'),
+    (gen_random_uuid(), 'Avión', (SELECT id FROM categories WHERE name='Transporte'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Avion_Web.m4v'),
     (gen_random_uuid(), 'Barco', (SELECT id FROM categories WHERE name='Transporte'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Barco_Web.m4v'),
     (gen_random_uuid(), 'Bicicleta', (SELECT id FROM categories WHERE name='Transporte'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Bicicleta_Web.m4v'),
-    (gen_random_uuid(), 'Camion', (SELECT id FROM categories WHERE name='Transporte'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Camion_Web.m4v'),
+    (gen_random_uuid(), 'Camión', (SELECT id FROM categories WHERE name='Transporte'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Camion_Web.m4v'),
     (gen_random_uuid(), 'Carro', (SELECT id FROM categories WHERE name='Transporte'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Carro_Web.m4v'),
-    (gen_random_uuid(), 'Cdeautobuses', (SELECT id FROM categories WHERE name='Transporte'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Cdeautobuses_Web.m4v'),
-    (gen_random_uuid(), 'Helicoptero', (SELECT id FROM categories WHERE name='Transporte'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Helicoptero_Web.m4v'),
+    (gen_random_uuid(), 'Central de autobuses', (SELECT id FROM categories WHERE name='Transporte'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Cdeautobuses_Web.m4v'),
+    (gen_random_uuid(), 'Helicóptero', (SELECT id FROM categories WHERE name='Transporte'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Helicoptero_Web.m4v'),
     (gen_random_uuid(), 'Metro', (SELECT id FROM categories WHERE name='Transporte'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Metro_Web.m4v'),
     (gen_random_uuid(), 'Motocicleta', (SELECT id FROM categories WHERE name='Transporte'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Motocicleta_Web.m4v'),
     (gen_random_uuid(), 'Taxi', (SELECT id FROM categories WHERE name='Transporte'), NULL, 'https://pub-05700fc259bc4e839552241871f5e896.r2.dev/Taxi_Web.m4v'),
@@ -784,8 +784,229 @@ INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure
 
 ---- Animales Query
 INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
-    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Animales'), 'multiple_choice', '¿Cuál es el signo para la palabra Abeja?', (SELECT id FROM signs WHERE name='Abeja'), 'text-image'),
-    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Animales'), 'multiple_choice', '¿A que animal corresponde este signo?', (SELECT id FROM signs WHERE name='Águila'), 'image-text');
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Animales'), 'multiple_choice', '¿A que animal corresponde este signo?', (SELECT id FROM signs WHERE name='Abeja'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Animales'), 'multiple_choice', '¿A que animal corresponde este signo?', (SELECT id FROM signs WHERE name='Águila'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Animales'), 'multiple_choice', '¿A que animal corresponde este signo?', (SELECT id FROM signs WHERE name='Burro'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Animales'), 'multiple_choice', '¿A que animal corresponde este signo?', (SELECT id FROM signs WHERE name='Caballo'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Animales'), 'multiple_choice', '¿A que animal corresponde este signo?', (SELECT id FROM signs WHERE name='Gato'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Animales'), 'multiple_choice', '¿A que animal corresponde este signo?', (SELECT id FROM signs WHERE name='Perro'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Animales'), 'multiple_choice', '¿A que animal corresponde este signo?', (SELECT id FROM signs WHERE name='Vaca'), 'image-text');
+
+---- Colores Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Colores'), 'multiple_choice', '¿A que color corresponde este signo?', (SELECT id FROM signs WHERE name='Rojo'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Colores'), 'multiple_choice', '¿A que color corresponde este signo?', (SELECT id FROM signs WHERE name='Ázul'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Colores'), 'multiple_choice', '¿A qué color corresponde este signo?', (SELECT id FROM signs WHERE name='Verde'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Colores'), 'multiple_choice', '¿A qué color corresponde este signo?', (SELECT id FROM signs WHERE name='Amarillo'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Colores'), 'multiple_choice', '¿A que color corresponde este signo?', (SELECT id FROM signs WHERE name='Negro'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Colores'), 'multiple_choice', '¿A que color corresponde este signo?', (SELECT id FROM signs WHERE name='Blanco'), 'image-text');
+
+---- Comida Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Comida'), 'multiple_choice', '¿A que comida corresponde este signo?', (SELECT id FROM signs WHERE name='Aceite'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Comida'), 'multiple_choice', '¿A que comida corresponde este signo?', (SELECT id FROM signs WHERE name='Água'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Comida'), 'multiple_choice', '¿A que comida corresponde este signo?', (SELECT id FROM signs WHERE name='Arroz'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Comida'), 'multiple_choice', '¿A que comida corresponde este signo?', (SELECT id FROM signs WHERE name='Cerveza'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Comida'), 'multiple_choice', '¿A que comida corresponde este signo?', (SELECT id FROM signs WHERE name='Chocolate'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Comida'), 'multiple_choice', '¿A que comida corresponde este signo?', (SELECT id FROM signs WHERE name='Ensalada'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Comida'), 'multiple_choice', '¿A que comida corresponde este signo?', (SELECT id FROM signs WHERE name='Huevo'), 'image-text');
+
+---- Cuerpo Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Cuerpo'), 'multiple_choice', '¿A que parte del cuerpo corresponde este signo?', (SELECT id FROM signs WHERE name='Cabeza'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Cuerpo'), 'multiple_choice', '¿A que parte del cuerpo corresponde este signo?', (SELECT id FROM signs WHERE name='Boca'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Cuerpo'), 'multiple_choice', '¿A que parte del cuerpo corresponde este signo?', (SELECT id FROM signs WHERE name='Mano'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Cuerpo'), 'multiple_choice', '¿A que parte del cuerpo corresponde este signo?', (SELECT id FROM signs WHERE name='Pestañas'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Cuerpo'), 'multiple_choice', '¿A que parte del cuerpo corresponde este signo?', (SELECT id FROM signs WHERE name='Piel'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Cuerpo'), 'multiple_choice', '¿A que parte del cuerpo corresponde este signo?', (SELECT id FROM signs WHERE name='Ojos'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Cuerpo'), 'multiple_choice', '¿A que parte del cuerpo corresponde este signo?', (SELECT id FROM signs WHERE name='Nariz'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Cuerpo'), 'multiple_choice', '¿A que parte del cuerpo corresponde este signo?', (SELECT id FROM signs WHERE name='Sangre'), 'image-text');
+
+---- Dias de la Semana Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Dias de la Semana'), 'multiple_choice', '¿A qué día de la semana corresponde este signo?', (SELECT id FROM signs WHERE name='Lunes'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Dias de la Semana'), 'multiple_choice', '¿A qué día de la semana corresponde este signo?', (SELECT id FROM signs WHERE name='Martes'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Dias de la Semana'), 'multiple_choice', '¿A qué día de la semana corresponde este signo?', (SELECT id FROM signs WHERE name='Miércoles'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Dias de la Semana'), 'multiple_choice', '¿A qué día de la semana corresponde este signo?', (SELECT id FROM signs WHERE name='Jueves'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Dias de la Semana'), 'multiple_choice', '¿A qué día de la semana corresponde este signo?', (SELECT id FROM signs WHERE name='Viernes'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Dias de la Semana'), 'multiple_choice', '¿A qué día de la semana corresponde este signo?', (SELECT id FROM signs WHERE name='Sábado'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Dias de la Semana'), 'multiple_choice', '¿A qué día de la semana corresponde este signo?', (SELECT id FROM signs WHERE name='Domingo'), 'image-text');
+
+---- Frutas Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Frutas'), 'multiple_choice', '¿A que fruta corresponde este signo?', (SELECT id FROM signs WHERE name='Manzana'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Frutas'), 'multiple_choice', '¿A que fruta corresponde este signo?', (SELECT id FROM signs WHERE name='Plátano'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Frutas'), 'multiple_choice', '¿A que fruta corresponde este signo?', (SELECT id FROM signs WHERE name='Almendra'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Frutas'), 'multiple_choice', '¿A que fruta corresponde este signo?', (SELECT id FROM signs WHERE name='Fresa'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Frutas'), 'multiple_choice', '¿A que fruta corresponde este signo?', (SELECT id FROM signs WHERE name='Uva'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Frutas'), 'multiple_choice', '¿A que fruta corresponde este signo?', (SELECT id FROM signs WHERE name='Piña'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Frutas'), 'multiple_choice', '¿A que fruta corresponde este signo?', (SELECT id FROM signs WHERE name='Mango'), 'image-text');
+
+---- Hogar Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Hogar'), 'multiple_choice', '¿A que objeto del hogar corresponde este signo?', (SELECT id FROM signs WHERE name='Silla'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Hogar'), 'multiple_choice', '¿A que objeto del hogar corresponde este signo?', (SELECT id FROM signs WHERE name='Mesa'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Hogar'), 'multiple_choice', '¿A que objeto del hogar corresponde este signo?', (SELECT id FROM signs WHERE name='Cama'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Hogar'), 'multiple_choice', '¿A que objeto del hogar corresponde este signo?', (SELECT id FROM signs WHERE name='Puerta'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Hogar'), 'multiple_choice', '¿A que objeto del hogar corresponde este signo?', (SELECT id FROM signs WHERE name='Ventana'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Hogar'), 'multiple_choice', '¿A que objeto del hogar corresponde este signo?', (SELECT id FROM signs WHERE name='Foco'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Hogar'), 'multiple_choice', '¿A que objeto del hogar corresponde este signo?', (SELECT id FROM signs WHERE name='Impresora'), 'image-text');
+
+---- Lugares Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Lugares'), 'multiple_choice', '¿A que lugar corresponde este signo?', (SELECT id FROM signs WHERE name='Escuela'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Lugares'), 'multiple_choice', '¿A que lugar corresponde este signo?', (SELECT id FROM signs WHERE name='Feria'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Lugares'), 'multiple_choice', '¿A que lugar corresponde este signo?', (SELECT id FROM signs WHERE name='Hotel'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Lugares'), 'multiple_choice', '¿A que lugar corresponde este signo?', (SELECT id FROM signs WHERE name='Iglesia'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Lugares'), 'multiple_choice', '¿A que lugar corresponde este signo?', (SELECT id FROM signs WHERE name='Mercado'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Lugares'), 'multiple_choice', '¿A que lugar corresponde este signo?', (SELECT id FROM signs WHERE name='Restaurante'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Lugares'), 'multiple_choice', '¿A que lugar corresponde este signo?', (SELECT id FROM signs WHERE name='Cine'), 'image-text');
+
+---- Meses del Año Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Meses del Año'), 'multiple_choice', '¿A qué mes del año corresponde este signo?', (SELECT id FROM signs WHERE name='Enero'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Meses del Año'), 'multiple_choice', '¿A qué mes del año corresponde este signo?', (SELECT id FROM signs WHERE name='Febrero'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Meses del Año'), 'multiple_choice', '¿A qué mes del año corresponde este signo?', (SELECT id FROM signs WHERE name='Marzo'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Meses del Año'), 'multiple_choice', '¿A qué mes del año corresponde este signo?', (SELECT id FROM signs WHERE name='Abril'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Meses del Año'), 'multiple_choice', '¿A qué mes del año corresponde este signo?', (SELECT id FROM signs WHERE name='Mayo'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Meses del Año'), 'multiple_choice', '¿A qué mes del año corresponde este signo?', (SELECT id FROM signs WHERE name='Junio'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Meses del Año'), 'multiple_choice', '¿A qué mes del año corresponde este signo?', (SELECT id FROM signs WHERE name='Julio'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Meses del Año'), 'multiple_choice', '¿A qué mes del año corresponde este signo?', (SELECT id FROM signs WHERE name='Agosto'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Meses del Año'), 'multiple_choice', '¿A qué mes del año corresponde este signo?', (SELECT id FROM signs WHERE name='Septiembre'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Meses del Año'), 'multiple_choice', '¿A qué mes del año corresponde este signo?', (SELECT id FROM signs WHERE name='Octubre'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Meses del Año'), 'multiple_choice', '¿A qué mes del año corresponde este signo?', (SELECT id FROM signs WHERE name='Noviembre'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Meses del Año'), 'multiple_choice', '¿A qué mes del año corresponde este signo?', (SELECT id FROM signs WHERE name='Diciembre'), 'image-text');
+
+---- Números Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Números'), 'multiple_choice', '¿A qué número corresponde este signo?', (SELECT id FROM signs WHERE name='1'), 'text-image'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Números'), 'multiple_choice', '¿A qué número corresponde este signo?', (SELECT id FROM signs WHERE name='2'), 'text-image'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Números'), 'multiple_choice', '¿A qué número corresponde este signo?', (SELECT id FROM signs WHERE name='3'), 'text-image'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Números'), 'multiple_choice', '¿A qué número corresponde este signo?', (SELECT id FROM signs WHERE name='4'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Números'), 'multiple_choice', '¿A qué número corresponde este signo?', (SELECT id FROM signs WHERE name='5'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Números'), 'multiple_choice', '¿A qué número corresponde este signo?', (SELECT id FROM signs WHERE name='6'), 'text-image'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Números'), 'multiple_choice', '¿A qué número corresponde este signo?', (SELECT id FROM signs WHERE name='7'), 'text-image'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Números'), 'multiple_choice', '¿A qué número corresponde este signo?', (SELECT id FROM signs WHERE name='8'), 'text-image'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Números'), 'multiple_choice', '¿A qué número corresponde este signo?', (SELECT id FROM signs WHERE name='9'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Números'), 'multiple_choice', '¿A qué número corresponde este signo?', (SELECT id FROM signs WHERE name='10'), 'image-text');
+
+---- Personas Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Personas'), 'multiple_choice', '¿A qué persona corresponde este signo?', (SELECT id FROM signs WHERE name='Mamá'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Personas'), 'multiple_choice', '¿A qué persona corresponde este signo?', (SELECT id FROM signs WHERE name='Papá'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Personas'), 'multiple_choice', '¿A qué persona corresponde este signo?', (SELECT id FROM signs WHERE name='Hermano'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Personas'), 'multiple_choice', '¿A qué persona corresponde este signo?', (SELECT id FROM signs WHERE name='Amigo'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Personas'), 'multiple_choice', '¿A qué persona corresponde este signo?', (SELECT id FROM signs WHERE name='Profesor'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Personas'), 'multiple_choice', '¿A qué persona corresponde este signo?', (SELECT id FROM signs WHERE name='Divorciado'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Personas'), 'multiple_choice', '¿A qué persona corresponde este signo?', (SELECT id FROM signs WHERE name='Vecino'), 'image-text');
+
+---- Preguntas Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Preguntas'), 'multiple_choice', '¿A qué pregunta corresponde este signo?', (SELECT id FROM signs WHERE name='¿Quién?'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Preguntas'), 'multiple_choice', '¿A qué pregunta corresponde este signo?', (SELECT id FROM signs WHERE name='¿Qué?'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Preguntas'), 'multiple_choice', '¿A qué pregunta corresponde este signo?', (SELECT id FROM signs WHERE name='¿Dónde?'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Preguntas'), 'multiple_choice', '¿A qué pregunta corresponde este signo?', (SELECT id FROM signs WHERE name='¿Cuándo?'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Preguntas'), 'multiple_choice', '¿A qué pregunta corresponde este signo?', (SELECT id FROM signs WHERE name='¿Por qué?'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Preguntas'), 'multiple_choice', '¿A qué pregunta corresponde este signo?', (SELECT id FROM signs WHERE name='¿Cómo?'), 'image-text');
+
+---- Grámatica Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Gramática'), 'multiple_choice', '¿A qué signo corresponde esta palabra?', (SELECT id FROM signs WHERE name='Abajo'), 'text-image'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Gramática'), 'multiple_choice', '¿A qué signo corresponde esta palabra?', (SELECT id FROM signs WHERE name='Amable'), 'text-image'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Gramática'), 'multiple_choice', '¿A qué signo corresponde esta palabra?', (SELECT id FROM signs WHERE name='Alto'), 'text-image'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Gramática'), 'multiple_choice', '¿A qué signo corresponde esta palabra?', (SELECT id FROM signs WHERE name='Bueno'), 'text-image'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Gramática'), 'multiple_choice', '¿A qué signo corresponde esta palabra?', (SELECT id FROM signs WHERE name='Chistoso'), 'text-image'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Gramática'), 'multiple_choice', '¿A qué signo corresponde esta palabra?', (SELECT id FROM signs WHERE name='Cobarde'), 'text-image'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Gramática'), 'multiple_choice', '¿A qué signo corresponde esta palabra?', (SELECT id FROM signs WHERE name='Fácil'), 'text-image');
+
+---- Pronombres Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Pronombres'), 'multiple_choice', '¿A qué pronombre corresponde este signo?', (SELECT id FROM signs WHERE name='Yo'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Pronombres'), 'multiple_choice', '¿A qué pronombre corresponde este signo?', (SELECT id FROM signs WHERE name='Tú'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Pronombres'), 'multiple_choice', '¿A qué pronombre corresponde este signo?', (SELECT id FROM signs WHERE name='Él'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Pronombres'), 'multiple_choice', '¿A qué pronombre corresponde este signo?', (SELECT id FROM signs WHERE name='Nosotros'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Pronombres'), 'multiple_choice', '¿A qué pronombre corresponde este signo?', (SELECT id FROM signs WHERE name='Ustedes'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Pronombres'), 'multiple_choice', '¿A qué pronombre corresponde este signo?', (SELECT id FROM signs WHERE name='Ellos'), 'image-text');
+
+---- Oficios Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Oficios'), 'multiple_choice', '¿A qué oficio corresponde este signo?', (SELECT id FROM signs WHERE name='Dentista'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Oficios'), 'multiple_choice', '¿A qué oficio corresponde este signo?', (SELECT id FROM signs WHERE name='Maestro'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Oficios'), 'multiple_choice', '¿A qué oficio corresponde este signo?', (SELECT id FROM signs WHERE name='Ingeniero'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Oficios'), 'multiple_choice', '¿A qué oficio corresponde este signo?', (SELECT id FROM signs WHERE name='Abogado'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Oficios'), 'multiple_choice', '¿A qué oficio corresponde este signo?', (SELECT id FROM signs WHERE name='Enfermera'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Oficios'), 'multiple_choice', '¿A qué oficio corresponde este signo?', (SELECT id FROM signs WHERE name='Carpintero'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Oficios'), 'multiple_choice', '¿A qué oficio corresponde este signo?', (SELECT id FROM signs WHERE name='Policía'), 'image-text');
+
+---- Ropa Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Ropa'), 'multiple_choice', '¿A qué prenda de ropa corresponde este signo?', (SELECT id FROM signs WHERE name='Camisa'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Ropa'), 'multiple_choice', '¿A qué prenda de ropa corresponde este signo?', (SELECT id FROM signs WHERE name='Pantalón'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Ropa'), 'multiple_choice', '¿A qué prenda de ropa corresponde este signo?', (SELECT id FROM signs WHERE name='Zapatos'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Ropa'), 'multiple_choice', '¿A qué prenda de ropa corresponde este signo?', (SELECT id FROM signs WHERE name='Medias'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Ropa'), 'multiple_choice', '¿A qué prenda de ropa corresponde este signo?', (SELECT id FROM signs WHERE name='Vestido'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Ropa'), 'multiple_choice', '¿A qué prenda de ropa corresponde este signo?', (SELECT id FROM signs WHERE name='Falda'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Ropa'), 'multiple_choice', '¿A qué prenda de ropa corresponde este signo?', (SELECT id FROM signs WHERE name='Corbata'), 'image-text');
+
+---- Saludos Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Saludos'), 'multiple_choice', '¿A qué saludo corresponde este signo?', (SELECT id FROM signs WHERE name='Hola'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Saludos'), 'multiple_choice', '¿A qué saludo corresponde este signo?', (SELECT id FROM signs WHERE name='Adiós'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Saludos'), 'multiple_choice', '¿A qué saludo corresponde este signo?', (SELECT id FROM signs WHERE name='Buenos días'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Saludos'), 'multiple_choice', '¿A qué saludo corresponde este signo?', (SELECT id FROM signs WHERE name='Buenas tardes'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Saludos'), 'multiple_choice', '¿A qué saludo corresponde este signo?', (SELECT id FROM signs WHERE name='Buenas noches'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Saludos'), 'multiple_choice', '¿A qué saludo corresponde este signo?', (SELECT id FROM signs WHERE name='¿Cómo estás?'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Saludos'), 'multiple_choice', '¿A qué saludo corresponde este signo?', (SELECT id FROM signs WHERE name='Mal'), 'image-text');
+
+---- Tiempo Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Tiempo'), 'multiple_choice', '¿A qué tiempo corresponde este signo?', (SELECT id FROM signs WHERE name='Ahora'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Tiempo'), 'multiple_choice', '¿A qué tiempo corresponde este signo?', (SELECT id FROM signs WHERE name='Ahorita'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Tiempo'), 'multiple_choice', '¿A qué tiempo corresponde este signo?', (SELECT id FROM signs WHERE name='Futuro'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Tiempo'), 'multiple_choice', '¿A qué tiempo corresponde este signo?', (SELECT id FROM signs WHERE name='Cumpleaños'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Tiempo'), 'multiple_choice', '¿A qué tiempo corresponde este signo?', (SELECT id FROM signs WHERE name='Frío'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Tiempo'), 'multiple_choice', '¿A qué tiempo corresponde este signo?', (SELECT id FROM signs WHERE name='Calor'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Tiempo'), 'multiple_choice', '¿A qué tiempo corresponde este signo?', (SELECT id FROM signs WHERE name='Hora'), 'image-text');
+
+---- Transporte Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Transporte'), 'multiple_choice', '¿A qué medio de transporte corresponde este signo?', (SELECT id FROM signs WHERE name='Avión'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Transporte'), 'multiple_choice', '¿A qué medio de transporte corresponde este signo?', (SELECT id FROM signs WHERE name='Bicicleta'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Transporte'), 'multiple_choice', '¿A qué medio de transporte corresponde este signo?', (SELECT id FROM signs WHERE name='Carro'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Transporte'), 'multiple_choice', '¿A qué medio de transporte corresponde este signo?', (SELECT id FROM signs WHERE name='Barco'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Transporte'), 'multiple_choice', '¿A qué medio de transporte corresponde este signo?', (SELECT id FROM signs WHERE name='Camión'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Transporte'), 'multiple_choice', '¿A qué medio de transporte corresponde este signo?', (SELECT id FROM signs WHERE name='Motocicleta'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Transporte'), 'multiple_choice', '¿A qué medio de transporte corresponde este signo?', (SELECT id FROM signs WHERE name='Tren'), 'image-text');
+
+---- Verbos Comunes Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verbos Comunes'), 'multiple_choice', '¿A qué verbo corresponde este signo?', (SELECT id FROM signs WHERE name='Comer'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verbos Comunes'), 'multiple_choice', '¿A qué verbo corresponde este signo?', (SELECT id FROM signs WHERE name='Ayudar'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verbos Comunes'), 'multiple_choice', '¿A qué verbo corresponde este signo?', (SELECT id FROM signs WHERE name='Comprar'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verbos Comunes'), 'multiple_choice', '¿A qué verbo corresponde este signo?', (SELECT id FROM signs WHERE name='Limpiar'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verbos Comunes'), 'multiple_choice', '¿A qué verbo corresponde este signo?', (SELECT id FROM signs WHERE name='Escribir'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verbos Comunes'), 'multiple_choice', '¿A qué verbo corresponde este signo?', (SELECT id FROM signs WHERE name='Dormir'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verbos Comunes'), 'multiple_choice', '¿A qué verbo corresponde este signo?', (SELECT id FROM signs WHERE name='Jugar'), 'image-text');
+
+---- Verbos Narrativos Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verbos Narrativos'), 'multiple_choice', '¿A qué verbo corresponde este signo?', (SELECT id FROM signs WHERE name='Conocer'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verbos Narrativos'), 'multiple_choice', '¿A qué verbo corresponde este signo?', (SELECT id FROM signs WHERE name='Gustar'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verbos Narrativos'), 'multiple_choice', '¿A qué verbo corresponde este signo?', (SELECT id FROM signs WHERE name='No entender'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verbos Narrativos'), 'multiple_choice', '¿A qué verbo corresponde este signo?', (SELECT id FROM signs WHERE name='No poder'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verbos Narrativos'), 'multiple_choice', '¿A qué verbo corresponde este signo?', (SELECT id FROM signs WHERE name='No querer'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verbos Narrativos'), 'multiple_choice', '¿A qué verbo corresponde este signo?', (SELECT id FROM signs WHERE name='Servir'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verbos Narrativos'), 'multiple_choice', '¿A qué verbo corresponde este signo?', (SELECT id FROM signs WHERE name='No saber'), 'image-text');
+
+---- Verduras Query
+INSERT INTO exercises (id, category_id, type, prompt, correct_sign_id, structure_type) VALUES
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verduras'), 'multiple_choice', '¿A qué verdura corresponde este signo?', (SELECT id FROM signs WHERE name='Zanahoria'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verduras'), 'multiple_choice', '¿A qué verdura corresponde este signo?', (SELECT id FROM signs WHERE name='Lechuga'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verduras'), 'multiple_choice', '¿A qué verdura corresponde este signo?', (SELECT id FROM signs WHERE name='Cebolla'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verduras'), 'multiple_choice', '¿A qué verdura corresponde este signo?', (SELECT id FROM signs WHERE name='Jitomate'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verduras'), 'multiple_choice', '¿A qué verdura corresponde este signo?', (SELECT id FROM signs WHERE name='Pepino'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verduras'), 'multiple_choice', '¿A qué verdura corresponde este signo?', (SELECT id FROM signs WHERE name='Calabacita'), 'image-text'),
+    (gen_random_uuid(), (SELECT id FROM categories WHERE name='Verduras'), 'multiple_choice', '¿A qué verdura corresponde este signo?', (SELECT id FROM signs WHERE name='Papa'), 'image-text');
 
 -------------------------------------------------------
 -- Stats Query

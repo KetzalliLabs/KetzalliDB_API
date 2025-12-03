@@ -187,6 +187,7 @@ CREATE TABLE user_favorite_signs (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id uuid NOT NULL REFERENCES users(id),
     sign_id uuid NOT NULL REFERENCES signs(id),
+    name varchar(100),
     created_at timestamp DEFAULT NOW(),
     CONSTRAINT uq_user_favorite_sign UNIQUE (user_id, sign_id)
 );
