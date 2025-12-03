@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KetzalliDB API - Mexican Sign Language Learning Platform</title>
+    <title>KetzalliDB API - Documentación API</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,19 +14,21 @@
     <header class="hero">
         <div class="container">
             <div class="logo-container fade-in">
-                <img src="./Media/Images/LOGO.jpg" alt="Ketzalli Logo" class="logo">
+                <img src="./Media/Images/LOGO_KETZ.png" alt="Ketzalli Logo" class="logo">
+                <img src="./Media/Images/LOGO_AMOX.png" alt="Amoxcalli Logo" class="logo">
             </div>
             <h1 class="hero-title slide-up">KetzalliDB API</h1>
-            <p class="hero-subtitle slide-up delay-1">Mexican Sign Language Learning Platform</p>
+            <p class="hero-subtitle slide-up delay-1">Documentación de la API</p>
             <div class="hero-badges slide-up delay-2">
                 <span class="badge">v1.0.0</span>
                 <span class="badge success">REST API</span>
                 <span class="badge info">TypeScript</span>
             </div>
             <div class="quick-links slide-up delay-3">
-                <a href="#endpoints" class="btn btn-primary">View Endpoints</a>
-                <a href="#authentication" class="btn btn-secondary">Authentication</a>
-                <a href="#database" class="btn btn-secondary">Database</a>
+                <a href="landing.html" class="btn btn-secondary">← Volver al Inicio</a>
+                <a href="#endpoints" class="btn btn-primary">Ver Endpoints</a>
+                <a href="#authentication" class="btn btn-secondary">Autenticación</a>
+                <a href="#database" class="btn btn-secondary">Base de Datos</a>
             </div>
         </div>
         <div class="hero-decoration"></div>
@@ -38,22 +40,22 @@
             <div class="status-grid">
                 <div class="status-card fade-in delay-1">
                     <div class="status-icon">🚀</div>
-                    <h3>API Status</h3>
-                    <p class="status-value">Operational</p>
+                    <h3>Estado API</h3>
+                    <p class="status-value">Operacional</p>
                 </div>
                 <div class="status-card fade-in delay-2">
                     <div class="status-icon">🗄️</div>
-                    <h3>Database</h3>
+                    <h3>Base de Datos</h3>
                     <p class="status-value">PostgreSQL</p>
                 </div>
                 <div class="status-card fade-in delay-3">
                     <div class="status-icon">☁️</div>
-                    <h3>Storage</h3>
+                    <h3>Almacenamiento</h3>
                     <p class="status-value">Cloudflare R2</p>
                 </div>
                 <div class="status-card fade-in delay-4">
                     <div class="status-icon">🔥</div>
-                    <h3>Auth</h3>
+                    <h3>Autenticación</h3>
                     <p class="status-value">Firebase</p>
                 </div>
             </div>
@@ -63,10 +65,10 @@
     <!-- Base URL Section -->
     <section class="base-url-section">
         <div class="container">
-            <h2>Base URL</h2>
+            <h2>URL Base</h2>
             <div class="code-block">
                 <code>http://localhost:3000</code>
-                <button class="copy-btn" onclick="copyToClipboard('http://localhost:3000')">📋 Copy</button>
+                <button class="copy-btn" onclick="copyToClipboard('http://localhost:3000')">📋 Copiar</button>
             </div>
         </div>
     </section>
@@ -74,8 +76,8 @@
     <!-- Authentication Section -->
     <section id="authentication" class="section">
         <div class="container">
-            <h2 class="section-title">🔐 Authentication</h2>
-            <p class="section-description">Most endpoints require Firebase authentication. Include the Firebase ID token in the Authorization header.</p>
+            <h2 class="section-title">🔐 Autenticación</h2>
+            <p class="section-description">La mayoría de los endpoints requieren autenticación de Firebase. Incluye el token ID de Firebase en el encabezado de autorización.</p>
             
             <div class="endpoint-card">
                 <div class="endpoint-header">
@@ -695,7 +697,7 @@ codice-dorado, codice_dorado, codice, oro - Códice dorado medal</code></pre>
     <!-- Signs Endpoints -->
     <section id="endpoints" class="section">
         <div class="container">
-            <h2 class="section-title">✋ Signs Endpoints</h2>
+            <h2 class="section-title">✋ Endpoints de Señas</h2>
             
             <div class="endpoint-card">
                 <div class="endpoint-header">
@@ -823,7 +825,7 @@ video: File</code></pre>
     <!-- Categories Endpoints -->
     <section class="section">
         <div class="container">
-            <h2 class="section-title">📁 Categories Endpoints</h2>
+            <h2 class="section-title">📁 Endpoints de Categorías</h2>
             
             <div class="endpoint-card">
                 <div class="endpoint-header">
@@ -885,7 +887,7 @@ file: File (icon image, optional)</code></pre>
     <!-- Exercises Endpoints -->
     <section class="section">
         <div class="container">
-            <h2 class="section-title">📝 Exercises Endpoints</h2>
+            <h2 class="section-title">📝 Endpoints de Ejercicios</h2>
             
             <div class="endpoint-card highlight">
                 <div class="endpoint-header">
@@ -1102,7 +1104,7 @@ Count: Maximum 50 questions per quiz</code></pre>
     <!-- User Endpoints -->
     <section class="section">
         <div class="container">
-            <h2 class="section-title">👤 User Endpoints</h2>
+            <h2 class="section-title">👤 Endpoints de Usuario</h2>
             
             <div class="endpoint-card">
                 <div class="endpoint-header">
@@ -1135,7 +1137,7 @@ Count: Maximum 50 questions per quiz</code></pre>
     <!-- Error Responses -->
     <section class="section">
         <div class="container">
-            <h2 class="section-title">⚠️ Error Responses</h2>
+            <h2 class="section-title">⚠️ Respuestas de Error</h2>
             
             <div class="error-examples">
                 <div class="error-card">
@@ -1177,18 +1179,18 @@ Count: Maximum 50 questions per quiz</code></pre>
     <!-- Database Section -->
     <section id="database" class="section">
         <div class="container">
-            <h2 class="section-title">🗄️ Database Documentation</h2>
+            <h2 class="section-title">🗄️ Documentación de la Base de Datos</h2>
             
             <div class="db-info">
                 <div class="db-card">
-                    <h3>📊 Database Information</h3>
+                    <h3>📊 Información de la Base de Datos</h3>
                     <div class="info-grid">
                         <div class="info-item">
-                            <span class="label">Database Type:</span>
+                            <span class="label">Tipo de Base de Datos:</span>
                             <span class="value">PostgreSQL</span>
                         </div>
                         <div class="info-item">
-                            <span class="label">Version:</span>
+                            <span class="label">Versión:</span>
                             <span class="value">12+</span>
                         </div>
                         <div class="info-item">
@@ -1196,14 +1198,14 @@ Count: Maximum 50 questions per quiz</code></pre>
                             <span class="value">pg (node-postgres)</span>
                         </div>
                         <div class="info-item">
-                            <span class="label">Total Tables:</span>
+                            <span class="label">Total de Tablas:</span>
                             <span class="value">17</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="db-card">
-                    <h3>🔌 Connection Configuration</h3>
+                    <h3>🔌 Configuración de Conexión</h3>
                     <pre><code>// Database Configuration (src/config/database.ts)
 import { Pool } from 'pg';
 
@@ -1222,11 +1224,11 @@ export default pool;</code></pre>
                 </div>
 
                 <div class="db-card">
-                    <h3>📋 Database Schema</h3>
-                    <p class="db-description">The database consists of 17 tables organized into 5 main categories:</p>
+                    <h3>📋 Esquema de Base de Datos</h3>
+                    <p class="db-description">La base de datos consta de 17 tablas organizadas en 5 categorías principales:</p>
                     
                     <div class="schema-category">
-                        <h4>👤 User & Authentication (3 tables)</h4>
+                        <h4>👤 Usuario & Autenticación (3 tablas)</h4>
                         <div class="table-list">
                             <div class="table-item">
                                 <strong>roles</strong>
@@ -1259,7 +1261,7 @@ UNIQUE (user_id, sign_id)</code></pre>
                     </div>
 
                     <div class="schema-category">
-                        <h4>✋ Content Management (3 tables)</h4>
+                        <h4>✋ Gestión de Contenido (3 tablas)</h4>
                         <div class="table-list">
                             <div class="table-item">
                                 <strong>categories</strong>
@@ -1292,7 +1294,7 @@ structure_type varchar(20)</code></pre>
                     </div>
 
                     <div class="schema-category">
-                        <h4>📊 Statistics & Analytics (2 tables)</h4>
+                        <h4>📊 Estadísticas & Análisis (2 tablas)</h4>
                         <div class="table-list">
                             <div class="table-item">
                                 <strong>stats</strong>
@@ -1318,7 +1320,7 @@ last_update timestamp</code></pre>
                     </div>
 
                     <div class="schema-category">
-                        <h4>🎯 Activity Tracking (4 tables)</h4>
+                        <h4>🎯 Seguimiento de Actividad (4 tablas)</h4>
                         <div class="table-list">
                             <div class="table-item">
                                 <strong>user_sign_views</strong>
@@ -1359,7 +1361,7 @@ date date</code></pre>
                     </div>
 
                     <div class="schema-category">
-                        <h4>🏆 Gamification (5 tables)</h4>
+                        <h4>🏆 Gamificación (5 tablas)</h4>
                         <div class="table-list">
                             <div class="table-item">
                                 <strong>streaks</strong>
@@ -1415,7 +1417,7 @@ UNIQUE (user_id, medal_id)</code></pre>
                 </div>
 
                 <div class="db-card">
-                    <h3>🔗 Entity Relationships</h3>
+                    <h3>🔗 Relaciones entre Entidades</h3>
                     <div class="relationships">
                         <div class="relationship-item">
                             <strong>users → roles</strong>
@@ -1449,26 +1451,26 @@ UNIQUE (user_id, medal_id)</code></pre>
                 </div>
 
                 <div class="db-card">
-                    <h3>⚡ Database Setup</h3>
+                    <h3>⚡ Configuración de la Base de Datos</h3>
                     <div class="setup-steps">
                         <div class="step">
                             <div class="step-number">1</div>
                             <div class="step-content">
-                                <h4>Create Database</h4>
+                                <h4>Crear la Base de Datos</h4>
                                 <pre><code>createdb amoxcalli_db</code></pre>
                             </div>
                         </div>
                         <div class="step">
                             <div class="step-number">2</div>
                             <div class="step-content">
-                                <h4>Run Schema</h4>
+                                <h4>Ejecutar el Esquema</h4>
                                 <pre><code>psql -d amoxcalli_db -f Database/AmoxcalliDB.sql</code></pre>
                             </div>
                         </div>
                         <div class="step">
                             <div class="step-number">3</div>
                             <div class="step-content">
-                                <h4>Configure Environment</h4>
+                                <h4>Configurar el Entorno</h4>
                                 <pre><code>DB_HOST=localhost
 DB_PORT=5432
 DB_USER=your_db_user
@@ -1479,7 +1481,7 @@ DB_NAME=amoxcalli_db</code></pre>
                         <div class="step">
                             <div class="step-number">4</div>
                             <div class="step-content">
-                                <h4>Create First Admin</h4>
+                                <h4>Crear el Primer Administrador</h4>
                                 <pre><code>npm run admin:create</code></pre>
                             </div>
                         </div>
@@ -1487,26 +1489,26 @@ DB_NAME=amoxcalli_db</code></pre>
                 </div>
 
                 <div class="db-card">
-                    <h3>🔍 Key Features</h3>
+                    <h3>🔍 Características Clave</h3>
                     <ul class="feature-list">
-                        <li><strong>UUID Primary Keys:</strong> All tables use UUIDs for primary keys via <code>gen_random_uuid()</code></li>
-                        <li><strong>Foreign Key Constraints:</strong> Enforced referential integrity across all relationships</li>
-                        <li><strong>Unique Constraints:</strong> Prevent duplicate favorites, medals, and progress entries</li>
-                        <li><strong>Cascade Deletes:</strong> Medal conditions are deleted when parent medal is removed</li>
-                        <li><strong>Timestamps:</strong> Automatic tracking of creation and update times</li>
-                        <li><strong>Indexes:</strong> Optimized queries on frequently accessed columns</li>
+                        <li><strong>Claves Primarias UUID:</strong> Todas las tablas usan UUIDs para claves primarias mediante <code>gen_random_uuid()</code></li>
+                        <li><strong>Restricciones de Clave Foránea:</strong> Integridad referencial aplicada en todas las relaciones</li>
+                        <li><strong>Restricciones Únicas:</strong> Previenen favoritos, medallas y entradas de progreso duplicadas</li>
+                        <li><strong>Eliminaciones en Cascada:</strong> Las condiciones de medallas se eliminan cuando se elimina la medalla padre</li>
+                        <li><strong>Marcas de Tiempo:</strong> Seguimiento automático de tiempos de creación y actualización</li>
+                        <li><strong>Índices:</strong> Consultas optimizadas en columnas frecuentemente accedidas</li>
                     </ul>
                 </div>
 
                 <div class="db-card">
-                    <h3>⚡ Database Triggers & Functions</h3>
-                    <p class="db-description">Automatic medal awarding system using PostgreSQL triggers</p>
+                    <h3>⚡ Triggers y Funciones de la Base de Datos</h3>
+                    <p class="db-description">Sistema automático de otorgamiento de medallas usando triggers de PostgreSQL</p>
                     
                     <div class="trigger-section">
-                        <h4>🏆 Auto-Award Medals on User Stats</h4>
+                        <h4>🏆 Auto-Otorgar Medallas en Estadísticas de Usuario</h4>
                         <div class="trigger-info">
                             <div class="info-item">
-                                <span class="label">Function:</span>
+                                <span class="label">Función:</span>
                                 <span class="value"><code>award_medals_on_user_stats_change()</code></span>
                             </div>
                             <div class="info-item">
@@ -1514,18 +1516,18 @@ DB_NAME=amoxcalli_db</code></pre>
                                 <span class="value"><code>trg_award_medals_on_user_stats_change</code></span>
                             </div>
                             <div class="info-item">
-                                <span class="label">Fires On:</span>
-                                <span class="value">AFTER INSERT OR UPDATE on <code>user_stats</code></span>
+                                <span class="label">Se Activa En:</span>
+                                <span class="value">AFTER INSERT OR UPDATE en <code>user_stats</code></span>
                             </div>
                         </div>
-                        <p style="margin-top: 1rem; color: var(--text-secondary);">Automatically awards medals when user statistics are updated. Checks all stat-based medal conditions and awards medals if thresholds are met.</p>
+                        <p style="margin-top: 1rem; color: var(--text-secondary);">Otorga automáticamente medallas cuando se actualizan las estadísticas del usuario. Verifica todas las condiciones de medallas basadas en estadísticas y otorga medallas si se cumplen los umbrales.</p>
                     </div>
 
                     <div class="trigger-section" style="margin-top: 1.5rem;">
-                        <h4>🔥 Auto-Award Medals on Streaks</h4>
+                        <h4>🔥 Auto-Otorgar Medallas en Rachas</h4>
                         <div class="trigger-info">
                             <div class="info-item">
-                                <span class="label">Function:</span>
+                                <span class="label">Función:</span>
                                 <span class="value"><code>award_medals_on_streaks_change()</code></span>
                             </div>
                             <div class="info-item">
@@ -1533,21 +1535,21 @@ DB_NAME=amoxcalli_db</code></pre>
                                 <span class="value"><code>trg_award_medals_on_streaks_change</code></span>
                             </div>
                             <div class="info-item">
-                                <span class="label">Fires On:</span>
-                                <span class="value">AFTER INSERT OR UPDATE on <code>streaks</code></span>
+                                <span class="label">Se Activa En:</span>
+                                <span class="value">AFTER INSERT OR UPDATE en <code>streaks</code></span>
                             </div>
                         </div>
-                        <p style="margin-top: 1rem; color: var(--text-secondary);">Automatically awards medals when user streaks are updated. Checks streak-based medal conditions (current_days) and awards medals when thresholds are reached.</p>
+                        <p style="margin-top: 1rem; color: var(--text-secondary);">Otorga automáticamente medallas cuando se actualizan las rachas del usuario. Verifica las condiciones de medallas basadas en rachas (current_days) y otorga medallas cuando se alcanzan los umbrales.</p>
                     </div>
 
                     <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(16, 185, 129, 0.05); border-radius: 8px; border-left: 3px solid var(--success-color);">
-                        <h4 style="color: var(--success-color); margin-bottom: 0.5rem;">Benefits</h4>
+                        <h4 style="color: var(--success-color); margin-bottom: 0.5rem;">Beneficios</h4>
                         <ul style="color: var(--text-secondary); margin-left: 1.5rem; line-height: 1.8;">
-                            <li>Automatic medal awarding without API calls</li>
-                            <li>Real-time achievement tracking</li>
-                            <li>Consistent medal logic at database level</li>
-                            <li>Prevents duplicate medal awards</li>
-                            <li>No additional application code needed</li>
+                            <li>Otorgamiento automático de medallas sin llamadas a la API</li>
+                            <li>Seguimiento de logros en tiempo real</li>
+                            <li>Lógica de medallas consistente a nivel de base de datos</li>
+                            <li>Previene otorgamiento duplicado de medallas</li>
+                            <li>No se necesita código adicional en la aplicación</li>
                         </ul>
                     </div>
                 </div>
@@ -1561,30 +1563,31 @@ DB_NAME=amoxcalli_db</code></pre>
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>KetzalliDB API</h3>
-                    <p>Mexican Sign Language Learning Platform</p>
-                    <p class="version">Version 1.0.0</p>
+                    <p>Plataforma de Aprendizaje de Lengua de Señas Mexicana</p>
+                    <p class="version">Versión 1.0.0</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Quick Links</h4>
+                    <h4>Enlaces Rápidos</h4>
                     <ul>
-                        <li><a href="#authentication">Authentication</a></li>
+                        <li><a href="landing.html">Inicio</a></li>
+                        <li><a href="#authentication">Autenticación</a></li>
                         <li><a href="#endpoints">Endpoints</a></li>
-                        <li><a href="#database">Database</a></li>
-                        <li><a href="/api/health">Health Check</a></li>
-                        <li><a href="/api">API Info</a></li>
+                        <li><a href="#database">Base de Datos</a></li>
+                        <li><a href="/api/health">Verificación de Salud</a></li>
+                        <li><a href="/api">Info de la API</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Resources</h4>
+                    <h4>Recursos</h4>
                     <ul>
                         <li><a href="https://github.com/KetzalliLabs">GitHub</a></li>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Documentación</a></li>
+                        <li><a href="#">Soporte</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 KetzalliLabs. Built with ❤️ for accessibility.</p>
+                <p>&copy; 2025 KetzalliLabs. Hecho con ❤️ para la accesibilidad.</p>
             </div>
         </div>
     </footer>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ketzalli & Amoxcalli - Plataforma de Aprendizaje de Lengua de Señas Mexicana</title>
+    <link rel="stylesheet" href="landing-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-content">
+                    <div class="logos">
+                        <img src="./Media/Images/LOGO_KETZ.png" alt="Ketzalli Logo" class="nav-logo">
+                        <img src="./Media/Images/LOGO_AMOX.png" alt="Amoxcalli Logo" class="nav-logo">
+                    </div>
+                    <a href="index.html" class="btn-api">Documentación API</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="hero-content">
+            <div class="container">
+                <div class="hero-text fade-in">
+                    <h1 class="hero-title">Ketzalli & Amoxcalli</h1>
+                    <p class="hero-subtitle">Plataforma de Aprendizaje de Lengua de Señas Mexicana</p>
+                    <p class="hero-description">
+                        Una API RESTful completa diseñada para potenciar el aprendizaje de la Lengua de Señas Mexicana
+                        a través de tecnología moderna, gamificación y almacenamiento en la nube.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#features" class="btn btn-primary">Explorar Características</a>
+                        <a href="index.html" class="btn btn-secondary">Ver Documentación</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Overview Section -->
+    <section class="section overview">
+        <div class="container">
+            <h2 class="section-title">🌟 Visión General</h2>
+            <p class="section-description">
+                <strong>KetzalliDB API</strong> es un servicio backend basado en TypeScript y Express.js diseñado para 
+                la plataforma Amoxcalli de aprendizaje de Lengua de Señas Mexicana. Proporciona operaciones CRUD completas 
+                para gestionar señas, categorías, ejercicios, perfiles de usuario y características de gamificación 
+                incluyendo rachas, medallas y seguimiento de progreso.
+            </p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section features">
+        <div class="container">
+            <h2 class="section-title">✨ Características Principales</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Autenticación Firebase</h3>
+                    <p>Autenticación segura de usuarios con Firebase Admin SDK</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🗄️</div>
+                    <h3>Base de Datos PostgreSQL</h3>
+                    <p>Base de datos relacional robusta para persistencia de datos</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <h3>Almacenamiento Cloudflare R2</h3>
+                    <p>Almacenamiento en la nube compatible con S3 para archivos multimedia</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🖼️</div>
+                    <h3>Procesamiento de Imágenes</h3>
+                    <p>Optimización automática de imágenes con Sharp</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📁</div>
+                    <h3>Carga de Archivos</h3>
+                    <p>Soporte para imágenes y videos multiparte</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Control de Acceso Basado en Roles</h3>
+                    <p>Roles de administrador y usuario</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Sistema de Gamificación</h3>
+                    <ul class="feature-list">
+                        <li>Seguimiento de rachas diarias</li>
+                        <li>Medallas de logros con condiciones</li>
+                        <li>Seguimiento de progreso por categoría</li>
+                        <li>Historial de finalización de ejercicios</li>
+                        <li>Análisis de visualización de señas</li>
+                        <li>Estadísticas de usuario (EXP, monedas, precisión)</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Sistema de Favoritos</h3>
+                    <p>Los usuarios pueden guardar sus señas favoritas</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Generación de Cuestionarios</h3>
+                    <p>Creación dinámica de cuestionarios con 3 modos (categoría, mixto, personalizado)</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Seguridad de Tipos</h3>
+                    <p>Soporte completo de TypeScript</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Manejo de Errores</h3>
+                    <p>Middleware centralizado de manejo de errores</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Monitoreo de Salud</h3>
+                    <p>Endpoints de verificación de salud integrados</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="section tech-stack">
+        <div class="container">
+            <h2 class="section-title">🛠️ Stack Tecnológico</h2>
+            
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <strong>Runtime:</strong>
+                    <span>Node.js</span>
+                </div>
+                <div class="tech-item">
+                    <strong>Framework:</strong>
+                    <span>Express.js</span>
+                </div>
+                <div class="tech-item">
+                    <strong>Lenguaje:</strong>
+                    <span>TypeScript</span>
+                </div>
+                <div class="tech-item">
+                    <strong>Base de Datos:</strong>
+                    <span>PostgreSQL</span>
+                </div>
+                <div class="tech-item">
+                    <strong>Autenticación:</strong>
+                    <span>Firebase Admin SDK</span>
+                </div>
+                <div class="tech-item">
+                    <strong>Almacenamiento:</strong>
+                    <span>Cloudflare R2 (Compatible S3)</span>
+                </div>
+                <div class="tech-item">
+                    <strong>Procesamiento de Imágenes:</strong>
+                    <span>Sharp</span>
+                </div>
+                <div class="tech-item">
+                    <strong>Carga de Archivos:</strong>
+                    <span>Multer</span>
+                </div>
+                <div class="tech-item">
+                    <strong>Desarrollo:</strong>
+                    <span>tsx (Ejecución TypeScript)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section class="section quick-start">
+        <div class="container">
+            <h2 class="section-title">🚀 Inicio Rápido</h2>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Clonar el Repositorio</h3>
+                        <pre><code>git clone https://github.com/KetzalliLabs/KetzalliDB_API.git
+cd KetzalliDB_API</code></pre>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Instalar Dependencias</h3>
+                        <pre><code>npm install</code></pre>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Configurar Variables de Entorno</h3>
+                        <pre><code>cp .env.example .env
+# Editar .env con tus credenciales</code></pre>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Configurar la Base de Datos</h3>
+                        <pre><code>createdb amoxcalli_db
+psql -d amoxcalli_db -f Database/AmoxcalliDB.sql</code></pre>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Iniciar el Servidor</h3>
+                        <pre><code>npm run dev</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Endpoints Preview -->
+    <section class="section endpoints-preview">
+        <div class="container">
+            <h2 class="section-title">📚 Endpoints de la API</h2>
+            
+            <div class="endpoint-categories">
+                <div class="endpoint-category">
+                    <h3>🔐 Autenticación</h3>
+                    <ul>
+                        <li><span class="method post">POST</span> /api/auth/register</li>
+                        <li><span class="method post">POST</span> /api/auth/login</li>
+                        <li><span class="method get">GET</span> /api/auth/me</li>
+                        <li><span class="method get">GET</span> /api/auth/me/stats</li>
+                    </ul>
+                </div>
+
+                <div class="endpoint-category">
+                    <h3>✋ Señas</h3>
+                    <ul>
+                        <li><span class="method get">GET</span> /api/items?type=signs</li>
+                        <li><span class="method post">POST</span> /api/items/signs</li>
+                        <li><span class="method put">PUT</span> /api/items/signs/:id</li>
+                        <li><span class="method delete">DELETE</span> /api/items/signs/:id</li>
+                    </ul>
+                </div>
+
+                <div class="endpoint-category">
+                    <h3>📁 Categorías</h3>
+                    <ul>
+                        <li><span class="method get">GET</span> /api/items?type=categories</li>
+                        <li><span class="method post">POST</span> /api/items/categories</li>
+                        <li><span class="method put">PUT</span> /api/items/categories/:id</li>
+                        <li><span class="method delete">DELETE</span> /api/items/categories/:id</li>
+                    </ul>
+                </div>
+
+                <div class="endpoint-category">
+                    <h3>📝 Ejercicios</h3>
+                    <ul>
+                        <li><span class="method get">GET</span> /api/items/exercises</li>
+                        <li><span class="method post">POST</span> /api/items/exercises/generate-quiz</li>
+                        <li><span class="method post">POST</span> /api/items/exercises</li>
+                        <li><span class="method delete">DELETE</span> /api/items/exercises/:id</li>
+                    </ul>
+                </div>
+
+                <div class="endpoint-category">
+                    <h3>🏆 Gamificación</h3>
+                    <ul>
+                        <li><span class="method get">GET</span> /api/auth/medals</li>
+                        <li><span class="method get">GET</span> /api/auth/me/medals</li>
+                        <li><span class="method post">POST</span> /api/auth/me/medals/:medalId/claim</li>
+                        <li><span class="method get">GET</span> /api/auth/me/favorites</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-documentation">
+                <a href="index.html" class="btn btn-primary btn-large">Ver Documentación Completa</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Database Schema Section -->
+    <section class="section database">
+        <div class="container">
+            <h2 class="section-title">🗄️ Esquema de Base de Datos</h2>
+            
+            <p class="section-description">
+                La base de datos consta de <strong>17 tablas</strong> organizadas en <strong>5 categorías principales</strong>:
+            </p>
+
+            <div class="db-categories">
+                <div class="db-category">
+                    <h3>👤 Usuario & Autenticación</h3>
+                    <p>roles, users, user_favorite_signs</p>
+                </div>
+
+                <div class="db-category">
+                    <h3>✋ Gestión de Contenido</h3>
+                    <p>categories, signs, exercises</p>
+                </div>
+
+                <div class="db-category">
+                    <h3>📊 Estadísticas & Análisis</h3>
+                    <p>stats, user_stats</p>
+                </div>
+
+                <div class="db-category">
+                    <h3>🎯 Seguimiento de Actividad</h3>
+                    <p>user_sign_views, attempts, user_exercise_history, daily_quiz_history</p>
+                </div>
+
+                <div class="db-category">
+                    <h3>🏆 Gamificación</h3>
+                    <p>streaks, progress, medals, medal_conditions, user_medals</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logos">
+                    <img src="./Media/Images/LOGO_KETZ.png" alt="Ketzalli Logo" class="footer-logo">
+                    <img src="./Media/Images/LOGO_AMOX.png" alt="Amoxcalli Logo" class="footer-logo">
+                </div>
+                
+                <div class="footer-info">
+                    <h3>KetzalliDB API</h3>
+                    <p>Plataforma de Aprendizaje de Lengua de Señas Mexicana</p>
+                    <p class="version">Versión 1.0.0</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Documentación API</a></li>
+                        <li><a href="#features">Características</a></li>
+                        <li><a href="https://github.com/KetzalliLabs">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 KetzalliLabs. Hecho con ❤️ para la accesibilidad.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
