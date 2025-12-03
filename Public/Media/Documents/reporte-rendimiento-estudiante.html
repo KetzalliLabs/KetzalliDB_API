@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Rendimiento - Amoxcalli</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3240;
+            background: white;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 4px solid #00b894;
+        }
+        
+        .logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            height: 80px;
+            width: auto;
+        }
+        
+        .report-title {
+            font-size: 28px;
+            color: #0f1419;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .report-subtitle {
+            font-size: 16px;
+            color: #64748b;
+        }
+        
+        /* Student Info */
+        .student-info {
+            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 5px solid #00b894;
+        }
+        
+        .student-info h2 {
+            color: #00b894;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+        
+        .info-value {
+            font-size: 16px;
+            color: #0f1419;
+            font-weight: 600;
+        }
+        
+        /* Summary Cards */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .summary-card.highlight {
+            border-color: #00b894;
+            background: linear-gradient(135deg, #f0fdfa 0%, white 100%);
+        }
+        
+        .card-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .card-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #00b894;
+            margin-bottom: 5px;
+        }
+        
+        .card-label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Section */
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            color: #0f1419;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Category Chart Table */
+        .category-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .category-table thead {
+            background: linear-gradient(135deg, #00b894 0%, #00966e 100%);
+            color: white;
+        }
+        
+        .category-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .category-table th.center {
+            text-align: center;
+        }
+        
+        .category-table tbody tr {
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .category-table tbody tr:hover {
+            background: #f8fafc;
+        }
+        
+        .category-table tbody tr:last-child {
+            border-bottom: none;
+        }
+        
+        .category-table td {
+            padding: 15px;
+            color: #475569;
+        }
+        
+        .category-table td.center {
+            text-align: center;
+        }
+        
+        .percentage-display {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00b894;
+        }
+        
+        .count-display {
+            font-size: 14px;
+            color: #64748b;
+        }
+        
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .data-table thead {
+            background: linear-gradient(135deg, #00b894 0%, #00966e 100%);
+            color: white;
+        }
+        
+        .data-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .data-table tbody tr {
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .data-table tbody tr:hover {
+            background: #f8fafc;
+        }
+        
+        .data-table tbody tr:last-child {
+            border-bottom: none;
+        }
+        
+        .data-table td {
+            padding: 15px;
+            color: #475569;
+        }
+        
+        .badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .badge.excellent {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .badge.good {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .badge.regular {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .badge.needs-improvement {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        /* Charts */
+        .chart-container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            margin-bottom: 30px;
+        }
+        
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #0f1419;
+        }
+        
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .bar-label {
+            min-width: 120px;
+            font-weight: 600;
+            color: #475569;
+            font-size: 14px;
+        }
+        
+        .bar-wrapper {
+            flex: 1;
+            height: 32px;
+            background: #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+        }
+        
+        .bar-fill.green { background: #00b894; }
+        .bar-fill.blue { background: #0984e3; }
+        .bar-fill.purple { background: #6c5ce7; }
+        .bar-fill.orange { background: #fdcb6e; color: #2d3436; }
+        
+        /* Activity Chart Table */
+        .activity-table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .activity-table thead {
+            background: linear-gradient(135deg, #0984e3 0%, #0766c2 100%);
+            color: white;
+        }
+        
+        .activity-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .activity-table th.center {
+            text-align: center;
+        }
+        
+        .activity-table tbody tr {
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .activity-table tbody tr:hover {
+            background: #f8fafc;
+        }
+        
+        .activity-table tbody tr:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-table td {
+            padding: 15px;
+            color: #475569;
+        }
+        
+        .activity-table td.center {
+            text-align: center;
+        }
+        
+        .week-label {
+            font-weight: 600;
+            color: #0f1419;
+        }
+        
+        .activity-percentage {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .activity-percentage.high {
+            color: #00b894;
+        }
+        
+        .activity-percentage.medium {
+            color: #0984e3;
+        }
+        
+        .activity-percentage.low {
+            color: #fdcb6e;
+        }
+        
+        .activity-count-cell {
+            font-size: 14px;
+            font-weight: 600;
+            color: #475569;
+        }
+        
+        /* Medals */
+        .medals-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .medal-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .medal-card.earned {
+            border-color: #00b894;
+            background: linear-gradient(135deg, #f0fdfa 0%, white 100%);
+        }
+        
+        .medal-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .medal-name {
+            font-weight: 700;
+            color: #0f1419;
+            margin-bottom: 5px;
+        }
+        
+        .medal-date {
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #64748b;
+            font-size: 12px;
+        }
+        
+        .footer-note {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #00b894;
+            text-align: left;
+        }
+        
+        /* Print Styles */
+        @media print {
+            .container {
+                padding: 0;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+            
+            .summary-cards,
+            .medals-grid {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logos">
+                <img src="../Images/LOGO_KETZ.png" alt="Ketzalli Logo" class="logo">
+                <img src="../Images/LOGO_AMOX.png" alt="Amoxcalli Logo" class="logo">
+            </div>
+            <h1 class="report-title">Reporte de Rendimiento del Estudiante</h1>
+            <p class="report-subtitle">Plataforma de Aprendizaje de Lengua de Señas Mexicana</p>
+        </div>
+
+        <!-- Student Information -->
+        <div class="student-info">
+            <h2>📋 Información del Estudiante</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Nombre Completo</span>
+                    <span class="info-value">Santiago Quintana Moreno</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">ID de Usuario</span>
+                    <span class="info-value">A01571222</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Fecha de Registro</span>
+                    <span class="info-value">3 de Diciembre, 2025</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Período del Reporte</span>
+                    <span class="info-value">Noviembre - Diciembre 2025</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+            <div class="summary-card highlight">
+                <div class="card-icon">🏆</div>
+                <div class="card-value">1,250</div>
+                <div class="card-label">Puntos de Experiencia</div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon">🔥</div>
+                <div class="card-value">28</div>
+                <div class="card-label">Días de Racha</div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon">✅</div>
+                <div class="card-value">92%</div>
+                <div class="card-label">Precisión Global</div>
+            </div>
+        </div>
+
+        <!-- Progress by Category -->
+        <div class="section">
+            <h2 class="section-title">📊 Progreso por Categoría</h2>
+            
+            <table class="category-table">
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th class="center">Señas Completadas</th>
+                        <th class="center">Total de Señas</th>
+                        <th class="center">Porcentaje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Abecedario</strong></td>
+                        <td class="center">27</td>
+                        <td class="center">27</td>
+                        <td class="center"><span class="percentage-display">100%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Números</strong></td>
+                        <td class="center">9</td>
+                        <td class="center">10</td>
+                        <td class="center"><span class="percentage-display">90%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Saludos</strong></td>
+                        <td class="center">17</td>
+                        <td class="center">20</td>
+                        <td class="center"><span class="percentage-display">85%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Familia</strong></td>
+                        <td class="center">12</td>
+                        <td class="center">16</td>
+                        <td class="center"><span class="percentage-display">75%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Colores</strong></td>
+                        <td class="center">6</td>
+                        <td class="center">10</td>
+                        <td class="center"><span class="percentage-display">60%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Activity Statistics Chart -->
+        <div class="section">
+            <h2 class="section-title">📈 Estadísticas de Actividad</h2>
+            
+            <div class="chart-container">
+                <div class="chart-title">Señas Aprendidas por Semana (Últimas 4 semanas)</div>
+                <table class="activity-table">
+                    <thead>
+                        <tr>
+                            <th>Período</th>
+                            <th class="center">Señas Aprendidas</th>
+                            <th class="center">Porcentaje del Objetivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="week-label">Semana 1</span></td>
+                            <td class="center"><span class="activity-count-cell">17 señas</span></td>
+                            <td class="center"><span class="activity-percentage high">85%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="week-label">Semana 2</span></td>
+                            <td class="center"><span class="activity-count-cell">19 señas</span></td>
+                            <td class="center"><span class="activity-percentage high">95%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="week-label">Semana 3</span></td>
+                            <td class="center"><span class="activity-count-cell">20 señas</span></td>
+                            <td class="center"><span class="activity-percentage high">100%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="week-label">Semana 4</span></td>
+                            <td class="center"><span class="activity-count-cell">15 señas</span></td>
+                            <td class="center"><span class="activity-percentage low">75%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Performance Table -->
+        <div class="section">
+            <h2 class="section-title">📝 Historial de Evaluaciones</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Categoría</th>
+                        <th>Tipo</th>
+                        <th>Preguntas</th>
+                        <th>Correctas</th>
+                        <th>Calificación</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01/12/2024</td>
+                        <td>Abecedario</td>
+                        <td>Quiz Diario</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td><strong>100%</strong></td>
+                        <td><span class="badge excellent">Excelente</span></td>
+                    </tr>
+                    <tr>
+                        <td>30/11/2024</td>
+                        <td>Números</td>
+                        <td>Quiz Categoría</td>
+                        <td>10</td>
+                        <td>9</td>
+                        <td><strong>90%</strong></td>
+                        <td><span class="badge excellent">Excelente</span></td>
+                    </tr>
+                    <tr>
+                        <td>28/11/2024</td>
+                        <td>Saludos</td>
+                        <td>Quiz Mixto</td>
+                        <td>15</td>
+                        <td>13</td>
+                        <td><strong>87%</strong></td>
+                        <td><span class="badge good">Bueno</span></td>
+                    </tr>
+                    <tr>
+                        <td>25/11/2024</td>
+                        <td>Familia</td>
+                        <td>Quiz Diario</td>
+                        <td>10</td>
+                        <td>8</td>
+                        <td><strong>80%</strong></td>
+                        <td><span class="badge good">Bueno</span></td>
+                    </tr>
+                    <tr>
+                        <td>22/11/2024</td>
+                        <td>Colores</td>
+                        <td>Quiz Categoría</td>
+                        <td>10</td>
+                        <td>7</td>
+                        <td><strong>70%</strong></td>
+                        <td><span class="badge regular">Regular</span></td>
+                    </tr>
+                    <tr>
+                        <td>20/11/2024</td>
+                        <td>Mixto</td>
+                        <td>Quiz Personalizado</td>
+                        <td>20</td>
+                        <td>18</td>
+                        <td><strong>90%</strong></td>
+                        <td><span class="badge excellent">Excelente</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Medals Section -->
+        <div class="section">
+            <h2 class="section-title">🏅 Medallas Obtenidas</h2>
+            
+            <div class="medals-grid">
+                <div class="medal-card earned">
+                    <div class="medal-icon">🌽</div>
+                    <div class="medal-name">Tlaolli</div>
+                    <div class="medal-date">Obtenida: 20/09/2024</div>
+                </div>
+                <div class="medal-card earned">
+                    <div class="medal-icon">💎</div>
+                    <div class="medal-name">Jade</div>
+                    <div class="medal-date">Obtenida: 05/10/2024</div>
+                </div>
+                <div class="medal-card earned">
+                    <div class="medal-icon">🗿</div>
+                    <div class="medal-name">Obsidiana</div>
+                    <div class="medal-date">Obtenida: 22/10/2024</div>
+                </div>
+                <div class="medal-card earned">
+                    <div class="medal-icon">💠</div>
+                    <div class="medal-name">Turquesa</div>
+                    <div class="medal-date">Obtenida: 10/11/2024</div>
+                </div>
+                <div class="medal-card">
+                    <div class="medal-icon" style="opacity: 0.3;">🦜</div>
+                    <div class="medal-name" style="opacity: 0.5;">Quetzal</div>
+                    <div class="medal-date" style="opacity: 0.5;">Por obtener</div>
+                </div>
+                <div class="medal-card">
+                    <div class="medal-icon" style="opacity: 0.3;">📜</div>
+                    <div class="medal-name" style="opacity: 0.5;">Códice Dorado</div>
+                    <div class="medal-date" style="opacity: 0.5;">Por obtener</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Statistics -->
+        <div class="section">
+            <h2 class="section-title">📊 Estadísticas Detalladas</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Métrica</th>
+                        <th>Valor</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Señas Visualizadas</strong></td>
+                        <td>71</td>
+                        <td>Total de señas diferentes visualizadas</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ejercicios Completados</strong></td>
+                        <td>156</td>
+                        <td>Total de ejercicios realizados</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quiz Diarios</strong></td>
+                        <td>28/30</td>
+                        <td>Quizzes diarios completados este mes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tiempo de Estudio</strong></td>
+                        <td>18.5 hrs</td>
+                        <td>Tiempo total invertido en la plataforma</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Promedio Diario</strong></td>
+                        <td>35 min</td>
+                        <td>Tiempo promedio de estudio por día</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Señas Favoritas</strong></td>
+                        <td>12</td>
+                        <td>Señas guardadas como favoritas</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Monedas Acumuladas</strong></td>
+                        <td>780</td>
+                        <td>Monedas virtuales obtenidas</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="section">
+            <h2 class="section-title">💡 Recomendaciones</h2>
+            
+            <div class="footer-note">
+                <p><strong>Áreas de Fortaleza:</strong></p>
+                <ul style="margin: 10px 0 20px 20px;">
+                    <li>Excelente dominio del abecedario (100% completado)</li>
+                    <li>Consistencia destacada con 28 días de racha activa</li>
+                    <li>Alta precisión general del 92% en evaluaciones</li>
+                    <li>Participación constante en quizzes diarios</li>
+                </ul>
+                
+                <p><strong>Áreas de Oportunidad:</strong></p>
+                <ul style="margin: 10px 0 20px 20px;">
+                    <li>Reforzar práctica en la categoría de "Colores" (60% completado)</li>
+                    <li>Incrementar tiempo de estudio en categorías avanzadas</li>
+                    <li>Practicar más ejercicios mixtos para integración de conocimientos</li>
+                    <li>Continuar racha diaria para obtener medalla "Quetzal"</li>
+                </ul>
+                
+                <p><strong>Meta Sugerida:</strong></p>
+                <p style="margin: 10px 0 0 0;">
+                    Alcanzar el 80% de progreso en todas las categorías durante el siguiente mes 
+                    y mantener una precisión superior al 85% en evaluaciones.
+                </p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Ketzalli & Amoxcalli</strong> - Plataforma de Aprendizaje de Lengua de Señas Mexicana</p>
+            <p>Reporte generado el 3 de Diciembre, 2025</p>
+            <p style="margin-top: 10px; font-size: 11px;">
+                Este reporte es confidencial y contiene información del progreso académico del estudiante.<br>
+                Para más información, visite nuestra plataforma o contacte a soporte técnico.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
