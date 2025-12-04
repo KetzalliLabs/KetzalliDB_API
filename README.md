@@ -1,122 +1,122 @@
 # KetzalliDB API
 
-> A RESTful API for Amoxcalli - Mexican Sign Language Learning Platform
+> API RESTful para Amoxcalli - Plataforma de Aprendizaje de Lengua de Señas Mexicana
 
-## ✅ Project Status
+## Estado del Proyecto
 
-**COMPLETED** - Version 1.0.0 (December 3, 2025)
+**COMPLETADO** - Versión 1.0.0 (3 de Diciembre, 2025)
 
-This project is officially complete and production-ready. All core features, authentication, gamification systems, and API endpoints are fully implemented and tested.
+Este proyecto está oficialmente completo y listo para producción. Todas las características principales, autenticación, sistemas de gamificación y endpoints de la API están completamente implementados y probados.
 
-## 📋 Table of Contents
+## Tabla de Contenidos
 
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Database Setup](#database-setup)
-- [Running the Application](#running-the-application)
-- [API Endpoints](#api-endpoints)
-- [Authentication](#authentication)
-- [Admin Management](#admin-management)
-- [File Upload](#file-upload)
-- [Error Handling](#error-handling)
-- [Project Structure](#project-structure)
-- [Development](#development)
-- [License](#license)
+- [Descripción General](#descripción-general)
+- [Características](#características)
+- [Stack Tecnológico](#stack-tecnológico)
+- [Prerequisitos](#prerequisitos)
+- [Instalación](#instalación)
+- [Configuración](#configuración)
+- [Configuración de la Base de Datos](#configuración-de-la-base-de-datos)
+- [Ejecutar la Aplicación](#ejecutar-la-aplicación)
+- [Endpoints de la API](#endpoints-de-la-api)
+- [Autenticación](#autenticación)
+- [Gestión de Administradores](#gestión-de-administradores)
+- [Carga de Archivos](#carga-de-archivos)
+- [Manejo de Errores](#manejo-de-errores)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Desarrollo](#desarrollo)
+- [Licencia](#licencia)
 
-## 🌟 Overview
+## Descripción General
 
-KetzalliDB API is a production-ready TypeScript-based Express.js backend service designed for the Amoxcalli Mexican Sign Language learning platform. It provides comprehensive CRUD operations for managing signs, categories, exercises, user profiles, and gamification features including streaks, medals, and progress tracking.
+KetzalliDB API es un servicio backend basado en Express.js y TypeScript listo para producción, diseñado para la plataforma de aprendizaje de Lengua de Señas Mexicana Amoxcalli. Proporciona operaciones CRUD completas para gestionar señas, categorías, ejercicios, perfiles de usuario y características de gamificación incluyendo rachas, medallas y seguimiento de progreso.
 
-**Version**: 1.0.0  
-**Status**: Production Ready  
-**Completion Date**: December 3, 2025
+**Versión**: 1.0.0  
+**Estado**: Listo para Producción  
+**Fecha de Finalización**: 3 de Diciembre, 2025
 
-## ✨ Features
+## Características
 
-- 🔐 **Firebase Authentication** - Secure user authentication with Firebase Admin SDK
-- 🗄️ **PostgreSQL Database** - Robust relational database for data persistence
-- ☁️ **Cloudflare R2 Storage** - S3-compatible cloud storage for media files
-- 🖼️ **Image Processing** - Automatic image optimization with Sharp
-- 📁 **Multi-part File Uploads** - Support for images and videos
-- 🎯 **Role-based Access Control** - Admin and user roles
-- 🏆 **Gamification System**:
-  - Daily streaks tracking
-  - Achievement medals with conditions
-  - User progress tracking by category
-  - Exercise completion history
-  - Sign view analytics
-  - User statistics (EXP, coins, accuracy)
-- ⭐ **Favorites System** - Users can save favorite signs
-- 📊 **Quiz Generation** - Dynamic quiz creation with 3 modes (category, mixed, custom)
-- 🔍 **Type Safety** - Full TypeScript support
-- 🛡️ **Error Handling** - Centralized error handling middleware
-- 📊 **Health Monitoring** - Built-in health check endpoints
+- **Autenticación Firebase** - Autenticación segura de usuarios con Firebase Admin SDK
+- **Base de Datos PostgreSQL** - Base de datos relacional robusta para persistencia de datos
+- **Almacenamiento Cloudflare R2** - Almacenamiento en la nube compatible con S3 para archivos multimedia
+- **Procesamiento de Imágenes** - Optimización automática de imágenes con Sharp
+- **Carga de Archivos Multi-parte** - Soporte para imágenes y videos
+- **Control de Acceso Basado en Roles** - Roles de administrador y usuario
+- **Sistema de Gamificación**:
+  - Seguimiento de rachas diarias
+  - Medallas de logros con condiciones
+  - Seguimiento de progreso del usuario por categoría
+  - Historial de finalización de ejercicios
+  - Análisis de visualización de señas
+  - Estadísticas de usuario (EXP, monedas, precisión)
+- **Sistema de Favoritos** - Los usuarios pueden guardar señas favoritas
+- **Generación de Quizzes** - Creación dinámica de quizzes con 3 modos (categoría, mixto, personalizado)
+- **Seguridad de Tipos** - Soporte completo de TypeScript
+- **Manejo de Errores** - Middleware centralizado de manejo de errores
+- **Monitoreo de Salud** - Endpoints integrados de verificación de salud
 
-## 🛠️ Tech Stack
+## Stack Tecnológico
 
 - **Runtime**: Node.js
 - **Framework**: Express.js
-- **Language**: TypeScript
-- **Database**: PostgreSQL
-- **Authentication**: Firebase Admin SDK
-- **Storage**: Cloudflare R2 (S3-compatible)
-- **Image Processing**: Sharp
-- **File Upload**: Multer
-- **Development**: tsx (TypeScript execution)
+- **Lenguaje**: TypeScript
+- **Base de Datos**: PostgreSQL
+- **Autenticación**: Firebase Admin SDK
+- **Almacenamiento**: Cloudflare R2 (compatible con S3)
+- **Procesamiento de Imágenes**: Sharp
+- **Carga de Archivos**: Multer
+- **Desarrollo**: tsx (ejecución de TypeScript)
 
-## 📦 Prerequisites
+## Prerequisitos
 
-Before you begin, ensure you have the following installed:
+Antes de comenzar, asegúrate de tener lo siguiente instalado:
 
-- Node.js (v18 or higher)
-- PostgreSQL (v12 or higher)
-- npm or yarn
-- Firebase project with service account
-- Cloudflare R2 account (or S3-compatible storage)
+- Node.js (v18 o superior)
+- PostgreSQL (v12 o superior)
+- npm o yarn
+- Proyecto Firebase con cuenta de servicio
+- Cuenta Cloudflare R2 (o almacenamiento compatible con S3)
 
-## 🚀 Installation
+## Instalación
 
-1. **Clone the repository**
+1. **Clonar el repositorio**
    ```bash
    git clone https://github.com/KetzalliLabs/KetzalliDB_API.git
    cd KetzalliDB_API
    ```
 
-2. **Install dependencies**
+2. **Instalar dependencias**
    ```bash
    npm install
    ```
 
-3. **Set up Firebase service account**
-   - Download your Firebase service account JSON file
-   - Save it as `serviceAccount.json` in the project root
+3. **Configurar cuenta de servicio de Firebase**
+   - Descarga tu archivo JSON de cuenta de servicio de Firebase
+   - Guárdalo como `serviceAccount.json` en la raíz del proyecto
 
-## ⚙️ Configuration
+## Configuración
 
-Create a `.env` file in the project root with the following variables:
+Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
 
 ```env
-# Server Configuration
+# Configuración del Servidor
 PORT=3000
 NODE_ENV=development
 
-# Database Configuration
+# Configuración de Base de Datos
 DB_HOST=localhost
 DB_PORT=5432
 DB_USER=your_db_user
 DB_PASSWORD=your_db_password
 DB_NAME=amoxcalli_db
 
-# Firebase Configuration
+# Configuración de Firebase
 FIREBASE_PROJECT_ID=your-project-id
 FIREBASE_PRIVATE_KEY=your-private-key
 FIREBASE_CLIENT_EMAIL=your-client-email
 
-# Cloudflare R2 Configuration
+# Configuración de Cloudflare R2
 R2_ACCOUNT_ID=your_account_id
 R2_ACCESS_KEY_ID=your_access_key_id
 R2_SECRET_ACCESS_KEY=your_secret_access_key
@@ -124,158 +124,158 @@ R2_BUCKET_NAME=your_bucket_name
 R2_PUBLIC_URL=https://your-public-url.r2.dev
 ```
 
-## 🗄️ Database Setup
+## Configuración de la Base de Datos
 
-1. **Create the database**
+1. **Crear la base de datos**
    ```bash
    createdb amoxcalli_db
    ```
 
-2. **Run the SQL schema**
+2. **Ejecutar el esquema SQL**
    ```bash
    psql -d amoxcalli_db -f Database/Amoxcalli_DB.sql
    ```
 
-3. **Create first admin user**
+3. **Crear primer usuario administrador**
    ```bash
    npm run admin:create
    ```
 
-## 🏃 Running the Application
+## Ejecutar la Aplicación
 
-### Development Mode
+### Modo Desarrollo
 ```bash
 npm run dev
 ```
 
-### Production Mode
+### Modo Producción
 ```bash
 npm run build
 npm start
 ```
 
-### Clean Build
+### Build Limpio
 ```bash
 npm run clean
 npm run build
 ```
 
-## 📚 API Endpoints
+## Endpoints de la API
 
-### Health & Info
+### Salud e Información
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| GET | `/` | API welcome message | No |
-| GET | `/api` | API documentation | No |
-| GET | `/api/health` | Health check with service status | No |
+| Método | Endpoint | Descripción | Autenticación Requerida |
+|--------|----------|-------------|-------------------------|
+| GET | `/` | Mensaje de bienvenida de la API | No |
+| GET | `/api` | Documentación de la API | No |
+| GET | `/api/health` | Verificación de salud con estado de servicios | No |
 
-### Authentication
+### Autenticación
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/api/auth/register` | Register new user in DB | No |
-| POST | `/api/auth/login` | Login user (auto-creates if doesn't exist) | No |
-| GET | `/api/auth/me` | Get current user profile with stats | Yes |
-| GET | `/api/auth/me/stats` | Get user statistics and progress | Yes |
-| POST | `/api/auth/verify` | Verify Firebase token | Yes |
-| POST | `/api/auth/users` | Create new user (admin) | Yes (Admin) |
-| POST | `/api/auth/users/claims` | Set user custom claims (admin) | Yes (Admin) |
-| DELETE | `/api/auth/users/:uid` | Delete user (admin) | Yes (Admin) |
+| Método | Endpoint | Descripción | Autenticación Requerida |
+|--------|----------|-------------|-------------------------|
+| POST | `/api/auth/register` | Registrar nuevo usuario en BD | No |
+| POST | `/api/auth/login` | Iniciar sesión de usuario (auto-crea si no existe) | No |
+| GET | `/api/auth/me` | Obtener perfil de usuario actual con estadísticas | Sí |
+| GET | `/api/auth/me/stats` | Obtener estadísticas y progreso del usuario | Sí |
+| POST | `/api/auth/verify` | Verificar token de Firebase | Sí |
+| POST | `/api/auth/users` | Crear nuevo usuario (admin) | Sí (Admin) |
+| POST | `/api/auth/users/claims` | Establecer claims personalizados de usuario (admin) | Sí (Admin) |
+| DELETE | `/api/auth/users/:uid` | Eliminar usuario (admin) | Sí (Admin) |
 
-### User Activity Tracking
+### Seguimiento de Actividad del Usuario
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/api/auth/me/signs/:signId/view` | Record sign view | Yes |
-| POST | `/api/auth/me/exercises/:exerciseId/complete` | Record exercise completion | Yes |
-| POST | `/api/auth/me/daily-quiz` | Record daily quiz result | Yes |
+| Método | Endpoint | Descripción | Autenticación Requerida |
+|--------|----------|-------------|-------------------------|
+| POST | `/api/auth/me/signs/:signId/view` | Registrar visualización de seña | Sí |
+| POST | `/api/auth/me/exercises/:exerciseId/complete` | Registrar finalización de ejercicio | Sí |
+| POST | `/api/auth/me/daily-quiz` | Registrar resultado de quiz diario | Sí |
 
-### Favorites
+### Favoritos
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/api/auth/me/favorites/:signId` | Add sign to favorites | Yes |
-| DELETE | `/api/auth/me/favorites/:signId` | Remove sign from favorites | Yes |
-| GET | `/api/auth/me/favorites` | Get user's favorite signs | Yes |
+| Método | Endpoint | Descripción | Autenticación Requerida |
+|--------|----------|-------------|-------------------------|
+| POST | `/api/auth/me/favorites/:signId` | Agregar seña a favoritos | Sí |
+| DELETE | `/api/auth/me/favorites/:signId` | Eliminar seña de favoritos | Sí |
+| GET | `/api/auth/me/favorites` | Obtener señas favoritas del usuario | Sí |
 
-### Medals & Achievements
+### Medallas y Logros
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| GET | `/api/auth/medals` | Get all available medals | No |
-| GET | `/api/auth/me/medals` | Get user's earned medals | Yes |
-| POST | `/api/auth/me/medals/:medalId/claim` | Claim a medal | Yes |
-| POST | `/api/auth/users/:uid/medals/:medalId` | Award medal to user (admin) | Yes (Admin) |
-| GET | `/api/items/medals/:slug` | Get medal by slug (public) | No |
+| Método | Endpoint | Descripción | Autenticación Requerida |
+|--------|----------|-------------|-------------------------|
+| GET | `/api/auth/medals` | Obtener todas las medallas disponibles | No |
+| GET | `/api/auth/me/medals` | Obtener medallas ganadas del usuario | Sí |
+| POST | `/api/auth/me/medals/:medalId/claim` | Reclamar una medalla | Sí |
+| POST | `/api/auth/users/:uid/medals/:medalId` | Otorgar medalla a usuario (admin) | Sí (Admin) |
+| GET | `/api/items/medals/:slug` | Obtener medalla por slug (público) | No |
 
-### Items (Signs & Categories)
+### Items (Señas y Categorías)
 
-#### Public Endpoints (Read-only)
+#### Endpoints Públicos (Solo lectura)
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| GET | `/api/items` | Get all items (supports type & category_id query params) | No |
-| GET | `/api/items/:id` | Get item by ID (supports type query param) | No |
+| Método | Endpoint | Descripción | Autenticación Requerida |
+|--------|----------|-------------|-------------------------|
+| GET | `/api/items` | Obtener todos los items (soporta parámetros type y category_id) | No |
+| GET | `/api/items/:id` | Obtener item por ID (soporta parámetro type) | No |
 
-**Query Parameters:**
+**Parámetros de Consulta:**
 - `type`: `signs`, `categories`, `exercises`
-- `category_id`: Filter items by category UUID
+- `category_id`: Filtrar items por UUID de categoría
 
-#### Protected Endpoints (Authentication Required)
+#### Endpoints Protegidos (Autenticación Requerida)
 
-##### Signs
+##### Señas
 
-| Method | Endpoint | Description | Content-Type |
+| Método | Endpoint | Descripción | Content-Type |
 |--------|----------|-------------|--------------|
-| POST | `/api/items/signs` | Create new sign | `multipart/form-data` |
-| PUT | `/api/items/signs/:id` | Update sign | `multipart/form-data` |
-| DELETE | `/api/items/signs/:id` | Delete sign | - |
+| POST | `/api/items/signs` | Crear nueva seña | `multipart/form-data` |
+| PUT | `/api/items/signs/:id` | Actualizar seña | `multipart/form-data` |
+| DELETE | `/api/items/signs/:id` | Eliminar seña | - |
 
-**Sign Form Data:**
-- `name` (string): Sign name
-- `description` (string): Sign description
-- `category_id` (uuid): Category UUID
-- `image` (file): Sign image (optional)
-- `video` (file): Sign video (optional)
+**Datos de Formulario de Seña:**
+- `name` (string): Nombre de la seña
+- `description` (string): Descripción de la seña
+- `category_id` (uuid): UUID de categoría
+- `image` (file): Imagen de la seña (opcional)
+- `video` (file): Video de la seña (opcional)
 
-##### Categories
+##### Categorías
 
-| Method | Endpoint | Description | Content-Type |
+| Método | Endpoint | Descripción | Content-Type |
 |--------|----------|-------------|--------------|
-| POST | `/api/items/categories` | Create new category | `multipart/form-data` |
-| PUT | `/api/items/categories/:id` | Update category | `multipart/form-data` |
-| DELETE | `/api/items/categories/:id` | Delete category | - |
+| POST | `/api/items/categories` | Crear nueva categoría | `multipart/form-data` |
+| PUT | `/api/items/categories/:id` | Actualizar categoría | `multipart/form-data` |
+| DELETE | `/api/items/categories/:id` | Eliminar categoría | - |
 
-**Category Form Data:**
-- `name` (string): Category name
-- `description` (string): Category description
-- `file` (file): Category icon image (optional)
+**Datos de Formulario de Categoría:**
+- `name` (string): Nombre de la categoría
+- `description` (string): Descripción de la categoría
+- `file` (file): Imagen de icono de categoría (opcional)
 
-##### Exercises
+##### Ejercicios
 
-| Method | Endpoint | Description | Content-Type |
+| Método | Endpoint | Descripción | Content-Type |
 |--------|----------|-------------|--------------|
-| GET | `/api/items/exercises` | Get exercises with options | - |
-| GET | `/api/items/exercises/:id/quiz` | Get exercise as quiz (1 correct + 3 incorrect) | - |
-| POST | `/api/items/exercises/generate-quiz` | Generate quiz with multiple exercises | `application/json` |
-| POST | `/api/items/exercises` | Create new exercise | `application/json` |
-| DELETE | `/api/items/exercises/:id` | Delete exercise | - |
+| GET | `/api/items/exercises` | Obtener ejercicios con opciones | - |
+| GET | `/api/items/exercises/:id/quiz` | Obtener ejercicio como quiz (1 correcta + 3 incorrectas) | - |
+| POST | `/api/items/exercises/generate-quiz` | Generar quiz con múltiples ejercicios | `application/json` |
+| POST | `/api/items/exercises` | Crear nuevo ejercicio | `application/json` |
+| DELETE | `/api/items/exercises/:id` | Eliminar ejercicio | - |
 
-**Get Exercises Query Parameters:**
-- `category_id` (uuid): Filter by category
-- `exercise_id` (uuid): Get specific exercise
+**Parámetros de Consulta para Obtener Ejercicios:**
+- `category_id` (uuid): Filtrar por categoría
+- `exercise_id` (uuid): Obtener ejercicio específico
 
-**Exercise JSON Body:**
+**Cuerpo JSON de Ejercicio:**
 ```json
 {
   "category_id": "uuid",
   "type": "multiple_choice",
-  "prompt": "What is this sign?",
+  "prompt": "¿Qué es esta seña?",
   "order_num": 1,
   "options": [
     {
-      "text": "Option 1",
+      "text": "Opción 1",
       "image_url": "https://...",
       "video_url": "https://...",
       "is_correct": true
@@ -284,7 +284,7 @@ npm run build
 }
 ```
 
-**Generate Quiz JSON Body:**
+**Cuerpo JSON para Generar Quiz:**
 ```json
 {
   "mode": "category",
@@ -293,99 +293,99 @@ npm run build
 }
 ```
 
-**Quiz Modes:**
-- `category` - Questions from specific category (requires `category_id`)
-- `mixed` - Random questions from all categories
-- `custom` - Specific exercises (requires `exercise_ids` array)
+**Modos de Quiz:**
+- `category` - Preguntas de categoría específica (requiere `category_id`)
+- `mixed` - Preguntas aleatorias de todas las categorías
+- `custom` - Ejercicios específicos (requiere array `exercise_ids`)
 
-##### User Avatar
+##### Avatar de Usuario
 
-| Method | Endpoint | Description | Content-Type |
+| Método | Endpoint | Descripción | Content-Type |
 |--------|----------|-------------|--------------|
-| PUT | `/api/items/users/:userId/avatar` | Update user avatar | `multipart/form-data` |
+| PUT | `/api/items/users/:userId/avatar` | Actualizar avatar de usuario | `multipart/form-data` |
 
-**Avatar Form Data:**
-- `file` (file): Avatar image
+**Datos de Formulario de Avatar:**
+- `file` (file): Imagen de avatar
 
-## 🔐 Authentication
+## Autenticación
 
-This API uses Firebase Authentication. To access protected endpoints:
+Esta API utiliza Firebase Authentication. Para acceder a endpoints protegidos:
 
-1. **Obtain a Firebase ID token** from your client application
-2. **Include the token** in the Authorization header:
+1. **Obtén un token de ID de Firebase** desde tu aplicación cliente
+2. **Incluye el token** en el encabezado de Autorización:
    ```
-   Authorization: Bearer YOUR_FIREBASE_ID_TOKEN
+   Authorization: Bearer TU_TOKEN_DE_ID_DE_FIREBASE
    ```
 
-### Example Request
+### Ejemplo de Solicitud
 
 ```bash
 curl -X GET http://localhost:3000/api/auth/me \
   -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
-## 👑 Admin Management
+## Gestión de Administradores
 
-The API includes built-in scripts for managing admin users:
+La API incluye scripts integrados para gestionar usuarios administradores:
 
-### Create First Admin
+### Crear Primer Administrador
 ```bash
 npm run admin:create
 ```
-Creates the first admin user in the database and sets Firebase custom claims.
+Crea el primer usuario administrador en la base de datos y establece los claims personalizados de Firebase.
 
-### Set Admin Role
+### Establecer Rol de Administrador
 ```bash
 npm run admin:set
 ```
-Grant admin privileges to a user by Firebase UID.
+Otorgar privilegios de administrador a un usuario por UID de Firebase.
 
-### Remove Admin Role
+### Eliminar Rol de Administrador
 ```bash
 npm run admin:remove
 ```
-Revoke admin privileges from a user.
+Revocar privilegios de administrador de un usuario.
 
-### List All Admins
+### Listar Todos los Administradores
 ```bash
 npm run admin:list
 ```
-Display all users with admin role.
+Mostrar todos los usuarios con rol de administrador.
 
-## 📤 File Upload
+## Carga de Archivos
 
-The API supports file uploads for:
-- **Sign images** (PNG, JPEG, WebP)
-- **Sign videos** (MP4, WebM)
-- **Category icons** (PNG, JPEG, WebP)
-- **User avatars** (PNG, JPEG, WebP)
+La API soporta carga de archivos para:
+- **Imágenes de señas** (PNG, JPEG, WebP)
+- **Videos de señas** (MP4, WebM)
+- **Iconos de categorías** (PNG, JPEG, WebP)
+- **Avatares de usuario** (PNG, JPEG, WebP)
 
-### Upload Specifications
+### Especificaciones de Carga
 
-- **Max file size**: 10MB (images), 50MB (videos)
-- **Accepted formats**:
-  - Images: PNG, JPEG, JPG, WebP, GIF
+- **Tamaño máximo de archivo**: 10MB (imágenes), 50MB (videos)
+- **Formatos aceptados**:
+  - Imágenes: PNG, JPEG, JPG, WebP, GIF
   - Videos: MP4, WebM, AVI, MOV
-- **Image processing**: Automatic optimization and resizing
-- **Storage**: Cloudflare R2 with public URLs
+- **Procesamiento de imágenes**: Optimización y redimensionamiento automático
+- **Almacenamiento**: Cloudflare R2 con URLs públicas
 
-### Example Upload (cURL)
+### Ejemplo de Carga (cURL)
 
 ```bash
 curl -X POST http://localhost:3000/api/items/signs \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -F "name=Hello" \
-  -F "description=Sign for greeting" \
+  -H "Authorization: Bearer TU_TOKEN" \
+  -F "name=Hola" \
+  -F "description=Seña de saludo" \
   -F "category_id=550e8400-e29b-41d4-a716-446655440000" \
-  -F "image=@/path/to/image.jpg" \
-  -F "video=@/path/to/video.mp4"
+  -F "image=@/ruta/a/imagen.jpg" \
+  -F "video=@/ruta/a/video.mp4"
 ```
 
-## ⚠️ Error Handling
+## Manejo de Errores
 
-The API uses centralized error handling with consistent response formats:
+La API utiliza manejo de errores centralizado con formatos de respuesta consistentes:
 
-### Success Response
+### Respuesta Exitosa
 ```json
 {
   "success": true,
@@ -393,139 +393,139 @@ The API uses centralized error handling with consistent response formats:
 }
 ```
 
-### Error Response
+### Respuesta de Error
 ```json
 {
   "success": false,
-  "error": "Error message",
-  "details": "Detailed error information"
+  "error": "Mensaje de error",
+  "details": "Información detallada del error"
 }
 ```
 
-### HTTP Status Codes
+### Códigos de Estado HTTP
 
-- `200` - Success
-- `201` - Created
-- `400` - Bad Request
-- `401` - Unauthorized
-- `403` - Forbidden
-- `404` - Not Found
-- `500` - Internal Server Error
+- `200` - Éxito
+- `201` - Creado
+- `400` - Solicitud Incorrecta
+- `401` - No Autorizado
+- `403` - Prohibido
+- `404` - No Encontrado
+- `500` - Error Interno del Servidor
 
-## 📁 Project Structure
+## Estructura del Proyecto
 
 ```
 KetzalliDB_API/
 ├── src/
-│   ├── config/           # Configuration files
+│   ├── config/           # Archivos de configuración
 │   │   ├── database.ts
 │   │   ├── firebase.config.ts
 │   │   └── r2.config.ts
-│   ├── controllers/      # Route controllers
+│   ├── controllers/      # Controladores de rutas
 │   │   ├── auth.controller.ts
 │   │   └── item.controller.ts
-│   ├── middleware/       # Express middleware
+│   ├── middleware/       # Middleware de Express
 │   │   ├── auth.middleware.ts
 │   │   ├── error.middleware.ts
 │   │   ├── src.middleware.ts
 │   │   └── upload.middleware.ts
-│   ├── models/          # Data models
+│   ├── models/          # Modelos de datos
 │   │   └── item.model.ts
-│   ├── routes/          # API routes
+│   ├── routes/          # Rutas de la API
 │   │   ├── auth.routes.ts
 │   │   └── item.routes.ts
-│   ├── scripts/         # Utility scripts
+│   ├── scripts/         # Scripts de utilidad
 │   │   └── createFirstAdmin.ts
-│   ├── types/           # TypeScript type definitions
+│   ├── types/           # Definiciones de tipos TypeScript
 │   │   └── express.d.ts
-│   ├── utils/           # Helper utilities
+│   ├── utils/           # Utilidades auxiliares
 │   │   ├── setAdmin.ts
 │   │   └── storage.util.ts
-│   └── index.ts         # Application entry point
+│   └── index.ts         # Punto de entrada de la aplicación
 ├── Database/
-│   └── Amoxcalli_DB.sql # Database schema
-├── .env                 # Environment variables (not in repo)
+│   └── Amoxcalli_DB.sql # Esquema de base de datos
+├── .env                 # Variables de entorno (no en repo)
 ├── package.json
 ├── tsconfig.json
-└── serviceAccount.json  # Firebase credentials (not in repo)
+└── serviceAccount.json  # Credenciales de Firebase (no en repo)
 ```
 
-## 🔧 Development
+## Desarrollo
 
-### Code Style
+### Estilo de Código
 
-This project uses TypeScript with strict type checking enabled. Follow these guidelines:
+Este proyecto utiliza TypeScript con verificación de tipos estricta habilitada. Sigue estas directrices:
 
-- Use TypeScript for all new files
-- Define interfaces for all data structures
-- Handle errors explicitly
-- Use async/await for asynchronous operations
-- Follow RESTful API conventions
+- Usa TypeScript para todos los archivos nuevos
+- Define interfaces para todas las estructuras de datos
+- Maneja errores explícitamente
+- Usa async/await para operaciones asíncronas
+- Sigue convenciones de API RESTful
 
-### Available Scripts
+### Scripts Disponibles
 
-| Command | Description |
+| Comando | Descripción |
 |---------|-------------|
-| `npm run dev` | Start development server with hot reload |
-| `npm run build` | Compile TypeScript to JavaScript |
-| `npm start` | Run production server |
-| `npm run clean` | Remove build directory |
-| `npm run admin:create` | Create first admin user |
-| `npm run admin:set` | Grant admin privileges |
-| `npm run admin:remove` | Revoke admin privileges |
-| `npm run admin:list` | List all admins |
+| `npm run dev` | Iniciar servidor de desarrollo con recarga en caliente |
+| `npm run build` | Compilar TypeScript a JavaScript |
+| `npm start` | Ejecutar servidor de producción |
+| `npm run clean` | Eliminar directorio de build |
+| `npm run admin:create` | Crear primer usuario administrador |
+| `npm run admin:set` | Otorgar privilegios de administrador |
+| `npm run admin:remove` | Revocar privilegios de administrador |
+| `npm run admin:list` | Listar todos los administradores |
 
-### Database Schema
+### Esquema de Base de Datos
 
-The database includes the following tables:
-- **roles** - User role definitions
-- **users** - User profiles and authentication
-- **categories** - Sign categories
-- **signs** - Mexican Sign Language signs
-- **exercises** - Learning exercises
-- **exercise_options** - Exercise answer options
-- **attempts** - User exercise attempts
-- **progress** - User learning progress by category
-- **streaks** - Daily streak tracking
-- **medals** - Achievement medal definitions
-- **medal_conditions** - Medal unlock conditions
-- **user_medals** - User medal achievements
-- **stats** - Global stat definitions (EXP, coins, etc.)
-- **user_stats** - User statistics values
-- **daily_quiz_history** - Daily quiz completion records
-- **user_exercise_history** - Exercise completion timestamps
-- **user_sign_views** - Sign view tracking
-- **user_favorite_signs** - User favorite signs
+La base de datos incluye las siguientes tablas:
+- **roles** - Definiciones de roles de usuario
+- **users** - Perfiles de usuario y autenticación
+- **categories** - Categorías de señas
+- **signs** - Señas de Lengua de Señas Mexicana
+- **exercises** - Ejercicios de aprendizaje
+- **exercise_options** - Opciones de respuesta de ejercicios
+- **attempts** - Intentos de ejercicios de usuario
+- **progress** - Progreso de aprendizaje de usuario por categoría
+- **streaks** - Seguimiento de rachas diarias
+- **medals** - Definiciones de medallas de logros
+- **medal_conditions** - Condiciones de desbloqueo de medallas
+- **user_medals** - Logros de medallas de usuario
+- **stats** - Definiciones de estadísticas globales (EXP, monedas, etc.)
+- **user_stats** - Valores de estadísticas de usuario
+- **daily_quiz_history** - Registros de finalización de quizzes diarios
+- **user_exercise_history** - Marcas de tiempo de finalización de ejercicios
+- **user_sign_views** - Seguimiento de visualización de señas
+- **user_favorite_signs** - Señas favoritas de usuario
 
-## 📄 License
+## Licencia
 
 ISC
 
 ---
 
-## 🎉 Project Completion
+## Finalización del Proyecto
 
-This project was successfully completed on **December 3, 2025** as part of the Software Development Security course at Tecnológico de Monterrey.
+Este proyecto fue completado exitosamente el **3 de Diciembre de 2025** como parte del curso de Seguridad en Desarrollo de Software en el Tecnológico de Monterrey.
 
-### ✨ Achievements
+### Logros
 
-- ✅ Full REST API implementation with TypeScript
-- ✅ Firebase authentication and role-based access control
-- ✅ PostgreSQL database with 17 normalized tables
-- ✅ Cloudflare R2 media storage integration
-- ✅ Complete gamification system (streaks, medals, progress tracking)
-- ✅ Dynamic quiz generation with 3 modes
-- ✅ User activity tracking and analytics
-- ✅ Comprehensive API documentation
-- ✅ Production-ready error handling
-- ✅ Admin management tools
-- ✅ Spanish landing page and documentation website
-- ✅ Student performance report template
+- Implementación completa de API REST con TypeScript
+- Autenticación Firebase y control de acceso basado en roles
+- Base de datos PostgreSQL con 17 tablas normalizadas
+- Integración de almacenamiento multimedia Cloudflare R2
+- Sistema de gamificación completo (rachas, medallas, seguimiento de progreso)
+- Generación dinámica de quizzes con 3 modos
+- Seguimiento y análisis de actividad de usuario
+- Documentación completa de la API
+- Manejo de errores listo para producción
+- Herramientas de gestión de administradores
+- Página de inicio y sitio web de documentación en español
+- Plantilla de reporte de rendimiento de estudiantes
 
-### 🙏 Acknowledgments
+### Agradecimientos
 
-Special thanks to the Software Development Security course instructors and the KetzalliLabs team for their support throughout this project.
+Agradecimiento especial a los instructores del curso de Seguridad en Desarrollo de Software y al equipo de KetzalliLabs por su apoyo durante este proyecto.
 
 ---
 
-Made with ❤️ by KetzalliLabs
+Hecho con ❤️ por KetzalliLabs
