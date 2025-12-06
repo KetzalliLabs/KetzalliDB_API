@@ -1,0 +1,356 @@
+================================================================================
+                    KETZALLIDB API - MANUAL DE INSTALACIÓN
+================================================================================
+
+VERSIÓN: 1.0.0
+FECHA: 6 de Diciembre, 2025
+PROYECTO: API REST para Amoxcalli - Plataforma de Lengua de Señas Mexicana
+
+================================================================================
+1. REQUISITOS PREVIOS
+================================================================================
+
+Antes de comenzar, asegúrese de tener instalado:
+
+- Node.js v18 o superior
+  Descarga: https://nodejs.org/
+
+- PostgreSQL v12 o superior
+  Descarga: https://www.postgresql.org/download/
+
+- npm o yarn (incluido con Node.js)
+
+- Git (para clonar el repositorio)
+  Descarga: https://git-scm.com/
+
+CUENTAS NECESARIAS:
+- Proyecto Firebase con cuenta de servicio
+- Cuenta Cloudflare R2 (o almacenamiento compatible con S3)
+
+================================================================================
+2. CLONAR EL REPOSITORIO
+================================================================================
+
+Abra una terminal y ejecute:
+
+git clone https://github.com/KetzalliLabs/KetzalliDB_API.git
+cd KetzalliDB_API
+
+================================================================================
+3. INSTALAR DEPENDENCIAS
+================================================================================
+
+npm install
+
+Este comando instalará todas las dependencias necesarias:
+- Express.js (framework web)
+- TypeScript (lenguaje)
+- PostgreSQL client (base de datos)
+- Firebase Admin SDK (autenticación)
+- Sharp (procesamiento de imágenes)
+- Multer (carga de archivos)
+- AWS SDK (Cloudflare R2)
+
+================================================================================
+4. CONFIGURAR FIREBASE
+================================================================================
+
+4.1. Obtener Credenciales de Firebase:
+     - Ir a Firebase Console (https://console.firebase.google.com/)
+     - Seleccionar su proyecto
+     - Ir a: Configuración del proyecto > Cuentas de servicio
+     - Hacer clic en "Generar nueva clave privada"
+     - Descargar el archivo JSON
+
+4.2. Guardar archivo de credenciales:
+     - Copiar el archivo JSON descargado
+     - Renombrarlo a: serviceAccount.json
+     - Colocarlo en la raíz del proyecto
+
+IMPORTANTE: NO subir serviceAccount.json a control de versiones
+
+================================================================================
+5. CONFIGURAR VARIABLES DE ENTORNO
+================================================================================
+
+5.1. Crear archivo .env en la raíz del proyecto
+
+5.2. Agregar las siguientes variables:
+
+# Configuración del Servidor
+PORT=3000
+NODE_ENV=development
+
+# Configuración de Base de Datos
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=tu_usuario_postgres
+DB_PASSWORD=tu_contraseña_postgres
+DB_NAME=amoxcalli_db
+
+# Configuración de Firebase
+FIREBASE_PROJECT_ID=tu-project-id
+FIREBASE_PRIVATE_KEY=tu-private-key
+FIREBASE_CLIENT_EMAIL=tu-client-email
+
+# Configuración de Cloudflare R2
+R2_ACCOUNT_ID=tu_account_id
+R2_ACCESS_KEY_ID=tu_access_key_id
+R2_SECRET_ACCESS_KEY=tu_secret_access_key
+R2_BUCKET_NAME=tu_bucket_name
+R2_PUBLIC_URL=https://tu-url-publica.r2.dev
+
+NOTA: Reemplazar todos los valores "tu_*" con sus credenciales reales
+
+================================================================================
+6. CONFIGURAR BASE DE DATOS
+================================================================================
+
+6.1. Crear la base de datos PostgreSQL:
+
+createdb amoxcalli_db
+
+   Alternativamente, usando psql:
+   
+   psql -U postgres
+   CREATE DATABASE amoxcalli_db;
+   \q
+
+6.2. Importar el esquema de base de datos:
+
+psql -d amoxcalli_db -f Database/Amoxcalli_DB.sql
+
+   O si requiere usuario y host específicos:
+
+   psql -h localhost -U tu_usuario -d amoxcalli_db -f Database/Amoxcalli_DB.sql
+
+6.3. Verificar la importación:
+
+   psql -d amoxcalli_db
+   \dt
+   
+   Debe mostrar 17 tablas:
+   - roles
+   - users
+   - categories
+   - signs
+   - exercises
+   - exercise_options
+   - attempts
+   - progress
+   - streaks
+   - medals
+   - medal_conditions
+   - user_medals
+   - stats
+   - user_stats
+   - daily_quiz_history
+   - user_exercise_history
+   - user_sign_views
+   - user_favorite_signs
+
+================================================================================
+7. CREAR USUARIO ADMINISTRADOR
+================================================================================
+
+npm run admin:create
+
+Este script:
+- Solicitará información del administrador
+- Creará el usuario en la base de datos
+- Establecerá claims personalizados en Firebase
+- Asignará rol de administrador
+
+IMPORTANTE: Ejecutar este comando SOLO UNA VEZ para crear el primer admin
+
+================================================================================
+8. COMPILAR EL PROYECTO
+================================================================================
+
+npm run build
+
+Este comando:
+- Compila TypeScript a JavaScript
+- Genera carpeta dist/ con código compilado
+- Verifica tipos y detecta errores
+
+================================================================================
+9. EJECUTAR LA APLICACIÓN
+================================================================================
+
+MODO DESARROLLO (con recarga automática):
+
+npm run dev
+
+MODO PRODUCCIÓN:
+
+npm start
+
+La API estará disponible en: http://localhost:3000
+
+================================================================================
+10. VERIFICAR INSTALACIÓN
+================================================================================
+
+10.1. Abrir navegador o usar curl:
+
+curl http://localhost:3000/
+
+   Respuesta esperada:
+   {
+     "message": "Bienvenido a KetzalliDB API"
+   }
+
+10.2. Verificar salud del sistema:
+
+curl http://localhost:3000/api/health
+
+   Respuesta esperada:
+   {
+     "status": "healthy",
+     "database": "connected",
+     "timestamp": "..."
+   }
+
+10.3. Ver documentación:
+
+   Navegador: http://localhost:3000/api
+
+================================================================================
+11. COMANDOS ADICIONALES
+================================================================================
+
+GESTIÓN DE ADMINISTRADORES:
+
+npm run admin:set      # Otorgar privilegios de admin a usuario existente
+npm run admin:remove   # Revocar privilegios de admin
+npm run admin:list     # Listar todos los administradores
+
+DESARROLLO:
+
+npm run dev            # Servidor desarrollo con hot-reload
+npm run build          # Compilar TypeScript
+npm run clean          # Limpiar carpeta de build
+npm start              # Servidor producción
+
+================================================================================
+12. ESTRUCTURA DE CARPETAS
+================================================================================
+
+KetzalliDB_API/
+├── src/                    # Código fuente TypeScript
+│   ├── config/             # Configuraciones (DB, Firebase, R2)
+│   ├── controllers/        # Lógica de controladores
+│   ├── middleware/         # Middleware (auth, error, upload)
+│   ├── models/             # Modelos de datos
+│   ├── routes/             # Definición de rutas
+│   ├── scripts/            # Scripts de utilidad
+│   ├── types/              # Tipos TypeScript
+│   ├── utils/              # Funciones auxiliares
+│   └── index.ts            # Punto de entrada
+├── Database/               # Scripts SQL
+├── Public/                 # Archivos estáticos (web)
+├── dist/                   # Código compilado (generado)
+├── node_modules/           # Dependencias (generado)
+├── .env                    # Variables de entorno (crear)
+├── serviceAccount.json     # Credenciales Firebase (crear)
+├── package.json            # Configuración npm
+└── tsconfig.json           # Configuración TypeScript
+
+================================================================================
+13. SOLUCIÓN DE PROBLEMAS COMUNES
+================================================================================
+
+PROBLEMA: Error al conectar a PostgreSQL
+SOLUCIÓN: 
+- Verificar que PostgreSQL esté ejecutándose
+- Confirmar credenciales en .env
+- Verificar que la base de datos exista
+
+PROBLEMA: Error "Cannot find module 'firebase-admin'"
+SOLUCIÓN: 
+- Ejecutar: npm install
+- Verificar que node_modules/ exista
+
+PROBLEMA: Error al importar esquema SQL
+SOLUCIÓN:
+- Verificar ruta del archivo: Database/Amoxcalli_DB.sql
+- Verificar permisos de lectura del archivo
+- Asegurar que la base de datos esté vacía
+
+PROBLEMA: Puerto 3000 en uso
+SOLUCIÓN:
+- Cambiar PORT en .env a otro puerto (ej: 3001)
+- O detener el proceso usando el puerto 3000
+
+PROBLEMA: Error de autenticación Firebase
+SOLUCIÓN:
+- Verificar que serviceAccount.json exista y sea válido
+- Confirmar que las variables FIREBASE_* en .env sean correctas
+- Regenerar credenciales si es necesario
+
+================================================================================
+14. SEGURIDAD
+================================================================================
+
+ARCHIVOS A NO INCLUIR EN CONTROL DE VERSIONES:
+- .env
+- serviceAccount.json
+- node_modules/
+- dist/
+
+ESTOS ARCHIVOS YA ESTÁN EN .gitignore
+
+RECOMENDACIONES:
+- Cambiar todas las contraseñas por defecto
+- Usar HTTPS en producción
+- Configurar CORS apropiadamente
+- Rotar claves regularmente
+- Implementar rate limiting
+- Monitorear logs de acceso
+
+================================================================================
+15. SIGUIENTE PASOS
+================================================================================
+
+Después de la instalación exitosa:
+
+1. Revisar documentación de API en: http://localhost:3000/api
+
+2. Probar endpoints con herramientas como:
+   - Postman
+   - Insomnia
+   - cURL
+   - Thunder Client (VS Code)
+
+3. Crear categorías y señas iniciales (requiere token admin)
+
+4. Configurar aplicación cliente para usar la API
+
+5. Implementar autenticación Firebase en el cliente
+
+6. Configurar deployment en servidor de producción
+
+================================================================================
+16. SOPORTE Y RECURSOS
+================================================================================
+
+DOCUMENTACIÓN:
+- README.md - Documentación completa
+- API_DOCUMENTATION.md - Documentación de endpoints
+- http://localhost:3000/api - Documentación web
+
+REPOSITORIO:
+https://github.com/KetzalliLabs/KetzalliDB_API
+
+CONTACTO:
+KetzalliLabs Team
+
+================================================================================
+                            FIN DEL MANUAL
+================================================================================
+
+Proyecto completado: 3 de Diciembre, 2025
+Tecnológico de Monterrey - Seguridad en Desarrollo de Software
+
+Hecho por KetzalliLabs
